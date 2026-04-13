@@ -71,26 +71,64 @@ Copy `.env.example` to `.env` and fill in:
 
 ## Deploy
 
-### Frontend → Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+### Option A — One-Command (Recommended)
 
 ```bash
-# vercel.json is already configured
-# Set env vars in Vercel dashboard:
-# VITE_API_URL = https://your-railway-backend.up.railway.app
-vercel --prod
+# Authenticate first (one-time, browser opens)
+vercel login
+railway login
+
+# Then deploy everything:
+bash scripts/deploy.sh
 ```
 
-### Backend → Railway
+### Option B — GitHub Actions (Auto-Deploy on Push)
 
+Push the workflow file once with the workflow scope:
 ```bash
-# railway.toml + Procfile are already configured
-# Set env vars in Railway dashboard
+gh auth refresh --hostname github.com -s workflow
+git push origin main
+```
+
+Then add these GitHub repository secrets (Settings → Secrets → Actions):
+
+| Secret | Where to get it |
+|--------|----------------|
+| `VERCEL_TOKEN` | vercel.com/account/tokens |
+| `VERCEL_ORG_ID` | vercel.com/account → Team ID |
+| `VERCEL_PROJECT_ID` | vercel.com → Project → Settings → General |
+| `VITE_API_URL` | Your Railway backend URL |
+
+After secrets are set, every push to `main` auto-deploys frontend to Vercel.
+
+### Option C — Manual Steps
+
+**Step 1: Backend → Railway**
+```bash
+railway login
 railway up
+# Get your URL from: railway.app/dashboard
 ```
 
-Railway required env vars: `JWT_SECRET_KEY`, `INFRANODUS_API_KEY`, `N8N_WEBHOOK_URL`, `N8N_AUTH_TOKEN`
+Railway env vars to set in dashboard:
+```
+JWT_SECRET_KEY=<generate: python -c "import secrets; print(secrets.token_hex(32))">
+INFRANODUS_API_KEY=<from infranodus.com/settings>
+N8N_WEBHOOK_URL=https://n8n-production-6fe9.up.railway.app/webhook/lebergott-bot
+N8N_AUTH_TOKEN=419f12f0bc4c8bc8d6a5625fede2d28b51b618200a199ad28e42fbb4fd3b852a
+```
+
+**Step 2: Frontend → Vercel**
+```bash
+cd frontend
+vercel --prod
+# When prompted: set VITE_API_URL = your Railway URL from step 1
+```
+
+Vercel env vars to set in dashboard:
+```
+VITE_API_URL=https://your-app.up.railway.app
+```
 
 ---
 
