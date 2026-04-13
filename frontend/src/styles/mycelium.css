@@ -1,0 +1,449 @@
+/* ============================================================
+   SYNODEA — Mycelium Graph Styles
+   Bioluminescent node network × living connections
+   ============================================================ */
+
+/* ---- Graph container ---- */
+.mycelium-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* Subtle radial gradient — feels like looking into a forest canopy */
+.mycelium-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0, 255, 136, 0.03) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 20% 80%, rgba(0, 221, 204, 0.02) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mycelium-svg {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Links / mycelium threads ---- */
+.mycelium-link {
+  stroke: #00cc6a;
+  stroke-linecap: round;
+  fill: none;
+  pointer-events: none;
+}
+
+/* Nutrient flow animation along links */
+@keyframes nutrientFlow {
+  0%   { stroke-dashoffset: 100; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.mycelium-link--active {
+  stroke: var(--accent-green);
+  filter: drop-shadow(0 0 3px rgba(0, 255, 136, 0.6));
+  animation: nutrientFlow 2s linear infinite;
+}
+
+/* ---- Nodes ---- */
+.mycelium-node {
+  cursor: pointer;
+}
+
+.mycelium-node circle {
+  transition: r 0.2s ease, filter 0.2s ease;
+}
+
+.mycelium-node:hover circle {
+  filter: brightness(1.3) drop-shadow(0 0 12px var(--accent-green));
+}
+
+/* Hub node pulse — large, bright, breathing */
+@keyframes hubPulse {
+  0%, 100% { r: var(--node-r); filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.5)); }
+  50%       { r: calc(var(--node-r) * 1.08); filter: drop-shadow(0 0 16px rgba(0, 255, 136, 0.8)); }
+}
+
+/* Regular node pulse — subtle breathing */
+@keyframes nodePulse {
+  0%, 100% { opacity: 0.85; }
+  50%       { opacity: 1; }
+}
+
+/* Gap node flicker — amber, dim, barely there */
+@keyframes gapFlicker {
+  0%, 100% { opacity: 0.35; filter: drop-shadow(0 0 4px rgba(255, 153, 68, 0.3)); }
+  50%       { opacity: 0.55; filter: drop-shadow(0 0 8px rgba(255, 153, 68, 0.5)); }
+}
+
+.mycelium-node--hub circle {
+  animation: hubPulse 4s ease-in-out infinite;
+}
+
+.mycelium-node--gap circle {
+  animation: gapFlicker 3s ease-in-out infinite;
+}
+
+/* ---- Node labels ---- */
+.mycelium-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 400;
+  fill: var(--text-secondary);
+  pointer-events: none;
+  user-select: none;
+  transition: fill 0.15s ease, font-weight 0.15s ease;
+}
+
+.mycelium-label--hub {
+  font-size: 12px;
+  font-weight: 500;
+  fill: var(--text-primary);
+}
+
+.mycelium-label--gap {
+  fill: var(--gap-amber-dim);
+  font-style: italic;
+}
+
+.mycelium-node:hover + .mycelium-label,
+.mycelium-node:hover .mycelium-label {
+  fill: var(--accent-green);
+  font-weight: 500;
+}
+
+/* ---- Tooltip ---- */
+.mycelium-tooltip {
+  position: absolute;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  pointer-events: none;
+  z-index: 100;
+  max-width: 220px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 16px var(--accent-glow);
+  transition: opacity 0.15s ease;
+}
+
+.mycelium-tooltip__title {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mycelium-tooltip__meta {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+.mycelium-tooltip__gap-label {
+  font-size: 0.7rem;
+  color: var(--gap-amber);
+  margin-top: var(--space-1);
+}
+
+/* ---- Cluster legend ---- */
+.cluster-legend {
+  position: absolute;
+  bottom: var(--space-4);
+  left: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  z-index: 10;
+}
+
+.cluster-legend__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.cluster-legend__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ---- Graph controls ---- */
+.graph-controls {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  z-index: 10;
+}
+
+.graph-controls__btn {
+  width: 32px;
+  height: 32px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+}
+.graph-controls__btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-strong);
+  color: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* ---- Loading pulse ---- */
+@keyframes sporeSpread {
+  0%   { transform: scale(0.5); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.loading-pulse {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  height: 100%;
+  min-height: 300px;
+}
+
+.loading-pulse__spore {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+.loading-pulse__spore::before,
+.loading-pulse__spore::after,
+.loading-pulse__core {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent-green);
+}
+
+.loading-pulse__core {
+  transform: scale(0.3);
+  opacity: 0.9;
+  box-shadow: 0 0 12px var(--accent-green);
+}
+
+.loading-pulse__spore::before {
+  animation: sporeSpread 2s ease-out infinite;
+  background: transparent;
+  border: 1px solid var(--accent-green);
+}
+
+.loading-pulse__spore::after {
+  animation: sporeSpread 2s ease-out 0.7s infinite;
+  background: transparent;
+  border: 1px solid var(--accent-green-dim);
+}
+
+.loading-pulse__text {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+}
+
+/* ---- Radar chart ---- */
+.radar-container {
+  position: relative;
+}
+
+.radar-svg text {
+  font-family: var(--font-sans);
+  fill: var(--text-secondary);
+  font-size: 11px;
+}
+
+.radar-polygon {
+  fill: rgba(0, 255, 136, 0.12);
+  stroke: var(--accent-green);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 6px rgba(0, 255, 136, 0.3));
+  transition: all 0.3s ease;
+}
+
+.radar-polygon:hover {
+  fill: rgba(0, 255, 136, 0.2);
+  filter: drop-shadow(0 0 12px rgba(0, 255, 136, 0.5));
+}
+
+.radar-axis {
+  stroke: var(--border-subtle);
+  stroke-width: 1;
+}
+
+.radar-ring {
+  fill: none;
+  stroke: var(--border-subtle);
+  stroke-width: 0.5;
+  stroke-dasharray: 4 4;
+}
+
+.radar-dot {
+  fill: var(--accent-green);
+  filter: drop-shadow(0 0 4px var(--accent-green));
+}
+
+/* ---- Panel animations ---- */
+@keyframes slideInRight {
+  from { transform: translateX(20px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+.panel-enter {
+  animation: slideInRight 0.3s ease both;
+}
+
+/* ---- Gap item ---- */
+.gap-item {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 153, 68, 0.15);
+  background: rgba(255, 153, 68, 0.04);
+  transition: all var(--transition-base);
+}
+.gap-item:hover {
+  border-color: rgba(255, 153, 68, 0.3);
+  background: rgba(255, 153, 68, 0.08);
+}
+
+.gap-item__title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gap-amber);
+  margin-bottom: var(--space-1);
+}
+
+.gap-item__reason {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.gap-item__bridge {
+  font-size: 0.78rem;
+  color: var(--accent-teal-dim);
+  font-style: italic;
+}
+
+/* ---- Bridge item ---- */
+.bridge-item {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0, 221, 204, 0.15);
+  background: rgba(0, 221, 204, 0.04);
+  transition: all var(--transition-base);
+}
+.bridge-item:hover {
+  border-color: rgba(0, 221, 204, 0.3);
+  background: rgba(0, 221, 204, 0.08);
+}
+
+.bridge-item__title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent-teal);
+  margin-bottom: var(--space-1);
+}
+
+.bridge-item__connects {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.bridge-item__why {
+  font-size: 0.78rem;
+  color: var(--bridge-cyan);
+  font-style: italic;
+}
+
+/* ---- Node detail panel ---- */
+.node-detail {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 340px;
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border-subtle);
+  overflow-y: auto;
+  z-index: 20;
+  animation: slideInRight 0.25s ease both;
+}
+
+.node-detail__header {
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  z-index: 1;
+}
+
+.node-detail__close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+}
+.node-detail__close:hover {
+  color: var(--accent-green);
+  border-color: var(--border-strong);
+}
+
+/* ---- Spore count indicator ---- */
+.spore-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.spore-count__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 4px var(--accent-green);
+}

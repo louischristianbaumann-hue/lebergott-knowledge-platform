@@ -1,0 +1,500 @@
+{
+  "lebergott-main": {
+    "graph_name": "lebergott-main",
+    "description": "Hauptgraph — Lebergott Kernwissen",
+    "clusters": [
+      {
+        "id": "cluster-leber",
+        "label": "Lebergesundheit",
+        "color": "#1a3a2a",
+        "nodes": ["leber", "lebergesundheit", "leberfunktion", "leberregeneration", "hepatozyten"],
+        "weight": 0.85,
+        "top_concepts": ["leber", "regeneration", "funktion"]
+      },
+      {
+        "id": "cluster-ernaehrung",
+        "label": "Ernährung & Nährstoffe",
+        "color": "#c5a55a",
+        "nodes": ["ernaehrung", "naehrstoffe", "antioxidantien", "vitamine", "mineralien"],
+        "weight": 0.72,
+        "top_concepts": ["antioxidantien", "vitamine", "ernaehrung"]
+      },
+      {
+        "id": "cluster-entgiftung",
+        "label": "Entgiftung & Reinigung",
+        "color": "#2d5a3d",
+        "nodes": ["entgiftung", "detox", "toxine", "gallenfluss", "lymphe"],
+        "weight": 0.68,
+        "top_concepts": ["entgiftung", "toxine", "reinigung"]
+      },
+      {
+        "id": "cluster-ganzheit",
+        "label": "Ganzheitliche Gesundheit",
+        "color": "#4a7c59",
+        "nodes": ["ganzheit", "mind-body", "stress", "schlaf", "bewegung"],
+        "weight": 0.61,
+        "top_concepts": ["ganzheit", "stress", "gleichgewicht"]
+      }
+    ],
+    "gaps": [
+      {
+        "concept": "epigenetik-leber",
+        "label": "Epigenetik & Lebergesundheit",
+        "description": "Verbindung zwischen epigenetischen Faktoren und Leberregeneration fehlt im Wissensgraph",
+        "bridge_potential": 0.89,
+        "gap_type": "missing_connection",
+        "related_clusters": ["cluster-leber", "cluster-ganzheit"]
+      },
+      {
+        "concept": "mikrobiom-leber-achse",
+        "label": "Darm-Leber-Achse",
+        "description": "Mikrobiom-Einfluss auf Leberfunktion ist unterrepräsentiert",
+        "bridge_potential": 0.84,
+        "gap_type": "weak_cluster",
+        "related_clusters": ["cluster-leber", "cluster-ernaehrung"]
+      },
+      {
+        "concept": "chronobiologie-detox",
+        "label": "Chronobiologie der Entgiftung",
+        "description": "Tagesrhythmus und optimale Entgiftungsfenster fehlen",
+        "bridge_potential": 0.76,
+        "gap_type": "missing_connection",
+        "related_clusters": ["cluster-entgiftung", "cluster-ganzheit"]
+      }
+    ],
+    "bridges": [
+      {
+        "concept": "leber-als-zentralorgan",
+        "label": "Leber als metabolisches Zentrum",
+        "connects": ["lebergesundheit", "ernaehrung", "entgiftung"],
+        "insight": "Die Leber verbindet Ernährung, Entgiftung und systemische Gesundheit als zentrales Regulationsorgan",
+        "strength": 0.92
+      },
+      {
+        "concept": "regeneration-durch-fasten",
+        "label": "Intermittierendes Fasten & Leberregeneration",
+        "connects": ["entgiftung", "leberregeneration", "ernaehrung"],
+        "insight": "Fastenprotokolle aktivieren Autophagie-Prozesse spezifisch in Lebergewebe",
+        "strength": 0.85
+      },
+      {
+        "concept": "phytonaehrstoffe-schutz",
+        "label": "Phytonährstoffe als Leberschutz",
+        "connects": ["antioxidantien", "leber", "ernaehrung"],
+        "insight": "Sekundäre Pflanzenstoffe (Silymarin, Curcumin) schützen Leberzellen spezifisch",
+        "strength": 0.78
+      }
+    ],
+    "stats": {
+      "total_nodes": 47,
+      "total_edges": 183,
+      "density": 0.17,
+      "avg_degree": 7.8,
+      "modularity": 0.64
+    }
+  },
+  "lebergott-liver": {
+    "graph_name": "lebergott-liver",
+    "description": "Tiefen-Graph — Leber-Anatomie & Physiologie",
+    "clusters": [
+      {
+        "id": "cluster-anatomie",
+        "label": "Anatomie & Struktur",
+        "color": "#1a3a2a",
+        "nodes": ["leber-lappen", "pfortader", "leberarterie", "gallenblase", "lebersinusoide"],
+        "weight": 0.81,
+        "top_concepts": ["leber-lappen", "pfortader", "sinusoide"]
+      },
+      {
+        "id": "cluster-metabolismus",
+        "label": "Metabolismus",
+        "color": "#c5a55a",
+        "nodes": ["glukogenese", "gluconeogenese", "lipolyse", "proteinsynthese", "harnstoffzyklus"],
+        "weight": 0.79,
+        "top_concepts": ["glukogenese", "lipolyse", "proteinsynthese"]
+      },
+      {
+        "id": "cluster-biomarker",
+        "label": "Biomarker & Diagnostik",
+        "color": "#2d5a3d",
+        "nodes": ["ALT", "AST", "GGT", "bilirubin", "albumin"],
+        "weight": 0.74,
+        "top_concepts": ["ALT", "AST", "bilirubin"]
+      }
+    ],
+    "gaps": [
+      {
+        "concept": "leber-immun-interface",
+        "label": "Leber-Immunsystem-Schnittstelle",
+        "description": "Kupffer-Zellen und ihre Rolle in der systemischen Immunregulation unterbelichtet",
+        "bridge_potential": 0.91,
+        "gap_type": "missing_connection",
+        "related_clusters": ["cluster-anatomie", "cluster-metabolismus"]
+      },
+      {
+        "concept": "hormon-leber-feedback",
+        "label": "Hormonelle Rückkopplungsschleifen",
+        "description": "Insulin-Glukagon-Leber-Feedback-Schleife fehlt im Kontext",
+        "bridge_potential": 0.82,
+        "gap_type": "weak_cluster",
+        "related_clusters": ["cluster-metabolismus"]
+      }
+    ],
+    "bridges": [
+      {
+        "concept": "leber-als-immunorgan",
+        "label": "Leber als Immunorgan",
+        "connects": ["kupffer-zellen", "immunsystem", "leberentzuendung"],
+        "insight": "Die Leber ist eines der größten Immunorgane — Kupffer-Zellen filtern 80% des Blutes",
+        "strength": 0.88
+      },
+      {
+        "concept": "biomarker-ernaehrung",
+        "label": "Ernährung & Lebermarker",
+        "connects": ["ALT", "AST", "ernaehrung", "alkohol"],
+        "insight": "Ernährungsinterventionen können Lebermarker in 8-12 Wochen signifikant verbessern",
+        "strength": 0.81
+      }
+    ],
+    "stats": {
+      "total_nodes": 38,
+      "total_edges": 142,
+      "density": 0.20,
+      "avg_degree": 7.5,
+      "modularity": 0.59
+    }
+  },
+  "lebergott-ernaehrung": {
+    "graph_name": "lebergott-ernaehrung",
+    "description": "Ernährungs-Graph — Leberoptimale Ernährungsstrategien",
+    "clusters": [
+      {
+        "id": "cluster-lebensmittel",
+        "label": "Leberfreundliche Lebensmittel",
+        "color": "#1a3a2a",
+        "nodes": ["artischocke", "mariendistel", "kurkuma", "knoblauch", "gruener-tee"],
+        "weight": 0.88,
+        "top_concepts": ["mariendistel", "artischocke", "kurkuma"]
+      },
+      {
+        "id": "cluster-makronaehrstoffe",
+        "label": "Makronährstoffe",
+        "color": "#c5a55a",
+        "nodes": ["protein", "gesunde-fette", "komplexe-kohlenhydrate", "ballaststoffe", "wasser"],
+        "weight": 0.75,
+        "top_concepts": ["protein", "gesunde-fette", "ballaststoffe"]
+      },
+      {
+        "id": "cluster-supplements",
+        "label": "Nahrungsergänzung",
+        "color": "#2d5a3d",
+        "nodes": ["NAC", "alpha-liponsaeure", "coenzym-q10", "vitamin-e", "selen"],
+        "weight": 0.71,
+        "top_concepts": ["NAC", "alpha-liponsaeure", "selen"]
+      },
+      {
+        "id": "cluster-essgewohnheiten",
+        "label": "Essgewohnheiten & Rhythmus",
+        "color": "#4a7c59",
+        "nodes": ["mahlzeitenfrequenz", "portionsgroesse", "kauen", "bewusstes-essen", "abendessen"],
+        "weight": 0.63,
+        "top_concepts": ["mahlzeitenfrequenz", "portionsgroesse", "rhythmus"]
+      }
+    ],
+    "gaps": [
+      {
+        "concept": "fermentation-leber",
+        "label": "Fermentierte Lebensmittel & Leber",
+        "description": "Probiotische Wirkung fermentierter Lebensmittel auf Lebergesundheit nicht dokumentiert",
+        "bridge_potential": 0.87,
+        "gap_type": "missing_connection",
+        "related_clusters": ["cluster-lebensmittel", "cluster-supplements"]
+      },
+      {
+        "concept": "ayurveda-leber-protokolle",
+        "label": "Ayurvedische Leberprotokolle",
+        "description": "Traditionelles Wissen über Leberunterstützung in Ayurveda fehlt",
+        "bridge_potential": 0.74,
+        "gap_type": "missing_connection",
+        "related_clusters": ["cluster-lebensmittel"]
+      },
+      {
+        "concept": "saisonale-ernaehrung",
+        "label": "Saisonale Ernährungsanpassung",
+        "description": "Jahreszeitliche Anpassung der Ernährung für optimale Leberfunktion",
+        "bridge_potential": 0.69,
+        "gap_type": "weak_cluster",
+        "related_clusters": ["cluster-essgewohnheiten", "cluster-lebensmittel"]
+      }
+    ],
+    "bridges": [
+      {
+        "concept": "silymarin-renaissance",
+        "label": "Silymarin — von traditionell zu evidenzbasiert",
+        "connects": ["mariendistel", "NAC", "leberregeneration"],
+        "insight": "Silymarin aus Mariendistel zeigt in Studien vergleichbare hepatoprotektive Wirkung wie pharmazeutische Interventionen",
+        "strength": 0.91
+      },
+      {
+        "concept": "bitterstoffe-gallenfluss",
+        "label": "Bitterstoffe aktivieren Gallenfluss",
+        "connects": ["artischocke", "chichoree", "entgiftung", "verdauung"],
+        "insight": "Bitterstoffhaltige Lebensmittel stimulieren die Gallenproduktion um 30-50%",
+        "strength": 0.84
+      }
+    ],
+    "stats": {
+      "total_nodes": 52,
+      "total_edges": 198,
+      "density": 0.15,
+      "avg_degree": 7.6,
+      "modularity": 0.68
+    }
+  },
+  "lebergott-entgiftung": {
+    "graph_name": "lebergott-entgiftung",
+    "description": "Entgiftungs-Graph — Detox-Mechanismen & Protokolle",
+    "clusters": [
+      {
+        "id": "cluster-phase1",
+        "label": "Phase-1-Entgiftung",
+        "color": "#1a3a2a",
+        "nodes": ["cytochrom-p450", "oxidation", "reduktion", "hydrolyse", "CYP-enzyme"],
+        "weight": 0.83,
+        "top_concepts": ["cytochrom-p450", "CYP-enzyme", "oxidation"]
+      },
+      {
+        "id": "cluster-phase2",
+        "label": "Phase-2-Konjugation",
+        "color": "#c5a55a",
+        "nodes": ["glucuronidierung", "sulfatierung", "glutathion", "methylierung", "acetylierung"],
+        "weight": 0.80,
+        "top_concepts": ["glutathion", "methylierung", "glucuronidierung"]
+      },
+      {
+        "id": "cluster-umwelttoxine",
+        "label": "Umwelttoxine & Belastungen",
+        "color": "#2d5a3d",
+        "nodes": ["schwermetalle", "pestizide", "plastik-toxine", "alkohol", "medikamente"],
+        "weight": 0.76,
+        "top_concepts": ["schwermetalle", "pestizide", "alkohol"]
+      }
+    ],
+    "gaps": [
+      {
+        "concept": "methylierung-MTHFR",
+        "label": "MTHFR-Polymorphismus & Entgiftung",
+        "description": "Genetische Varianten die Methylierungskapazität beeinflussen fehlen im Kontext",
+        "bridge_potential": 0.93,
+        "gap_type": "missing_connection",
+        "related_clusters": ["cluster-phase2"]
+      },
+      {
+        "concept": "schwermetall-chelation",
+        "label": "Natürliche Chelation von Schwermetallen",
+        "description": "Natürliche Chelatoren (Chlorella, Koriander) und ihr Protokoll fehlen",
+        "bridge_potential": 0.85,
+        "gap_type": "missing_connection",
+        "related_clusters": ["cluster-umwelttoxine", "cluster-phase2"]
+      },
+      {
+        "concept": "schlaf-autophagie",
+        "label": "Schlaf & Autophagie-Aktivierung",
+        "description": "Schlafqualität als kritischer Faktor für nächtliche Leberentgiftung",
+        "bridge_potential": 0.78,
+        "gap_type": "weak_cluster",
+        "related_clusters": ["cluster-phase1"]
+      }
+    ],
+    "bridges": [
+      {
+        "concept": "glutathion-master-antioxidant",
+        "label": "Glutathion — das Master-Antioxidans",
+        "connects": ["glutathion", "Phase-2", "immunsystem", "NAC"],
+        "insight": "Glutathion ist das wichtigste körpereigene Antioxidans — NAC und Glycin erhöhen Spiegel effektiv",
+        "strength": 0.94
+      },
+      {
+        "concept": "fasten-autophagie-leber",
+        "label": "Fasten aktiviert Leber-Autophagie",
+        "connects": ["intermittierendes-fasten", "autophagie", "entgiftung", "zellreparatur"],
+        "insight": "16:8 Fasten aktiviert hepatische Autophagie nach 12-14 Stunden ohne Nahrung",
+        "strength": 0.87
+      }
+    ],
+    "stats": {
+      "total_nodes": 44,
+      "total_edges": 167,
+      "density": 0.18,
+      "avg_degree": 7.6,
+      "modularity": 0.61
+    }
+  },
+  "lebergott-symptome": {
+    "graph_name": "lebergott-symptome",
+    "description": "Symptom-Graph — Warnsignale & Zusammenhänge",
+    "clusters": [
+      {
+        "id": "cluster-warnsignale",
+        "label": "Warnsignale",
+        "color": "#1a3a2a",
+        "nodes": ["muedigkeit", "gelbsucht", "blähbauch", "juckreiz", "dunkler-urin"],
+        "weight": 0.86,
+        "top_concepts": ["muedigkeit", "gelbsucht", "blähbauch"]
+      },
+      {
+        "id": "cluster-systemisch",
+        "label": "Systemische Symptome",
+        "color": "#c5a55a",
+        "nodes": ["gewichtszunahme", "hormonstoerungen", "stimmungsschwankungen", "gehirnnebel", "schlafprobleme"],
+        "weight": 0.78,
+        "top_concepts": ["gehirnnebel", "hormonstoerungen", "muedigkeit"]
+      },
+      {
+        "id": "cluster-haut",
+        "label": "Haut & Äußere Zeichen",
+        "color": "#2d5a3d",
+        "nodes": ["gelbfaerbung", "spidernaevi", "palmarerythem", "nagel-veraenderungen", "akne"],
+        "weight": 0.69,
+        "top_concepts": ["gelbfaerbung", "spidernaevi", "akne"]
+      }
+    ],
+    "gaps": [
+      {
+        "concept": "lebermude-syndrom",
+        "label": "Lebererschöpfungs-Syndrom",
+        "description": "Subklinische Leberbelastung als Ursache für diffuse Müdigkeit nicht ausreichend beschrieben",
+        "bridge_potential": 0.88,
+        "gap_type": "missing_connection",
+        "related_clusters": ["cluster-warnsignale", "cluster-systemisch"]
+      },
+      {
+        "concept": "oestrogendominanz-leber",
+        "label": "Östrogendominanz & Leberentgiftung",
+        "description": "Leber als primärer Östrogenabbauort — Verbindung zu Hormonstörungen",
+        "bridge_potential": 0.83,
+        "gap_type": "weak_cluster",
+        "related_clusters": ["cluster-systemisch"]
+      }
+    ],
+    "bridges": [
+      {
+        "concept": "haut-als-spiegel",
+        "label": "Haut als Spiegel der Lebergesundheit",
+        "connects": ["haut", "leber", "entgiftung", "akne"],
+        "insight": "Hautprobleme (besonders Akne, Rötungen) reflektieren oft suboptimale Leberentgiftung",
+        "strength": 0.86
+      },
+      {
+        "concept": "stimmung-leber-gut",
+        "label": "Leber-Darm-Gehirn-Achse",
+        "connects": ["stimmungsschwankungen", "mikrobiom", "leber", "serotonin"],
+        "insight": "Die Leber produziert Vorstufen von Neurotransmittern — Leberbelastung korreliert mit Stimmungstiefs",
+        "strength": 0.81
+      }
+    ],
+    "stats": {
+      "total_nodes": 35,
+      "total_edges": 124,
+      "density": 0.21,
+      "avg_degree": 7.1,
+      "modularity": 0.57
+    }
+  },
+  "lebergott-protokoll": {
+    "graph_name": "lebergott-protokoll",
+    "description": "Protokoll-Graph — Praktische Anwendung & Behandlungsstrategien",
+    "clusters": [
+      {
+        "id": "cluster-morgenroutine",
+        "label": "Morgenroutine",
+        "color": "#1a3a2a",
+        "nodes": ["warmes-zitronenwasser", "oelpulling", "morgenspaziergang", "atemübungen", "nüchtern-bewegung"],
+        "weight": 0.82,
+        "top_concepts": ["warmes-zitronenwasser", "nüchtern-bewegung", "atemübungen"]
+      },
+      {
+        "id": "cluster-kuren",
+        "label": "Kuren & Programme",
+        "color": "#c5a55a",
+        "nodes": ["21-tage-kur", "leberwickel", "bittersaft-kur", "fasten-protokoll", "saftkur"],
+        "weight": 0.76,
+        "top_concepts": ["21-tage-kur", "fasten-protokoll", "leberwickel"]
+      },
+      {
+        "id": "cluster-lebensstil",
+        "label": "Lebensstil & Prävention",
+        "color": "#2d5a3d",
+        "nodes": ["stressmanagement", "schlaf-hygiene", "alkohol-reduktion", "bewegung", "natur-kontakt"],
+        "weight": 0.73,
+        "top_concepts": ["stressmanagement", "schlaf-hygiene", "bewegung"]
+      },
+      {
+        "id": "cluster-tracking",
+        "label": "Fortschritt messen",
+        "color": "#4a7c59",
+        "nodes": ["blutbild-monitoring", "symptom-journal", "energie-tracking", "biomarker", "fotos"],
+        "weight": 0.65,
+        "top_concepts": ["blutbild-monitoring", "symptom-journal", "energie-tracking"]
+      }
+    ],
+    "gaps": [
+      {
+        "concept": "personalisiertes-protokoll",
+        "label": "Personalisierung nach Symptom-Profil",
+        "description": "Individualisierte Protokolle basierend auf persönlichem Symptom-Screening fehlen",
+        "bridge_potential": 0.92,
+        "gap_type": "missing_connection",
+        "related_clusters": ["cluster-kuren", "cluster-tracking"]
+      },
+      {
+        "concept": "jahreszeitenkur",
+        "label": "Saisonale Leberunterstützung",
+        "description": "Frühjahrs- und Herbstkuren als traditionelles Konzept nicht ausgearbeitet",
+        "bridge_potential": 0.77,
+        "gap_type": "weak_cluster",
+        "related_clusters": ["cluster-kuren", "cluster-morgenroutine"]
+      },
+      {
+        "concept": "stress-leber-protokoll",
+        "label": "Stressreduktions-Protokoll für Leber",
+        "description": "Cortisol-Einfluss auf Leberfunktion und spezifische Stressreduktionsmethoden fehlen",
+        "bridge_potential": 0.81,
+        "gap_type": "missing_connection",
+        "related_clusters": ["cluster-lebensstil"]
+      }
+    ],
+    "bridges": [
+      {
+        "concept": "leberwickel-wissenschaft",
+        "label": "Leberwickel — Volksmedizin mit Wissenschaft",
+        "connects": ["leberwickel", "zirkulationssteigerung", "entgiftung", "parasympathikus"],
+        "insight": "Wärmeapplikation steigert lokale Durchblutung um 40% und aktiviert das parasympathische Nervensystem",
+        "strength": 0.79
+      },
+      {
+        "concept": "21-tage-transformation",
+        "label": "21-Tage-Kur als Verhaltensänderung",
+        "connects": ["21-tage-kur", "gewohnheitsbildung", "neuroplastizitaet", "ernaehrungsumstellung"],
+        "insight": "21 Tage sind die minimale Dauer für messbare epigenetische Veränderungen durch Ernährungsumstellung",
+        "strength": 0.83
+      }
+    ],
+    "stats": {
+      "total_nodes": 41,
+      "total_edges": 156,
+      "density": 0.19,
+      "avg_degree": 7.6,
+      "modularity": 0.66
+    }
+  },
+  "_meta": {
+    "generated": "2026-04-13",
+    "version": "1.0",
+    "source": "InfraNodus Lebergott Knowledge Platform",
+    "graphs": ["lebergott-main", "lebergott-liver", "lebergott-ernaehrung", "lebergott-entgiftung", "lebergott-symptome", "lebergott-protokoll"],
+    "description": "Cached InfraNodus graph data for Lebergott Knowledge Platform. All 6 graphs contain topical clusters, knowledge gaps, and conceptual bridges derived from Lebergott content corpus.",
+    "total_nodes": 257,
+    "total_edges": 970
+  }
+}

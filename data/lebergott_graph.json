@@ -1,0 +1,2616 @@
+{
+  "vault_id": "analyse-1-0-workbook",
+  "vault_name": "analyse 1.0 workbook",
+  "generated": "2026-04-12T21:55:11",
+  "stats": {
+    "total_files": 44,
+    "total_connections": 303,
+    "total_gaps": 4,
+    "total_hubs": 40,
+    "avg_connections": 13.77
+  },
+  "nodes": [
+    {
+      "id": "konzepte-map",
+      "label": "Konzepte-Map",
+      "path": "Atlas/Maps/Konzepte-Map.md",
+      "group": "Maps",
+      "type": "map",
+      "tags": [
+        "map"
+      ],
+      "wordCount": 385,
+      "excerpt": "Gehört zu: Efforts/Ongoing ♻️/lebergott/analyse 1.0 workbook/Home",
+      "connections": 84,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "leber-heisst-leben",
+      "label": "Leber heißt Leben",
+      "path": "Atlas/Konzepte/Leber heißt Leben.md",
+      "group": "Ganzheit",
+      "type": "concept",
+      "tags": [
+        "kernkonzept"
+      ],
+      "wordCount": 421,
+      "excerpt": "Das zentrale Motto der Gesundheit: Die Leber ist DIE Gesundheitsorgel. Sie ist nicht einfach eines unter vielen Organen – sie ist das Zentrum, von dem alles andere abhängt.",
+      "connections": 77,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "fett-als-hauptbelastung",
+      "label": "Fett als Hauptbelastung",
+      "path": "Atlas/Konzepte/Fett als Hauptbelastung.md",
+      "group": "Ernährung",
+      "type": "concept",
+      "tags": [
+        "ernährung"
+      ],
+      "wordCount": 314,
+      "excerpt": "Fett ist der unterschätzteste Faktor in der Gesundheit. Während die Schulmedizin auf Zucker hinweist, ignoriert sie die massive Belastung durch Fett.",
+      "connections": 54,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "leberkonform-leben",
+      "label": "Leberkonform leben",
+      "path": "Atlas/Konzepte/Leberkonform leben.md",
+      "group": "Anatomie",
+      "type": "concept",
+      "tags": [
+        "heilung",
+        "kernkonzept"
+      ],
+      "wordCount": 426,
+      "excerpt": "Die Rückkehr zur Ordnung der Natur. Leberkonform leben bedeutet nicht Verzicht — es bedeutet, dem Körper das zu geben, wofür er gebaut wurde. Es ist die Entscheidung, sich an die Gesetze des Lebendige",
+      "connections": 51,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "selbstheilungskraft",
+      "label": "Selbstheilungskraft",
+      "path": "Atlas/Konzepte/Selbstheilungskraft.md",
+      "group": "Ganzheit",
+      "type": "concept",
+      "tags": [
+        "grundprinzipien",
+        "heilung"
+      ],
+      "wordCount": 506,
+      "excerpt": "Der Körper will heilen. Er ist niemals gegen uns. Er ist immer auf unserer Seite — selbst wenn er krank ist, arbeitet er daran, den Urzustand ist Gesundheit wiederherzustellen. Das ist keine Metapher ",
+      "connections": 46,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "toxische-metalle",
+      "label": "Toxische Metalle",
+      "path": "Atlas/Konzepte/Toxische Metalle.md",
+      "group": "Entgiftung",
+      "type": "concept",
+      "tags": [
+        "toxine"
+      ],
+      "wordCount": 403,
+      "excerpt": "Quecksilber, Blei und andere Schwermetalle sind überall in unserer Umwelt – in der Luft, im Wasser, in der Nahrung und sogar in Zahnfüllungen.",
+      "connections": 44,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "home",
+      "label": "Gesundheits-Workbook",
+      "path": "Home.md",
+      "group": "Maps",
+      "type": "map",
+      "tags": [],
+      "wordCount": 226,
+      "excerpt": "Vom Atom zum Organismus – von der Ursache zur Heilung.",
+      "connections": 42,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "kapitel-4-leberbedingte-krankheiten",
+      "label": "Kapitel 4 – Leberbedingte Krankheiten",
+      "path": "Kapitel/04 - Leberbedingte Krankheiten/Kapitel 4 – Leberbedingte Krankheiten.md",
+      "group": "Krankheiten",
+      "type": "chapter",
+      "tags": [
+        "leber",
+        "krankheiten",
+        "kapitel",
+        "cholesterin"
+      ],
+      "wordCount": 793,
+      "excerpt": "Gehört zu: Efforts/Ongoing ♻️/lebergott/analyse 1.0 workbook/Home",
+      "connections": 42,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "fettleber",
+      "label": "Fettleber",
+      "path": "Atlas/Konzepte/Fettleber.md",
+      "group": "Ernährung",
+      "type": "concept",
+      "tags": [
+        "leber"
+      ],
+      "wordCount": 465,
+      "excerpt": "Die Fettleber ist eine Epidemie – und die meisten Menschen wissen nicht, dass sie sie haben.",
+      "connections": 39,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "ganzheitlichkeit",
+      "label": "Ganzheitlichkeit",
+      "path": "Atlas/Konzepte/Ganzheitlichkeit.md",
+      "group": "Ganzheit",
+      "type": "concept",
+      "tags": [
+        "grundprinzipien"
+      ],
+      "wordCount": 474,
+      "excerpt": "Das Grundprinzip der wahren Gesundheit: Kein Organ arbeitet isoliert. Der menschliche Körper ist ein vernetztes System, in dem jedes Teil das Ganze beeinflusst.",
+      "connections": 34,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "gesundheits-map",
+      "label": "Gesundheits-Map",
+      "path": "Atlas/Maps/Gesundheits-Map.md",
+      "group": "Maps",
+      "type": "map",
+      "tags": [
+        "map"
+      ],
+      "wordCount": 319,
+      "excerpt": "Gehört zu: Efforts/Ongoing ♻️/lebergott/analyse 1.0 workbook/Home",
+      "connections": 31,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "urzustand-ist-gesundheit",
+      "label": "Urzustand ist Gesundheit",
+      "path": "Atlas/Konzepte/Urzustand ist Gesundheit.md",
+      "group": "Ganzheit",
+      "type": "concept",
+      "tags": [
+        "grundprinzipien"
+      ],
+      "wordCount": 440,
+      "excerpt": "Die Natur hat den Menschen nicht als krankes Wesen konzipiert. Der Urzustand ist Gesundheit – Krankheit ist die Ausnahme, nicht die Regel.",
+      "connections": 31,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "hochtoxische-welt",
+      "label": "Hochtoxische Welt",
+      "path": "Atlas/Konzepte/Hochtoxische Welt.md",
+      "group": "Ernährung",
+      "type": "concept",
+      "tags": [
+        "belastungen",
+        "umwelt"
+      ],
+      "wordCount": 389,
+      "excerpt": "Vor 300 Jahren hatte kein Mensch ein Leberproblem. Nicht weil die Leber anders war — sondern weil die Welt anders war. Die Luft war rein, das Wasser sauber, die Nahrung unverarbeitet. Die Leber schaff",
+      "connections": 30,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "kapitel-2-die-leber-als-zentralorgan",
+      "label": "Kapitel 2 – Die Leber als Zentralorgan",
+      "path": "Kapitel/02 - Die Leber als Zentralorgan/Kapitel 2 – Die Leber als Zentralorgan.md",
+      "group": "Anatomie",
+      "type": "chapter",
+      "tags": [
+        "leber",
+        "kapitel",
+        "zentralorgan"
+      ],
+      "wordCount": 917,
+      "excerpt": "Gehört zu: Efforts/Ongoing ♻️/lebergott/analyse 1.0 workbook/Home",
+      "connections": 30,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "kapitel-3-belastungen-der-leber",
+      "label": "Kapitel 3 – Belastungen der Leber",
+      "path": "Kapitel/03 - Belastungen der Leber/Kapitel 3 – Belastungen der Leber.md",
+      "group": "Entgiftung",
+      "type": "chapter",
+      "tags": [
+        "belastungen",
+        "leber",
+        "fettleber",
+        "kapitel"
+      ],
+      "wordCount": 591,
+      "excerpt": "Gehört zu: Efforts/Ongoing ♻️/lebergott/analyse 1.0 workbook/Home",
+      "connections": 30,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "leber-als-emotionaler-speicher",
+      "label": "Leber als emotionaler Speicher",
+      "path": "Atlas/Konzepte/Leber als emotionaler Speicher.md",
+      "group": "Ganzheit",
+      "type": "concept",
+      "tags": [
+        "leber",
+        "emotionen",
+        "philosophie"
+      ],
+      "wordCount": 506,
+      "excerpt": "Die tiefste Dimension der Lebergesundheit. Die Leber heißt Leben filtert nicht nur chemische Giftstoffe — sie sammelt auch alles, was wir emotional nicht vollständig durchlebt haben. Unterdrückte Wut,",
+      "connections": 30,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "wasser-als-lebensgrundlage",
+      "label": "Wasser als Lebensgrundlage",
+      "path": "Atlas/Konzepte/Wasser als Lebensgrundlage.md",
+      "group": "Ernährung",
+      "type": "concept",
+      "tags": [
+        "grundprinzipien",
+        "wasser"
+      ],
+      "wordCount": 386,
+      "excerpt": "Der Mensch überlebt ohne Nahrung bis zu zwei Monate. Ohne Wasser maximal fünf Tage. In dieser einfachen Tatsache liegt eine tiefe Wahrheit: Wasser ist nicht Beilage — es ist Fundament.",
+      "connections": 30,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "dankbarkeitsritual",
+      "label": "Dankbarkeitsritual",
+      "path": "Atlas/Konzepte/Dankbarkeitsritual.md",
+      "group": "Ganzheit",
+      "type": "concept",
+      "tags": [
+        "praxis",
+        "achtsamkeit"
+      ],
+      "wordCount": 436,
+      "excerpt": "Die vielleicht kraftvollste und einfachste Übung für die Lebergesundheit. Kein Supplement, kein Protokoll — nur die Hände, der Atem und ein Satz.",
+      "connections": 29,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "kapitel-1-anatomie-des-menschen",
+      "label": "Kapitel 1 – Anatomie des Menschen",
+      "path": "Kapitel/01 - Anatomie des Menschen/Kapitel 1 – Anatomie des Menschen.md",
+      "group": "Anatomie",
+      "type": "chapter",
+      "tags": [
+        "grundlagen",
+        "anatomie",
+        "kapitel"
+      ],
+      "wordCount": 437,
+      "excerpt": "Gehört zu: Efforts/Ongoing ♻️/lebergott/analyse 1.0 workbook/Home",
+      "connections": 29,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "adrenalin-ueberschuss",
+      "label": "Adrenalin-Überschuss",
+      "path": "Atlas/Konzepte/Adrenalin-Überschuss.md",
+      "group": "Entgiftung",
+      "type": "concept",
+      "tags": [
+        "belastungen",
+        "hormone"
+      ],
+      "wordCount": 321,
+      "excerpt": "Das Steinzeit-Hormon in der modernen Welt. Adrenalin wurde für seltene Momente echter Gefahr geschaffen — Flucht vor dem Raubtier, Kampf ums Überleben. Heute wird es mehrmals täglich ausgeschüttet, oh",
+      "connections": 28,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "die-bauchspeicheldruese",
+      "label": "Die Bauchspeicheldrüse",
+      "path": "Atlas/Konzepte/Die Bauchspeicheldrüse.md",
+      "group": "Anatomie",
+      "type": "concept",
+      "tags": [
+        "organ",
+        "insulin"
+      ],
+      "wordCount": 343,
+      "excerpt": "Wenn die Leber heißt Leben ein Elefant ist — robust, kraftvoll, fast unzerstörbar — dann ist die Bauchspeicheldrüse eine zarte Blume. Man kann mit einem Fuß drauftreten und sie knickt. Der Elefant häl",
+      "connections": 28,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "genetik-mythos",
+      "label": "Genetik-Mythos",
+      "path": "Atlas/Konzepte/Genetik-Mythos.md",
+      "group": "Mythen",
+      "type": "concept",
+      "tags": [
+        "mythen"
+      ],
+      "wordCount": 348,
+      "excerpt": "\"Es ist genetisch\" – Die häufigste und schädlichste Fehldiagnose in der modernen Medizin. Diese Aussage beraubt Menschen der Hoffnung und Verantwortung.",
+      "connections": 28,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "industrielle-nahrung",
+      "label": "Industrielle Nahrung",
+      "path": "Atlas/Konzepte/Industrielle Nahrung.md",
+      "group": "Ernährung",
+      "type": "concept",
+      "tags": [
+        "belastungen",
+        "ernährung"
+      ],
+      "wordCount": 342,
+      "excerpt": "Die Natur kennt keine Kombination von viel Fett und viel Zucker im selben Lebensmittel. Früchte haben Zucker und Wasser — kein Fett. Nüsse haben Fett und Protein — kaum Zucker. Fleisch hat Protein und",
+      "connections": 28,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "leberkonform-leben-praxisguide",
+      "label": "Leberkonform leben – Praxisguide",
+      "path": "Workbook/Leberkonform leben – Praxisguide.md",
+      "group": "Ganzheit",
+      "type": "concept",
+      "tags": [
+        "lebergesundheit",
+        "alltag",
+        "praxisguide"
+      ],
+      "wordCount": 632,
+      "excerpt": "Ein praktischer Leitfaden für die Umsetzung leberkonformer Gewohnheiten im Alltag. Basierend auf den drei Säulen: Sauerstoff, Flüssigkeit, Glukose.",
+      "connections": 27,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "cholesterin",
+      "label": "Cholesterin",
+      "path": "Atlas/Konzepte/Cholesterin.md",
+      "group": "Ernährung",
+      "type": "concept",
+      "tags": [
+        "blutfette"
+      ],
+      "wordCount": 286,
+      "excerpt": "Cholesterin ist eine Substanz, die die Leber heißt Leben produziert – nicht etwas, das nur aus der Nahrung kommt. Es ist ein Symptom einer überbelasteten Leber, nie eine Ursache von Krankheit.",
+      "connections": 25,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "fett-blockiert-insulin",
+      "label": "Fett blockiert Insulin",
+      "path": "Atlas/Konzepte/Fett blockiert Insulin.md",
+      "group": "Ernährung",
+      "type": "concept",
+      "tags": [
+        "insulin"
+      ],
+      "wordCount": 289,
+      "excerpt": "Eine der wichtigsten und am meisten übersehenen Wahrheiten: Fett in der Blutbahn blockiert Insulin-Rezeptoren. Die Bauchspeicheldrüse muss überarbeiten, um die Zucker-Aufnahme zu erzwingen.",
+      "connections": 25,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "mitochondrien",
+      "label": "Mitochondrien",
+      "path": "Atlas/Konzepte/Mitochondrien.md",
+      "group": "Anatomie",
+      "type": "concept",
+      "tags": [
+        "energie",
+        "zelle"
+      ],
+      "wordCount": 310,
+      "excerpt": "Die Kraftwerke der Zelle. In jeder Zelle des Körpers arbeiten 500 bis 2000 Mitochondrien — winzige Energiefabriken, die aus Glukose und Sauerstoff die Lebensenergie erzeugen, die wir als Antrieb, Wärm",
+      "connections": 25,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "mythen-wahrheiten",
+      "label": "Mythen & Wahrheiten",
+      "path": "Atlas/Maps/Mythen & Wahrheiten.md",
+      "group": "Maps",
+      "type": "map",
+      "tags": [
+        "kernwissen",
+        "mythen-debunking",
+        "maps"
+      ],
+      "wordCount": 333,
+      "excerpt": "Gehört zu: Efforts/Sleeping 💤/old/+ maps archive atlas/Atlas",
+      "connections": 24,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "hormone-mythos",
+      "label": "Hormone-Mythos",
+      "path": "Atlas/Konzepte/Hormone-Mythos.md",
+      "group": "Mythen",
+      "type": "concept",
+      "tags": [
+        "mythen",
+        "hormone"
+      ],
+      "wordCount": 375,
+      "excerpt": "„Deine Hormone sind schuld\" — eine Aussage, die Millionen Frauen hören und die sie in eine Abhängigkeit von externen Hormonen führt. Die Wahrheit: Hormonelle Probleme sind fast immer ein Symptom einer",
+      "connections": 22,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "zucker-mythos",
+      "label": "Zucker-Mythos",
+      "path": "Atlas/Konzepte/Zucker-Mythos.md",
+      "group": "Ernährung",
+      "type": "concept",
+      "tags": [
+        "mythen"
+      ],
+      "wordCount": 344,
+      "excerpt": "\"Obst verursacht Fettleber\" und \"Zucker ist Gift\" – Falsch. Das ist einer der schädlichsten Mythen der modernen Ernährung.",
+      "connections": 22,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "eiweiss-ueberbewertung",
+      "label": "Eiweiß-Überbewertung",
+      "path": "Atlas/Konzepte/Eiweiß-Überbewertung.md",
+      "group": "Ernährung",
+      "type": "concept",
+      "tags": [
+        "mythen",
+        "ernährung"
+      ],
+      "wordCount": 278,
+      "excerpt": "Die Fitness-Industrie hat Protein zum König der Nährstoffe erklärt. Shakes, Riegel, Pulver — ein milliardenschwerer Markt. Die Wahrheit ist nüchterner: Eiweiß ist ein Baustein von vielen. Nicht DER Ha",
+      "connections": 21,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "fragen-fuer-klientengespraeche",
+      "label": "Fragen für Klientengespräche",
+      "path": "Workbook/Fragen für Klientengespräche.md",
+      "group": "Ganzheit",
+      "type": "concept",
+      "tags": [
+        "fragen",
+        "klienten",
+        "beratung",
+        "gespräche"
+      ],
+      "wordCount": 773,
+      "excerpt": "Ein strukturierter Leitfaden für Gesundheitsberater, um Klienten effektiv zu assessieren und auf den Weg zur Lebergesundheit zu führen.",
+      "connections": 19,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "ernaehrungs-reflexion",
+      "label": "Ernährungs-Reflexion",
+      "path": "Workbook/Reflexionen/Ernährungs-Reflexion.md",
+      "group": "Ganzheit",
+      "type": "concept",
+      "tags": [
+        "fettanalyse",
+        "reflexion",
+        "ernährung"
+      ],
+      "wordCount": 322,
+      "excerpt": "Eine tiefere Analyse deiner aktuellen Ernährungsgewohnheiten mit Fokus auf Fettquellen, versteckte Fette und notwendige Veränderungen.",
+      "connections": 18,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "alkohol-mythos",
+      "label": "Alkohol-Mythos",
+      "path": "Atlas/Konzepte/Alkohol-Mythos.md",
+      "group": "Ernährung",
+      "type": "concept",
+      "tags": [
+        "mythen",
+        "belastungen"
+      ],
+      "wordCount": 272,
+      "excerpt": "„Ein Glas Rotwein am Tag ist gesund\" — einer der hartnäckigsten Mythen der modernen Ernährung. Die Wahrheit: Alkohol ist für die Leber heißt Leben pures Gift. Immer. Egal in welcher Menge, egal in wel",
+      "connections": 17,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "selbstcheck-wo-stehe-ich",
+      "label": "Selbstcheck – Wo stehe ich?",
+      "path": "Workbook/Selbstcheck – Wo stehe ich?.md",
+      "group": "Ganzheit",
+      "type": "concept",
+      "tags": [
+        "ausgangslage",
+        "workbook",
+        "selbstreflexion"
+      ],
+      "wordCount": 456,
+      "excerpt": "Ein reflektives Selbstassessment zur Bestimmung deines aktuellen Ausgangszustands und deiner Gesundheitsgewohnheiten.",
+      "connections": 17,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "kollagen-mythos",
+      "label": "Kollagen-Mythos",
+      "path": "Atlas/Konzepte/Kollagen-Mythos.md",
+      "group": "Ernährung",
+      "type": "concept",
+      "tags": [
+        "mythen",
+        "ernährung"
+      ],
+      "wordCount": 229,
+      "excerpt": "„Kollagen-Pulver stärkt Haut und Bindegewebe\" — ein Milliardenmarkt, gebaut auf einem Irrtum. Der Körper kann Fremdkollagen nicht verwerten. Es ist totes Pulver.",
+      "connections": 16,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "wissens-gaps",
+      "label": "Wissens-Gaps",
+      "path": "Gaps/Wissens-Gaps.md",
+      "group": "Gaps",
+      "type": "gap",
+      "tags": [
+        "weiterentwicklung",
+        "forschung",
+        "wissens-lücken"
+      ],
+      "wordCount": 440,
+      "excerpt": "Identifizierte Wissenslücken im Trainingsmaterial - Bereiche, die noch vertieft oder detailliert dokumentiert werden müssen.",
+      "connections": 16,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "forschungs-gaps",
+      "label": "Forschungs-Gaps",
+      "path": "Gaps/Forschungs-Gaps.md",
+      "group": "Gaps",
+      "type": "gap",
+      "tags": [
+        "forschungs-lücken",
+        "studien",
+        "evidenz"
+      ],
+      "wordCount": 880,
+      "excerpt": "Die wissenschaftlichen Lücken: Wo die aktuelle Evidenzbasis schwach ist und wo mehr Forschung nötig wäre, um den Ansatz vollständig zu validieren.",
+      "connections": 15,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "koerper-map",
+      "label": "Körper-Map",
+      "path": "Atlas/Maps/Körper-Map.md",
+      "group": "Maps",
+      "type": "map",
+      "tags": [
+        "map"
+      ],
+      "wordCount": 283,
+      "excerpt": "Gehört zu: Efforts/Ongoing ♻️/lebergott/analyse 1.0 workbook/Home",
+      "connections": 15,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "praxis-gaps",
+      "label": "Praxis-Gaps",
+      "path": "Gaps/Praxis-Gaps.md",
+      "group": "Gaps",
+      "type": "gap",
+      "tags": [
+        "herausforderungen",
+        "umsetzung",
+        "praxis-lücken"
+      ],
+      "wordCount": 590,
+      "excerpt": "Die Kluft zwischen Theorie und Praxis: Wo die Umsetzung scheitert, wie man Widerstände überwindet und wie man aus Wissen tatsächliche Verhaltensänderung macht.",
+      "connections": 11,
+      "isHub": true,
+      "isGap": false
+    },
+    {
+      "id": "2026-02-24-session-1-anatomie",
+      "label": "2026-02-24 Session 1 - Anatomie",
+      "path": "Transkripte/2026-02-24 Session 1 - Anatomie.md",
+      "group": "Transkripte",
+      "type": "transcript",
+      "tags": [
+        "transkript"
+      ],
+      "wordCount": 6,
+      "excerpt": "0.0-8.8  So man lieben. Ich freue mich sehr schön, schön, dass ihr da seid und heute werden wir in das erste",
+      "connections": 0,
+      "isHub": false,
+      "isGap": true
+    },
+    {
+      "id": "2026-03-10-session-2-leber",
+      "label": "2026-03-10 Session 2 - Leber",
+      "path": "Transkripte/2026-03-10 Session 2 - Leber.md",
+      "group": "Transkripte",
+      "type": "transcript",
+      "tags": [
+        "transkript"
+      ],
+      "wordCount": 6,
+      "excerpt": "0.0-8.3  Wir machen weiter im Programm und wir werden heute in dem dritten Summcall,",
+      "connections": 0,
+      "isHub": false,
+      "isGap": true
+    },
+    {
+      "id": "2026-03-24-session-3-belastungen",
+      "label": "2026-03-24 Session 3 - Belastungen",
+      "path": "Transkripte/2026-03-24 Session 3 - Belastungen.md",
+      "group": "Transkripte",
+      "type": "transcript",
+      "tags": [
+        "transkript"
+      ],
+      "wordCount": 6,
+      "excerpt": "0.0-8.0  So ein Leben. Also es geht weiter. Wir starten mit dem nächsten Thema. Wir haben",
+      "connections": 0,
+      "isHub": false,
+      "isGap": true
+    },
+    {
+      "id": "2026-03-31-session-4-krankheiten",
+      "label": "2026-03-31 Session 4 - Krankheiten",
+      "path": "Transkripte/2026-03-31 Session 4 - Krankheiten.md",
+      "group": "Transkripte",
+      "type": "transcript",
+      "tags": [
+        "transkript"
+      ],
+      "wordCount": 6,
+      "excerpt": "0.0-7.6  Wunderbar, alles sind wieder da. Wir können starten, es geht weiter. Und wie versprochen",
+      "connections": 0,
+      "isHub": false,
+      "isGap": true
+    }
+  ],
+  "links": [
+    {
+      "source": "adrenalin-ueberschuss",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "adrenalin-ueberschuss",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "adrenalin-ueberschuss",
+      "target": "hochtoxische-welt",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "adrenalin-ueberschuss",
+      "target": "kapitel-3-belastungen-der-leber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "adrenalin-ueberschuss",
+      "target": "hormone-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "adrenalin-ueberschuss",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "adrenalin-ueberschuss",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "alkohol-mythos",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "alkohol-mythos",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "alkohol-mythos",
+      "target": "hochtoxische-welt",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "alkohol-mythos",
+      "target": "kapitel-3-belastungen-der-leber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "alkohol-mythos",
+      "target": "mythen-wahrheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "alkohol-mythos",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "alkohol-mythos",
+      "target": "fettleber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "cholesterin",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "cholesterin",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "cholesterin",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "cholesterin",
+      "target": "industrielle-nahrung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "cholesterin",
+      "target": "fettleber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "cholesterin",
+      "target": "genetik-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "cholesterin",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "cholesterin",
+      "target": "kapitel-4-leberbedingte-krankheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "cholesterin",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "dankbarkeitsritual",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "dankbarkeitsritual",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "dankbarkeitsritual",
+      "target": "leber-als-emotionaler-speicher",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "dankbarkeitsritual",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "dankbarkeitsritual",
+      "target": "wasser-als-lebensgrundlage",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "dankbarkeitsritual",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "dankbarkeitsritual",
+      "target": "ganzheitlichkeit",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "dankbarkeitsritual",
+      "target": "urzustand-ist-gesundheit",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "die-bauchspeicheldruese",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "die-bauchspeicheldruese",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "die-bauchspeicheldruese",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "die-bauchspeicheldruese",
+      "target": "fett-blockiert-insulin",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "die-bauchspeicheldruese",
+      "target": "zucker-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "die-bauchspeicheldruese",
+      "target": "industrielle-nahrung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "die-bauchspeicheldruese",
+      "target": "kapitel-4-leberbedingte-krankheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "die-bauchspeicheldruese",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "eiweiss-ueberbewertung",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "eiweiss-ueberbewertung",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "eiweiss-ueberbewertung",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "eiweiss-ueberbewertung",
+      "target": "industrielle-nahrung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "eiweiss-ueberbewertung",
+      "target": "wasser-als-lebensgrundlage",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "eiweiss-ueberbewertung",
+      "target": "kollagen-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "eiweiss-ueberbewertung",
+      "target": "mythen-wahrheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "eiweiss-ueberbewertung",
+      "target": "kapitel-1-anatomie-des-menschen",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-als-hauptbelastung",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-als-hauptbelastung",
+      "target": "fettleber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-als-hauptbelastung",
+      "target": "wasser-als-lebensgrundlage",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-als-hauptbelastung",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-als-hauptbelastung",
+      "target": "fett-blockiert-insulin",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-als-hauptbelastung",
+      "target": "industrielle-nahrung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-als-hauptbelastung",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-als-hauptbelastung",
+      "target": "ernaehrungs-reflexion",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-blockiert-insulin",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-blockiert-insulin",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-blockiert-insulin",
+      "target": "fettleber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-blockiert-insulin",
+      "target": "zucker-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-blockiert-insulin",
+      "target": "industrielle-nahrung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-blockiert-insulin",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fett-blockiert-insulin",
+      "target": "kapitel-4-leberbedingte-krankheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fettleber",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fettleber",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fettleber",
+      "target": "toxische-metalle",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fettleber",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fettleber",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fettleber",
+      "target": "adrenalin-ueberschuss",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fettleber",
+      "target": "die-bauchspeicheldruese",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fettleber",
+      "target": "industrielle-nahrung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fettleber",
+      "target": "hochtoxische-welt",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fettleber",
+      "target": "kapitel-3-belastungen-der-leber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "toxische-metalle",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "die-bauchspeicheldruese",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "adrenalin-ueberschuss",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "fettleber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "leber-als-emotionaler-speicher",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "urzustand-ist-gesundheit",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "mitochondrien",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "hochtoxische-welt",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ganzheitlichkeit",
+      "target": "kapitel-1-anatomie-des-menschen",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "genetik-mythos",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "genetik-mythos",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "genetik-mythos",
+      "target": "toxische-metalle",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "genetik-mythos",
+      "target": "hochtoxische-welt",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "genetik-mythos",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "genetik-mythos",
+      "target": "mythen-wahrheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "genetik-mythos",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "genetik-mythos",
+      "target": "kapitel-4-leberbedingte-krankheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hochtoxische-welt",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hochtoxische-welt",
+      "target": "toxische-metalle",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hochtoxische-welt",
+      "target": "industrielle-nahrung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hochtoxische-welt",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hochtoxische-welt",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hochtoxische-welt",
+      "target": "urzustand-ist-gesundheit",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hochtoxische-welt",
+      "target": "kapitel-3-belastungen-der-leber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hormone-mythos",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hormone-mythos",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hormone-mythos",
+      "target": "fett-blockiert-insulin",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hormone-mythos",
+      "target": "die-bauchspeicheldruese",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hormone-mythos",
+      "target": "mythen-wahrheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hormone-mythos",
+      "target": "kapitel-4-leberbedingte-krankheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hormone-mythos",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "hormone-mythos",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "industrielle-nahrung",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "industrielle-nahrung",
+      "target": "zucker-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "industrielle-nahrung",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "industrielle-nahrung",
+      "target": "ernaehrungs-reflexion",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "industrielle-nahrung",
+      "target": "kapitel-3-belastungen-der-leber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kollagen-mythos",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kollagen-mythos",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kollagen-mythos",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kollagen-mythos",
+      "target": "wasser-als-lebensgrundlage",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kollagen-mythos",
+      "target": "mythen-wahrheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kollagen-mythos",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kollagen-mythos",
+      "target": "kapitel-1-anatomie-des-menschen",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-als-emotionaler-speicher",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-als-emotionaler-speicher",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-als-emotionaler-speicher",
+      "target": "adrenalin-ueberschuss",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-als-emotionaler-speicher",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-als-emotionaler-speicher",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-als-emotionaler-speicher",
+      "target": "urzustand-ist-gesundheit",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-als-emotionaler-speicher",
+      "target": "kapitel-2-die-leber-als-zentralorgan",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-als-emotionaler-speicher",
+      "target": "hochtoxische-welt",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-heisst-leben",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-heisst-leben",
+      "target": "toxische-metalle",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-heisst-leben",
+      "target": "wasser-als-lebensgrundlage",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-heisst-leben",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-heisst-leben",
+      "target": "mitochondrien",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leber-heisst-leben",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben",
+      "target": "wasser-als-lebensgrundlage",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben",
+      "target": "urzustand-ist-gesundheit",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben",
+      "target": "zucker-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben",
+      "target": "leberkonform-leben-praxisguide",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "mitochondrien",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "mitochondrien",
+      "target": "toxische-metalle",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "mitochondrien",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "mitochondrien",
+      "target": "kapitel-1-anatomie-des-menschen",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "mitochondrien",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "mitochondrien",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "selbstheilungskraft",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "selbstheilungskraft",
+      "target": "urzustand-ist-gesundheit",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "selbstheilungskraft",
+      "target": "wasser-als-lebensgrundlage",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "selbstheilungskraft",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "selbstheilungskraft",
+      "target": "toxische-metalle",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "selbstheilungskraft",
+      "target": "kapitel-2-die-leber-als-zentralorgan",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "toxische-metalle",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "toxische-metalle",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "toxische-metalle",
+      "target": "kapitel-3-belastungen-der-leber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "toxische-metalle",
+      "target": "kapitel-4-leberbedingte-krankheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "urzustand-ist-gesundheit",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "urzustand-ist-gesundheit",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "urzustand-ist-gesundheit",
+      "target": "mitochondrien",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "urzustand-ist-gesundheit",
+      "target": "toxische-metalle",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "urzustand-ist-gesundheit",
+      "target": "kapitel-1-anatomie-des-menschen",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "wasser-als-lebensgrundlage",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "wasser-als-lebensgrundlage",
+      "target": "toxische-metalle",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "wasser-als-lebensgrundlage",
+      "target": "adrenalin-ueberschuss",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "wasser-als-lebensgrundlage",
+      "target": "alkohol-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "wasser-als-lebensgrundlage",
+      "target": "kapitel-1-anatomie-des-menschen",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "wasser-als-lebensgrundlage",
+      "target": "leberkonform-leben-praxisguide",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "zucker-mythos",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "zucker-mythos",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "zucker-mythos",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "zucker-mythos",
+      "target": "fettleber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "zucker-mythos",
+      "target": "mitochondrien",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "zucker-mythos",
+      "target": "mythen-wahrheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "home",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "kapitel-2-die-leber-als-zentralorgan",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "kapitel-3-belastungen-der-leber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "kapitel-1-anatomie-des-menschen",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "kapitel-4-leberbedingte-krankheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "ganzheitlichkeit",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "urzustand-ist-gesundheit",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "leber-als-emotionaler-speicher",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "die-bauchspeicheldruese",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "mitochondrien",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "wasser-als-lebensgrundlage",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "toxische-metalle",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "hochtoxische-welt",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "adrenalin-ueberschuss",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "industrielle-nahrung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "genetik-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "zucker-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "alkohol-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "kollagen-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "eiweiss-ueberbewertung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "hormone-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "gesundheits-map",
+      "target": "dankbarkeitsritual",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "konzepte-map",
+      "target": "home",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "konzepte-map",
+      "target": "leberkonform-leben-praxisguide",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "koerper-map",
+      "target": "home",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "koerper-map",
+      "target": "kapitel-2-die-leber-als-zentralorgan",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "koerper-map",
+      "target": "die-bauchspeicheldruese",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "koerper-map",
+      "target": "adrenalin-ueberschuss",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "koerper-map",
+      "target": "fett-blockiert-insulin",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "koerper-map",
+      "target": "hormone-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "koerper-map",
+      "target": "mitochondrien",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "koerper-map",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "koerper-map",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "koerper-map",
+      "target": "ganzheitlichkeit",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "koerper-map",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "koerper-map",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "mythen-wahrheiten",
+      "target": "selbstcheck-wo-stehe-ich",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "mythen-wahrheiten",
+      "target": "leberkonform-leben-praxisguide",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "mythen-wahrheiten",
+      "target": "fragen-fuer-klientengespraeche",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "mythen-wahrheiten",
+      "target": "konzepte-map",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "mythen-wahrheiten",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "mythen-wahrheiten",
+      "target": "industrielle-nahrung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "forschungs-gaps",
+      "target": "wissens-gaps",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "forschungs-gaps",
+      "target": "praxis-gaps",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "forschungs-gaps",
+      "target": "leberkonform-leben-praxisguide",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "forschungs-gaps",
+      "target": "fragen-fuer-klientengespraeche",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "forschungs-gaps",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "forschungs-gaps",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "forschungs-gaps",
+      "target": "fettleber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "forschungs-gaps",
+      "target": "mitochondrien",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "praxis-gaps",
+      "target": "wissens-gaps",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "praxis-gaps",
+      "target": "fragen-fuer-klientengespraeche",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "praxis-gaps",
+      "target": "leberkonform-leben-praxisguide",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "wissens-gaps",
+      "target": "leberkonform-leben-praxisguide",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "wissens-gaps",
+      "target": "fragen-fuer-klientengespraeche",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "wissens-gaps",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "wissens-gaps",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "wissens-gaps",
+      "target": "leber-als-emotionaler-speicher",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "wissens-gaps",
+      "target": "dankbarkeitsritual",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "mythen-wahrheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "kapitel-1-anatomie-des-menschen",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "kapitel-2-die-leber-als-zentralorgan",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "kapitel-3-belastungen-der-leber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "kapitel-4-leberbedingte-krankheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "selbstcheck-wo-stehe-ich",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "ernaehrungs-reflexion",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "leberkonform-leben-praxisguide",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "fragen-fuer-klientengespraeche",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "wissens-gaps",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "praxis-gaps",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "forschungs-gaps",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "urzustand-ist-gesundheit",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "ganzheitlichkeit",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "leber-als-emotionaler-speicher",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "home",
+      "target": "dankbarkeitsritual",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-1-anatomie-des-menschen",
+      "target": "toxische-metalle",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-1-anatomie-des-menschen",
+      "target": "adrenalin-ueberschuss",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-1-anatomie-des-menschen",
+      "target": "kapitel-2-die-leber-als-zentralorgan",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-1-anatomie-des-menschen",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-2-die-leber-als-zentralorgan",
+      "target": "alkohol-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-2-die-leber-als-zentralorgan",
+      "target": "zucker-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-2-die-leber-als-zentralorgan",
+      "target": "fettleber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-2-die-leber-als-zentralorgan",
+      "target": "cholesterin",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-2-die-leber-als-zentralorgan",
+      "target": "kapitel-3-belastungen-der-leber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-2-die-leber-als-zentralorgan",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-2-die-leber-als-zentralorgan",
+      "target": "genetik-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-2-die-leber-als-zentralorgan",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-2-die-leber-als-zentralorgan",
+      "target": "dankbarkeitsritual",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-2-die-leber-als-zentralorgan",
+      "target": "die-bauchspeicheldruese",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-2-die-leber-als-zentralorgan",
+      "target": "wasser-als-lebensgrundlage",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-2-die-leber-als-zentralorgan",
+      "target": "hormone-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-3-belastungen-der-leber",
+      "target": "kapitel-4-leberbedingte-krankheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-3-belastungen-der-leber",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-3-belastungen-der-leber",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-3-belastungen-der-leber",
+      "target": "genetik-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-3-belastungen-der-leber",
+      "target": "die-bauchspeicheldruese",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-4-leberbedingte-krankheiten",
+      "target": "adrenalin-ueberschuss",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-4-leberbedingte-krankheiten",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-4-leberbedingte-krankheiten",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-4-leberbedingte-krankheiten",
+      "target": "fettleber",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-4-leberbedingte-krankheiten",
+      "target": "kapitel-2-die-leber-als-zentralorgan",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-4-leberbedingte-krankheiten",
+      "target": "wissens-gaps",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-4-leberbedingte-krankheiten",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-4-leberbedingte-krankheiten",
+      "target": "leber-als-emotionaler-speicher",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "kapitel-4-leberbedingte-krankheiten",
+      "target": "hochtoxische-welt",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fragen-fuer-klientengespraeche",
+      "target": "selbstcheck-wo-stehe-ich",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fragen-fuer-klientengespraeche",
+      "target": "leberkonform-leben-praxisguide",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "fragen-fuer-klientengespraeche",
+      "target": "ernaehrungs-reflexion",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben-praxisguide",
+      "target": "dankbarkeitsritual",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben-praxisguide",
+      "target": "leber-als-emotionaler-speicher",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben-praxisguide",
+      "target": "selbstcheck-wo-stehe-ich",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben-praxisguide",
+      "target": "ernaehrungs-reflexion",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben-praxisguide",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben-praxisguide",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "leberkonform-leben-praxisguide",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ernaehrungs-reflexion",
+      "target": "selbstcheck-wo-stehe-ich",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ernaehrungs-reflexion",
+      "target": "mythen-wahrheiten",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ernaehrungs-reflexion",
+      "target": "wissens-gaps",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ernaehrungs-reflexion",
+      "target": "eiweiss-ueberbewertung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ernaehrungs-reflexion",
+      "target": "zucker-mythos",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "ernaehrungs-reflexion",
+      "target": "leberkonform-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "selbstcheck-wo-stehe-ich",
+      "target": "leber-heisst-leben",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "selbstcheck-wo-stehe-ich",
+      "target": "fett-als-hauptbelastung",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "selbstcheck-wo-stehe-ich",
+      "target": "wasser-als-lebensgrundlage",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "selbstcheck-wo-stehe-ich",
+      "target": "adrenalin-ueberschuss",
+      "type": "wikilink",
+      "strength": 1.0
+    },
+    {
+      "source": "selbstcheck-wo-stehe-ich",
+      "target": "selbstheilungskraft",
+      "type": "wikilink",
+      "strength": 1.0
+    }
+  ],
+  "clusters": [
+    {
+      "id": "anatomie",
+      "label": "Anatomie",
+      "color": "#00ff88",
+      "nodeCount": 5
+    },
+    {
+      "id": "entgiftung",
+      "label": "Entgiftung",
+      "color": "#ff6644",
+      "nodeCount": 3
+    },
+    {
+      "id": "ernaehrung",
+      "label": "Ernährung",
+      "color": "#ffaa00",
+      "nodeCount": 11
+    },
+    {
+      "id": "ganzheit",
+      "label": "Ganzheit",
+      "color": "#44ddff",
+      "nodeCount": 10
+    },
+    {
+      "id": "gaps",
+      "label": "Gaps",
+      "color": "#ff9900",
+      "nodeCount": 3
+    },
+    {
+      "id": "krankheiten",
+      "label": "Krankheiten",
+      "color": "#ff3366",
+      "nodeCount": 1
+    },
+    {
+      "id": "maps",
+      "label": "Maps",
+      "color": "#ffffff",
+      "nodeCount": 5
+    },
+    {
+      "id": "mythen",
+      "label": "Mythen",
+      "color": "#aa88ff",
+      "nodeCount": 2
+    },
+    {
+      "id": "transkripte",
+      "label": "Transkripte",
+      "color": "#aaaaaa",
+      "nodeCount": 4
+    }
+  ],
+  "gaps": [
+    {
+      "nodeId": "2026-02-24-session-1-anatomie",
+      "reason": "0 connections — completely isolated node",
+      "severity": "critical",
+      "bridgeSuggestion": "Could bridge to Transkripte cluster"
+    },
+    {
+      "nodeId": "2026-03-10-session-2-leber",
+      "reason": "0 connections — completely isolated node",
+      "severity": "critical",
+      "bridgeSuggestion": "Could bridge to Transkripte cluster"
+    },
+    {
+      "nodeId": "2026-03-24-session-3-belastungen",
+      "reason": "0 connections — completely isolated node",
+      "severity": "critical",
+      "bridgeSuggestion": "Could bridge to Transkripte cluster"
+    },
+    {
+      "nodeId": "2026-03-31-session-4-krankheiten",
+      "reason": "0 connections — completely isolated node",
+      "severity": "critical",
+      "bridgeSuggestion": "Could bridge to Transkripte cluster"
+    }
+  ]
+}

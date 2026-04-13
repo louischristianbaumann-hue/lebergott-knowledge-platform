@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1a3a2a" />
+  <title>Offline — Lebergott Akademie</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --forest: #1a3a2a;
+      --forest-dark: #0f2418;
+      --gold: #c5a55a;
+      --gold-light: #d4b86a;
+      --cream: #faf9f5;
+      --cream-muted: #e8e4d8;
+    }
+
+    body {
+      background: var(--forest-dark);
+      color: var(--cream);
+      font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .leaf {
+      font-size: 4rem;
+      margin-bottom: 2rem;
+      display: block;
+      animation: breathe 4s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.08); opacity: 1; }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    p {
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      color: var(--cream-muted);
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(197, 165, 90, 0.2);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .card-title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    .card li {
+      font-size: 0.9375rem;
+      color: var(--cream-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+    }
+
+    .card li::before {
+      content: '•';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.05em;
+    }
+
+    button {
+      background: var(--gold);
+      color: var(--forest-dark);
+      border: none;
+      border-radius: 10px;
+      padding: 0.875rem 2rem;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      width: 100%;
+    }
+
+    button:hover {
+      background: var(--gold-light);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .footer {
+      margin-top: 2.5rem;
+      font-size: 0.8125rem;
+      color: rgba(250, 249, 245, 0.35);
+    }
+
+    @media (prefers-color-scheme: light) {
+      body { background: var(--cream); color: var(--forest-dark); }
+      .card { background: rgba(26, 58, 42, 0.04); border-color: rgba(197, 165, 90, 0.3); }
+      button { color: var(--forest-dark); }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <div class="container">
+    <span class="leaf">🌿</span>
+
+    <h1>Momentan offline</h1>
+
+    <p>
+      Die Lebergott Akademie braucht eine Verbindung, um Ihr Wissensnetz
+      zu laden. Prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.
+    </p>
+
+    <div class="card">
+      <div class="card-title">Was Sie tun können</div>
+      <ul>
+        <li>Internetverbindung prüfen (WLAN oder Mobilnetz)</li>
+        <li>Seite neu laden, sobald Sie wieder online sind</li>
+        <li>Zuletzt geöffnete Inhalte könnten noch verfügbar sein</li>
+      </ul>
+    </div>
+
+    <button onclick="window.location.reload()">
+      Erneut verbinden
+    </button>
+
+    <div class="footer">Lebergott Akademie — Wissen, das trägt.</div>
+  </div>
+
+  <script>
+    window.addEventListener('online', () => {
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>

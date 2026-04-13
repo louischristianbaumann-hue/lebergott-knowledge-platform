@@ -1,0 +1,36 @@
+# SYNODEA NEXT — Backend Dependencies
+
+# Web framework
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+
+# Settings
+pydantic>=2.7.0
+pydantic-settings>=2.3.0
+
+# Database
+sqlalchemy>=2.0.35
+
+# YAML parsing (frontmatter)
+pyyaml>=6.0.2
+
+# Type annotation support
+typing-extensions>=4.12.0
+
+# Auth
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# Optional: PostgreSQL driver (uncomment when moving to Postgres)
+# asyncpg>=0.29.0
+# psycopg2-binary>=2.9.9
+
+# Optional: async SQLAlchemy (for PostgreSQL migration)
+# aiosqlite>=0.20.0
+
+# HTTP client (InfraNodus live integration + testing)
+httpx>=0.27.0
+
+# Development only
+# pytest>=8.0.0
+# pytest-asyncio>=0.23.0
