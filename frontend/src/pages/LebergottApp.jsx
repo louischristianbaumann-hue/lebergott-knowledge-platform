@@ -18,6 +18,7 @@ import MyceliumGraph from '../components/MyceliumGraph.jsx'
 import ChatPanel from '../components/ChatPanel.jsx'
 import GapPanel from '../components/GapPanel.jsx'
 import BridgePanel from '../components/BridgePanel.jsx'
+import LoadingPulse from '../components/LoadingPulse.jsx'
 import { DEMO_GRAPH, DEMO_GAPS, DEMO_BRIDGES } from '../utils/api.js'
 import { useAuth } from '../context/AuthContext.jsx'
 
@@ -316,24 +317,34 @@ export default function LebergottApp() {
   const [bridges, setBridges]                       = useState(DEMO_BRIDGES)
   const [selectedNode, setSelectedNode]             = useState(null)
   const [isLoading, setIsLoading]                   = useState(true)
+  const [isDataCached, setIsDataCached]             = useState(false)
   const [onboardingProfile, setOnboardingProfile]   = useState(null)
   const [personalizedNodeIds, setPersonalizedNodeIds] = useState([])
   const [showWelcome, setShowWelcome]               = useState(false)
   const [chatContext, setChatContext]               = useState('')
 
-  // Load graph data
+  // Load graph data with graceful fallback
   useEffect(() => {
+    let cancelled = false
     async function loadData() {
+      // Attempt 1: Backend API
       try {
-        const res = await fetch(`${BASE_URL}/demo/lebergott`, { signal: AbortSignal.timeout(3000) })
-        if (res.ok) {
+        const res = await fetch(`${BASE_URL}/demo/lebergott`, { signal: AbortSignal.timeout(4000) })
+        if (!cancelled && res.ok) {
           const data = await res.json()
           if (data.graph)   setGraphData(data.graph)
           if (data.gaps)    setGaps(data.gaps)
           if (data.bridges) setBridges(data.bridges)
-          setIsLoading(false); return
+          // Check if backend returned cached InfraNodus data
+          if (data._cached) setIsDataCached(true)
+          setIsLoading(false)
+          return
         }
       } catch {}
+
+      if (cancelled) return
+
+      // Attempt 2: n8n webhook
       try {
         const res = await fetch(N8N_WEBHOOK, {
           method: 'POST',
@@ -341,15 +352,21 @@ export default function LebergottApp() {
           body: JSON.stringify({ query: 'system:get-graph-data' }),
           signal: AbortSignal.timeout(5000),
         })
-        if (res.ok) {
+        if (!cancelled && res.ok) {
           const data = await res.json()
           if (data.graph) setGraphData(data.graph)
           if (data.gaps)  setGaps(data.gaps)
         }
       } catch {}
+
+      if (cancelled) return
+
+      // Fallback: use built-in demo data (already set as initial state)
+      setIsDataCached(true)
       setIsLoading(false)
     }
     loadData()
+    return () => { cancelled = true }
   }, [])
 
   // Load onboarding profile
@@ -424,6 +441,21 @@ export default function LebergottApp() {
   const gapPanelTitle  = primarySymptom ? `Lücken zu ${primarySymptom}` : `${gapCount} Wissenslücken`
   const recommendationCount = personalizedNodeIds.length
 
+  // Loading screen
+  if (isLoading) {
+    return (
+      <div style={{
+        position: 'fixed', inset: 0, background: brand.forestDeep,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontFamily: "'DM Sans', -apple-system, sans-serif",
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <LoadingPulse text="Wissensnetzwerk laden…" />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div style={{ position: 'fixed', inset: 0, background: brand.forestDeep, fontFamily: "'DM Sans', -apple-system, sans-serif", overflow: 'hidden' }}>
       <style>{`
@@ -485,9 +517,19 @@ export default function LebergottApp() {
           {personalizedNodeIds.length > 0 && <StatPill value={personalizedNodeIds.length} label="Profil" />}
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.6rem', color: brand.goldDim }}>
-          <div style={{ width: 5, height: 5, borderRadius: '50%', background: isLoading ? brand.gold : '#6a9e6a', boxShadow: `0 0 6px ${isLoading ? brand.gold : '#6a9e6a'}66` }} />
-          {isLoading ? 'Laden...' : 'Aktiv'}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          {isDataCached && (
+            <span style={{
+              fontSize: '0.52rem', fontWeight: 700, letterSpacing: '0.06em',
+              textTransform: 'uppercase', color: brand.goldDim,
+              background: 'rgba(197,165,90,0.1)', borderRadius: 99,
+              padding: '2px 7px', border: '1px solid rgba(197,165,90,0.2)',
+            }}>Cached</span>
+          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.6rem', color: brand.goldDim }}>
+            <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#6a9e6a', boxShadow: '0 0 6px #6a9e6a66' }} />
+            Aktiv
+          </div>
         </div>
       </header>
 

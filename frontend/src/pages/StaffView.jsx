@@ -306,11 +306,30 @@ export default function StaffView() {
 
   const completedCount = clients.filter(onboardingComplete).length
 
+  if (loadingClients && clients.length === 0) {
+    return (
+      <div style={{ ...styles.root, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap');
+          @keyframes lb-spin{to{transform:rotate(360deg)}}
+          @keyframes lb-shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+          .sf-skel{background:linear-gradient(90deg,rgba(197,165,90,0.06) 0%,rgba(197,165,90,0.12) 50%,rgba(197,165,90,0.06) 100%);background-size:800px 100%;animation:lb-shimmer 1.6s infinite linear;border-radius:8px}
+        `}</style>
+        <div style={{ width: '100%', maxWidth: 800, padding: '0 24px' }}>
+          <div className="sf-skel" style={{ height: 56, marginBottom: 20, borderRadius: 12 }} />
+          {[1,2,3].map(i => <div key={i} className="sf-skel" style={{ height: 64, marginBottom: 10, borderRadius: 10 }} />)}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div style={styles.root}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap');
         @keyframes lb-spin { to { transform: rotate(360deg); } }
+        @keyframes lb-shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+        .sf-skel{background:linear-gradient(90deg,rgba(197,165,90,0.06) 0%,rgba(197,165,90,0.12) 50%,rgba(197,165,90,0.06) 100%);background-size:800px 100%;animation:lb-shimmer 1.6s infinite linear;border-radius:8px}
       `}</style>
 
       {/* Header */}

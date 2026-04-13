@@ -1161,6 +1161,29 @@ def get_my_onboarding_profile(
 
 
 @router.get("/health", tags=["system"], summary="Health check")
-def health():
-    """Basic liveness check."""
-    return {"status": "ok", "service": "synodea-next", "version": "1.0.0"}
+def health(db: Session = Depends(get_db)):
+    """Extended health check: DB + InfraNodus status."""
+    from datetime import datetime
+
+    # Check DB connectivity
+    db_ok = False
+    try:
+        db.execute(__import__("sqlalchemy").text("SELECT 1"))
+        db_ok = True
+    except Exception:
+        pass
+
+    # Check InfraNodus (just config presence, no live ping)
+    settings = get_settings()
+    infranodus_configured = bool(settings.infranodus_api_key)
+
+    return {
+        "status": "ok",
+        "service": "synodea-next",
+        "version": "1.0.0",
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "checks": {
+            "database": "ok" if db_ok else "degraded",
+            "infranodus": "configured" if infranodus_configured else "cache-only",
+        },
+    }

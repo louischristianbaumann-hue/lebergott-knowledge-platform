@@ -3,20 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- viewport-fit=cover for iPhone X+ notch and home bar -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="Lebergott Akademie — Wissensnetz für Gesundheit und Bewusstsein" />
+
     <!-- PWA / iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Lebergott" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Apple touch icons -->
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152.png" />
     <link rel="apple-touch-icon" sizes="167x167" href="/apple-touch-icon-167.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180.png" />
-    <!-- Splash screens (iPhone) -->
-    <meta name="theme-color" content="#1a3a2a" />
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#1a3a2a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#1a3a2a" media="(prefers-color-scheme: light)" />
+
     <link rel="manifest" href="/manifest.json" />
     <title>Lebergott Akademie</title>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

@@ -5,17 +5,48 @@
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
 
-async function request(path, options = {}) {
+// Retry with exponential backoff — 3 attempts, 400ms/800ms/1600ms delays
+async function request(path, options = {}, retries = 3) {
   const url = `${BASE_URL}${path}`
-  const res = await fetch(url, {
-    headers: { 'Content-Type': 'application/json', ...options.headers },
-    ...options,
-  })
-  if (!res.ok) {
-    const text = await res.text().catch(() => '')
-    throw new Error(`API ${res.status}: ${text || res.statusText}`)
+  let lastError
+
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      const signal = options.signal || AbortSignal.timeout(10000)
+      const res = await fetch(url, {
+        headers: { 'Content-Type': 'application/json', ...options.headers },
+        ...options,
+        signal,
+      })
+      if (!res.ok) {
+        const text = await res.text().catch(() => '')
+        // Don't retry 4xx errors — they won't change
+        if (res.status >= 400 && res.status < 500) {
+          throw new Error(`API ${res.status}: ${text || res.statusText}`)
+        }
+        lastError = new Error(`API ${res.status}: ${text || res.statusText}`)
+        if (attempt < retries - 1) {
+          await new Promise(r => setTimeout(r, 400 * Math.pow(2, attempt)))
+          continue
+        }
+        throw lastError
+      }
+      return res.json()
+    } catch (err) {
+      // Don't retry user-aborted requests
+      if (err.name === 'AbortError') throw err
+      lastError = err
+      if (attempt < retries - 1) {
+        await new Promise(r => setTimeout(r, 400 * Math.pow(2, attempt)))
+      }
+    }
   }
-  return res.json()
+  throw lastError
+}
+
+// No-retry variant for one-shot calls (auth, chat)
+async function requestOnce(path, options = {}) {
+  return request(path, options, 1)
 }
 
 export const api = {
@@ -36,6 +67,9 @@ export const api = {
 
   // Node file content
   getNode: (vaultId, nodeId) => request(`/node/${vaultId}/${nodeId}`),
+
+  // Health check
+  health: () => request('/health', {}, 1),
 
   // ── InfraNodus Live ──────────────────────────────────────────────────
   // All 6 Lebergott graphs: gaps + bridges + clusters + stats

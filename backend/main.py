@@ -5,10 +5,11 @@ Customer-facing Knowledge Intelligence Platform.
 Start: uvicorn backend.main:app --reload
 Docs:  http://localhost:8000/docs
 """
+import asyncio
 import logging
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -89,8 +90,22 @@ async def server_error_handler(request, exc):
     logger.error(f"Internal error: {exc}", exc_info=True)
     return JSONResponse(
         status_code=500,
-        content={"detail": "Internal server error"},
+        content={"detail": "Ein interner Fehler ist aufgetreten. Bitte versuche es erneut."},
     )
+
+
+# ── Request Timeout Middleware ─────────────────────────────────────────────
+# 30s global timeout — prevents hanging InfraNodus / n8n calls from blocking
+
+@app.middleware("http")
+async def timeout_middleware(request: Request, call_next):
+    try:
+        return await asyncio.wait_for(call_next(request), timeout=30.0)
+    except asyncio.TimeoutError:
+        return JSONResponse(
+            status_code=504,
+            content={"detail": "Anfrage hat zu lange gedauert. Bitte versuche es erneut."},
+        )
 
 
 # ── Router ────────────────────────────────────────────────────────────────

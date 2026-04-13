@@ -3,8 +3,9 @@
   "short_name": "Lebergott",
   "description": "Wissensnetz — Gaps, Bridges, Graph",
   "start_url": "/lebergott",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#1a3a2a",
+  "background_color": "#faf9f5",
   "theme_color": "#1a3a2a",
   "orientation": "portrait-primary",
   "icons": [
@@ -15,8 +16,8 @@
       "purpose": "any"
     },
     {
-      "src": "/apple-touch-icon-180.png",
-      "sizes": "180x180",
+      "src": "/apple-touch-icon-167.png",
+      "sizes": "167x167",
       "type": "image/png",
       "purpose": "any"
     },
@@ -24,9 +25,22 @@
       "src": "/apple-touch-icon-180.png",
       "sizes": "180x180",
       "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon-180.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon-180.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "maskable"
     }
   ],
   "categories": ["education", "health", "lifestyle"],
-  "lang": "de"
+  "lang": "de",
+  "prefer_related_applications": false
 }

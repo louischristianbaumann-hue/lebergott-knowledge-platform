@@ -243,24 +243,32 @@ export default function MarcelDashboard() {
   const [activity]                      = useState(DEMO_ACTIVITY_LOG)
   const [selectedNode, setSelectedNode] = useState(null)
   const [loading,      setLoading]      = useState(true)
+  const [loadError,    setLoadError]    = useState(null)
   const [isDemo,       setIsDemo]       = useState(true)
 
   const load = useCallback(async () => {
-    const results = await Promise.allSettled([
-      fetchJSON(`${BASE_URL}/auth/users`, token),
-      fetchJSON(`${BASE_URL}/infranodus/gaps?min_bridge_potential=0.5`, null),
-      fetchJSON(`${BASE_URL}/demo/lebergott`, null),
-    ])
-    let anyReal = false
-    if (results[0].status === 'fulfilled' && Array.isArray(results[0].value)) { setUsers(results[0].value); anyReal = true }
-    if (results[1].status === 'fulfilled' && results[1].value?.gaps?.length) { setGaps(enrichGaps(results[1].value.gaps)); anyReal = true }
-    if (results[2].status === 'fulfilled' && results[2].value?.graph?.nodes?.length) {
-      const g = results[2].value.graph
-      setGraphData({ nodes: g.nodes, links: g.links || [], clusters: g.clusters || [] })
-      anyReal = true
+    setLoading(true)
+    setLoadError(null)
+    try {
+      const results = await Promise.allSettled([
+        fetchJSON(`${BASE_URL}/auth/users`, token),
+        fetchJSON(`${BASE_URL}/infranodus/gaps?min_bridge_potential=0.5`, null),
+        fetchJSON(`${BASE_URL}/demo/lebergott`, null),
+      ])
+      let anyReal = false
+      if (results[0].status === 'fulfilled' && Array.isArray(results[0].value)) { setUsers(results[0].value); anyReal = true }
+      if (results[1].status === 'fulfilled' && results[1].value?.gaps?.length) { setGaps(enrichGaps(results[1].value.gaps)); anyReal = true }
+      if (results[2].status === 'fulfilled' && results[2].value?.graph?.nodes?.length) {
+        const g = results[2].value.graph
+        setGraphData({ nodes: g.nodes, links: g.links || [], clusters: g.clusters || [] })
+        anyReal = true
+      }
+      if (anyReal) setIsDemo(false)
+    } catch (err) {
+      setLoadError('Daten konnten nicht geladen werden. Demo-Daten werden angezeigt.')
+    } finally {
+      setLoading(false)
     }
-    if (anyReal) setIsDemo(false)
-    setLoading(false)
   }, [token])
 
   useEffect(() => { load() }, [load])
@@ -279,11 +287,28 @@ export default function MarcelDashboard() {
 
   if (loading) {
     return (
-      <div style={{ ...page, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
-        <div style={{ textAlign: 'center' }}>
-          <style>{`@keyframes lb-spin{to{transform:rotate(360deg)}}`}</style>
-          <div style={{ width: 36, height: 36, border: `3px solid rgba(197,165,90,0.2)`, borderTopColor: B.gold, borderRadius: '50%', animation: 'lb-spin 0.7s linear infinite', margin: '0 auto 14px' }} />
-          <p style={{ color: B.textMuted, fontSize: '0.82rem', fontFamily: "'DM Sans', sans-serif" }}>Dashboard wird geladen…</p>
+      <div style={{ ...page }}>
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap');
+          @keyframes lb-spin{to{transform:rotate(360deg)}}
+          @keyframes lb-shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+          .skel{background:linear-gradient(90deg,rgba(197,165,90,0.06) 0%,rgba(197,165,90,0.12) 50%,rgba(197,165,90,0.06) 100%);background-size:800px 100%;animation:lb-shimmer 1.6s infinite linear;border-radius:8px}
+        `}</style>
+        {/* Skeleton header */}
+        <div style={{ background: B.forest, padding: '0 36px', height: 64, display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div className="skel" style={{ width: 36, height: 36, borderRadius: 9 }} />
+          <div className="skel" style={{ width: 160, height: 16 }} />
+        </div>
+        <div style={{ padding: '32px 36px', maxWidth: 1200, margin: '0 auto' }}>
+          {/* Skeleton stat cards */}
+          <div style={{ display: 'flex', gap: 16, marginBottom: 32 }}>
+            {[1,2,3,4].map(i => <div key={i} className="skel" style={{ flex: 1, height: 88, borderRadius: 16 }} />)}
+          </div>
+          {/* Skeleton content rows */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            <div className="skel" style={{ height: 320, borderRadius: 16 }} />
+            <div className="skel" style={{ height: 320, borderRadius: 16 }} />
+          </div>
         </div>
       </div>
     )
@@ -324,6 +349,25 @@ export default function MarcelDashboard() {
           <NavBtn onClick={logout} accent>Logout</NavBtn>
         </div>
       </header>
+
+      {/* Error banner */}
+      {loadError && (
+        <div style={{
+          background: 'rgba(180,60,40,0.08)', borderBottom: '1px solid rgba(180,60,40,0.2)',
+          padding: '10px 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          gap: 12,
+        }}>
+          <span style={{ fontSize: '0.76rem', color: '#b53a2a', fontFamily: "'DM Sans', sans-serif" }}>
+            ⚠ {loadError}
+          </span>
+          <button
+            onClick={load}
+            style={{ fontSize: '0.7rem', fontWeight: 600, color: B.forest, background: 'rgba(26,58,42,0.08)', border: '1px solid rgba(26,58,42,0.18)', borderRadius: 6, padding: '4px 12px', cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" }}
+          >
+            Erneut versuchen
+          </button>
+        </div>
+      )}
 
       {/* Content */}
       <div style={{ padding: '36px 40px', maxWidth: 1380, margin: '0 auto' }}>
