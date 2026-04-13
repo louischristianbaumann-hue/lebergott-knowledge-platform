@@ -59,6 +59,8 @@ class Settings(BaseSettings):
         "http://127.0.0.1:5173",
         "https://lebergott-knowledge-platform.vercel.app",
     ]
+    # Regex for Vercel preview URLs — matches *-louischristianbaumann-hue.vercel.app
+    cors_origin_regex: str = r"https://.*-louischristianbaumann-hue\.vercel\.app"
 
     # Database
     database_url: str = "sqlite:///./synodea.db"
@@ -85,6 +87,9 @@ class Settings(BaseSettings):
     jwt_secret_key: str = "lebergott-secret-key-change-in-production"  # Override: JWT_SECRET_KEY
     jwt_algorithm: str = "HS256"
     jwt_expire_days: int = 7
+
+    # n8n
+    n8n_webhook_url: str = ""  # Set via N8N_WEBHOOK_URL env var — lebergott-bot endpoint
 
     # InfraNodus Live Integration
     infranodus_api_key: str = ""          # Set via INFRANODUS_API_KEY env var
