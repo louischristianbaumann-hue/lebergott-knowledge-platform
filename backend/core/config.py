@@ -51,12 +51,13 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8000
 
-    # CORS — frontend dev server
+    # CORS — override via CORS_ORIGINS='["https://your-app.vercel.app"]' in prod
     cors_origins: list[str] = [
         "http://localhost:3000",
         "http://localhost:5173",
         "http://127.0.0.1:3000",
         "http://127.0.0.1:5173",
+        "https://lebergott-knowledge-platform.vercel.app",
     ]
 
     # Database
@@ -81,7 +82,7 @@ class Settings(BaseSettings):
     demo_vault_id: str = "lebergott"
 
     # JWT Auth
-    jwt_secret_key: str = "lebergott-secret-key-change-in-production"
+    jwt_secret_key: str = "lebergott-secret-key-change-in-production"  # Override: JWT_SECRET_KEY
     jwt_algorithm: str = "HS256"
     jwt_expire_days: int = 7
 
