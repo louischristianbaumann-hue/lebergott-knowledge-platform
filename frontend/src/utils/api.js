@@ -3,7 +3,9 @@
    Thin fetch wrapper with error handling + demo data fallback
    ============================================================ */
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
+// Production: set VITE_API_URL in Vercel dashboard → pointing to Railway backend
+// Railway URL format: https://[project]-production.up.railway.app
+const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/v1'
 
 // Retry with exponential backoff — 3 attempts, 400ms/800ms/1600ms delays
 async function request(path, options = {}, retries = 3) {

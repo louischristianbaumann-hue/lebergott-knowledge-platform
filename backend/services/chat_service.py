@@ -9,11 +9,13 @@ import urllib.request
 import urllib.error
 from typing import Optional
 
+from ..core.config import get_settings
 from .vault_loader import VaultLoader
 from .graph_service import GraphService
 
-
-N8N_WEBHOOK = 'https://n8n-production-6fe9.up.railway.app/webhook/lebergott-bot'
+_settings = get_settings()
+# Read from env: N8N_WEBHOOK_URL (fallback to known production endpoint)
+N8N_WEBHOOK = _settings.n8n_webhook_url or 'https://n8n-production-6fe9.up.railway.app/webhook/lebergott-bot'
 N8N_AUTH = '419f12f0bc4c8bc8d6a5625fede2d28b51b618200a199ad28e42fbb4fd3b852a'
 
 
