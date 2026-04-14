@@ -107,6 +107,7 @@ class Settings(BaseSettings):
 
     # n8n
     n8n_webhook_url: str = ""  # Set via N8N_WEBHOOK_URL env var — lebergott-bot endpoint
+    n8n_auth_token: str = ""   # Set via N8N_AUTH_TOKEN env var — bearer token for webhook
 
     # InfraNodus Live Integration
     infranodus_api_key: str = ""          # Set via INFRANODUS_API_KEY env var

@@ -127,7 +127,7 @@
     "lebergott_bot": {
       "url": "https://n8n-production-6fe9.up.railway.app/webhook/lebergott-bot",
       "auth_header": "X-Auth-Token",
-      "auth_value": "419f12f0bc4c8bc8d6a5625fede2d28b51b618200a199ad28e42fbb4fd3b852a",
+      "auth_value": "<N8N_AUTH_TOKEN — set in Railway environment variables>",
       "method": "POST",
       "body_schema": {
         "question": "string — die Frage des Users",

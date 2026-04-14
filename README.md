@@ -115,7 +115,7 @@ Railway env vars to set in dashboard:
 JWT_SECRET_KEY=<generate: python -c "import secrets; print(secrets.token_hex(32))">
 INFRANODUS_API_KEY=<from infranodus.com/settings>
 N8N_WEBHOOK_URL=https://n8n-production-6fe9.up.railway.app/webhook/lebergott-bot
-N8N_AUTH_TOKEN=419f12f0bc4c8bc8d6a5625fede2d28b51b618200a199ad28e42fbb4fd3b852a
+N8N_AUTH_TOKEN=<from n8n workflow credentials>
 ```
 
 **Step 2: Frontend → Vercel**

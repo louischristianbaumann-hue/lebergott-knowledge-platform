@@ -93,7 +93,7 @@ curl -X POST http://127.0.0.1:8000/api/v1/chat \
 **Via n8n Webhook (direkt):**
 ```bash
 curl -X POST https://n8n-production-6fe9.up.railway.app/webhook/lebergott-bot \
-  -H "X-Auth-Token: 419f12f0bc4c8bc8d6a5625fede2d28b51b618200a199ad28e42fbb4fd3b852a" \
+  -H "X-Auth-Token: <N8N_AUTH_TOKEN from Railway env>" \
   -H "Content-Type: application/json" \
   -d '{"question":"Was sind die Kernprinzipien von Lebergott?"}'
 ```
