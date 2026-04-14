@@ -256,21 +256,28 @@ def init_db(engine) -> None:
 
 
 def seed_admin_user(db: Session) -> None:
-    """Seed Marcel as admin user if not already present."""
+    """Seed demo users (admin/staff/client) if not already present."""
     from passlib.context import CryptContext
 
-    existing = db.query(User).filter_by(email="marcel@lebergott.de").first()
-    if existing:
-        return
-
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-    user = User(
-        email="marcel@lebergott.de",
-        password_hash=pwd_context.hash("lebergott2024"),
-        role="admin",
-        onboarding_data="{}",
-    )
-    db.add(user)
+
+    demo_users = [
+        ("marcel@lebergott.de", "lebergott2024", "admin"),
+        ("staff@lebergott.de", "lebergott2024", "staff"),
+        ("client@lebergott.de", "lebergott2024", "client"),
+    ]
+
+    for email, password, role in demo_users:
+        if db.query(User).filter_by(email=email).first():
+            continue
+        user = User(
+            email=email,
+            password_hash=pwd_context.hash(password),
+            role=role,
+            onboarding_data="{}",
+        )
+        db.add(user)
+
     db.commit()
 
 

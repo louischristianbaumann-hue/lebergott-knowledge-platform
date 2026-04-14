@@ -61,8 +61,8 @@ class ChatService:
             'history': history,
         }
 
-        # ── Attempt 1–3: n8n Lebergott Bot ──────────────────────────────
-        for attempt in range(3):
+        # ── Attempt 1–2: n8n Lebergott Bot (2×8s = 16s, safely under 30s timeout) ──
+        for attempt in range(2):
             try:
                 encoded = json.dumps(payload).encode('utf-8')
                 req = urllib.request.Request(
@@ -74,7 +74,7 @@ class ChatService:
                     },
                     method='POST',
                 )
-                with urllib.request.urlopen(req, timeout=15) as resp:
+                with urllib.request.urlopen(req, timeout=8) as resp:
                     raw = json.loads(resp.read().decode('utf-8'))
 
                 # Handle various n8n response shapes
