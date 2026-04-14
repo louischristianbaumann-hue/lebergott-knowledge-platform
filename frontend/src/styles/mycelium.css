@@ -65,16 +65,10 @@
   filter: brightness(1.3) drop-shadow(0 0 12px var(--accent-green));
 }
 
-/* Hub node pulse — large, bright, breathing */
-@keyframes hubPulse {
-  0%, 100% { r: var(--node-r); filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.5)); }
-  50%       { r: calc(var(--node-r) * 1.08); filter: drop-shadow(0 0 16px rgba(0, 255, 136, 0.8)); }
-}
-
-/* Regular node pulse — subtle breathing */
-@keyframes nodePulse {
-  0%, 100% { opacity: 0.85; }
-  50%       { opacity: 1; }
+/* Breathe — organic scale pulse for all nodes */
+@keyframes breathe {
+  0%, 100% { transform: scale(1.0); }
+  50%       { transform: scale(1.08); }
 }
 
 /* Gap node flicker — amber, dim, barely there */
@@ -83,10 +77,19 @@
   50%       { opacity: 0.55; filter: drop-shadow(0 0 8px rgba(255, 153, 68, 0.5)); }
 }
 
-.mycelium-node--hub circle {
-  animation: hubPulse 4s ease-in-out infinite;
+/* All nodes breathe */
+.mycelium-node circle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: breathe 3s ease-in-out infinite;
 }
 
+/* Hubs breathe slower + stronger */
+.mycelium-node--hub circle {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* Gap nodes flicker instead */
 .mycelium-node--gap circle {
   animation: gapFlicker 3s ease-in-out infinite;
 }

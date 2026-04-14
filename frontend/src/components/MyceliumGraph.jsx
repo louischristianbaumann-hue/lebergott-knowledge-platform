@@ -12,7 +12,6 @@ import {
   getNodeGlow,
   getLinkWidth,
   getLinkOpacity,
-  getPulseScale,
 } from '../utils/graphPhysics.js'
 
 // ---- Cluster legend items ----
@@ -85,8 +84,6 @@ export default function MyceliumGraph({ data, onNodeClick, selectedNodeId, perso
   const wrapperRef = useRef(null)
   const simulationRef = useRef(null)
   const zoomRef = useRef(null)
-  const animFrameRef = useRef(null)
-  const startTimeRef = useRef(performance.now())
 
   const [tooltip, setTooltip] = useState({ node: null, x: 0, y: 0 })
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 })
@@ -186,12 +183,13 @@ export default function MyceliumGraph({ data, onNodeClick, selectedNodeId, perso
     // ---- Links layer ----
     const linkGroup = container.append('g').attr('class', 'links-layer')
     const linkSelection = linkGroup
-      .selectAll('line')
+      .selectAll('path')
       .data(links)
-      .join('line')
+      .join('path')
       .attr('class', 'mycelium-link')
       .attr('stroke-width', (d) => getLinkWidth(d.strength))
       .attr('stroke-opacity', (d) => getLinkOpacity(d.strength))
+      .attr('fill', 'none')
       .attr('stroke', (d) => {
         // Color links by source cluster
         const srcNode = nodes.find((n) => n.id === (d.source?.id || d.source))
@@ -341,31 +339,23 @@ export default function MyceliumGraph({ data, onNodeClick, selectedNodeId, perso
     simulationRef.current = simulation
 
     simulation.on('tick', () => {
-      linkSelection
-        .attr('x1', (d) => d.source.x)
-        .attr('y1', (d) => d.source.y)
-        .attr('x2', (d) => d.target.x)
-        .attr('y2', (d) => d.target.y)
+      linkSelection.attr('d', (d) => {
+        const sx = d.source.x, sy = d.source.y
+        const tx = d.target.x, ty = d.target.y
+        const ddx = tx - sx, ddy = ty - sy
+        const len = Math.sqrt(ddx * ddx + ddy * ddy) || 1
+        // Perpendicular unit vector for S-curve control points
+        const px = -ddy / len, py = ddx / len
+        const offset = 60
+        const cp1x = sx + ddx / 3 + px * offset
+        const cp1y = sy + ddy / 3 + py * offset
+        const cp2x = sx + 2 * ddx / 3 - px * offset
+        const cp2y = sy + 2 * ddy / 3 - py * offset
+        return `M ${sx} ${sy} C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${tx} ${ty}`
+      })
 
       nodeSelection.attr('transform', (d) => `translate(${d.x},${d.y})`)
     })
-
-    // ---- Breathing animation (requestAnimationFrame loop) ----
-    let lastFrame = 0
-    function animate(ts) {
-      if (ts - lastFrame > 100) { // throttle to ~10fps for the pulse
-        lastFrame = ts
-        const elapsed = ts - startTimeRef.current
-
-        nodeSelection.select('circle').attr('r', (d) => {
-          const base = getNodeRadius(d.connections, d.isHub)
-          const scale = getPulseScale(elapsed, d._pulseDelay || 0, d._pulseSpeed || 4)
-          return base * scale
-        })
-      }
-      animFrameRef.current = requestAnimationFrame(animate)
-    }
-    animFrameRef.current = requestAnimationFrame(animate)
 
     // ---- Initial zoom to fit ----
     const initialTransform = d3.zoomIdentity.translate(width * 0.1, height * 0.1).scale(0.85)
@@ -373,7 +363,6 @@ export default function MyceliumGraph({ data, onNodeClick, selectedNodeId, perso
 
     return () => {
       simulation.stop()
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current)
     }
   }, [data, dimensions, selectedNodeId, personalizedNodeIds])
 

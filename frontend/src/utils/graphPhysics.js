@@ -89,8 +89,8 @@ export function createSimulation(nodes, links, width, height) {
       d3.forceX(width / 2).strength(0.02)
     )
     .force('y', d3.forceY(height / 2).strength(0.02))
-    .alphaDecay(0.015) // slow decay = organic movement
-    .velocityDecay(0.4)
+    .alphaDecay(0.008) // very slow decay = organic, living movement
+    .velocityDecay(0.35)
 
   return simulation
 }
