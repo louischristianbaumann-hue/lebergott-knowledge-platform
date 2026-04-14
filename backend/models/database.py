@@ -262,9 +262,9 @@ def seed_admin_user(db: Session) -> None:
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
     demo_users = [
-        ("marcel@lebergott.de", "lebergott2024", "admin"),
-        ("mitarbeiter@lebergott.de", "lebergott2024", "staff"),
-        ("demo@lebergott.de", "lebergott2024", "client"),
+        ("marcel@lebergott.de", "Lebergott2026!", "admin"),
+        ("mitarbeiter@lebergott.de", "Staff2026!", "staff"),
+        ("demo@lebergott.de", "Demo2026!", "client"),
     ]
 
     for email, password, role in demo_users:
