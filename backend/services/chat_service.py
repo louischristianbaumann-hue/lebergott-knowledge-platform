@@ -61,8 +61,9 @@ class ChatService:
             'history': history,
         }
 
-        # ── Attempt 1–2: n8n Lebergott Bot (2×8s = 16s, safely under 30s timeout) ──
-        for attempt in range(2):
+        # ── 1 attempt: n8n Lebergott Bot (15s timeout, within 30s backend limit) ──
+        # n8n bot takes ~10-12s — 1 attempt keeps total under 30s with fallback room
+        for attempt in range(1):
             try:
                 encoded = json.dumps(payload).encode('utf-8')
                 req = urllib.request.Request(
@@ -74,7 +75,7 @@ class ChatService:
                     },
                     method='POST',
                 )
-                with urllib.request.urlopen(req, timeout=8) as resp:
+                with urllib.request.urlopen(req, timeout=15) as resp:
                     raw = json.loads(resp.read().decode('utf-8'))
 
                 # Handle various n8n response shapes
@@ -84,12 +85,14 @@ class ChatService:
                     first = raw[0]
                     answer_text = (
                         first.get('output') or first.get('answer') or
-                        first.get('text') or str(first)
+                        first.get('knowledge') or first.get('text') or str(first)
                     )
                     raw = first  # use first item for additional fields
                 else:
+                    # n8n Lebergott bot returns {status, query, knowledge, sources, disclaimer}
                     answer_text = (
-                        raw.get('output') or raw.get('answer') or raw.get('text')
+                        raw.get('output') or raw.get('answer') or
+                        raw.get('knowledge') or raw.get('text')
                     )
 
                 if answer_text:
@@ -103,21 +106,30 @@ class ChatService:
                         }
 
                     raw_dict = raw if isinstance(raw, dict) else {}
+                    # n8n Lebergott bot provides sources and disclaimer
+                    sources = raw_dict.get('sources', [])
+                    disclaimer = raw_dict.get('disclaimer', '')
+
+                    # Build follow-ups from local graph (n8n bot doesn't generate them)
+                    follow_ups = local.get('follow_up_questions', [])
+                    if sources:
+                        follow_ups = follow_ups[:3]  # make room for sources hint
+
                     return {
                         'answer': answer_text,
                         'relevant_nodes': raw_dict.get('relevant_nodes') or local.get('relevant_nodes', []),
                         'gaps': raw_dict.get('gaps') or local.get('gaps', []),
                         'bridges': raw_dict.get('bridges') or local.get('bridges', []),
-                        'follow_up_questions': (
-                            raw_dict.get('follow_up_questions') or local.get('follow_up_questions', [])
-                        ),
+                        'follow_up_questions': follow_ups,
+                        'sources': sources,
+                        'disclaimer': disclaimer,
                         'context': {**(local.get('context') or {}), 'source': 'n8n'},
                     }
 
             except urllib.error.URLError:
-                pass  # Network error — retry
+                pass  # Network error — n8n unreachable
             except Exception:
-                pass  # Parse error — retry
+                pass  # Parse error — fall through to local graph
 
         # ── Fallback 1: local graph analysis ────────────────────────────
         try:
