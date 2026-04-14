@@ -10,7 +10,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
+const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/v1'
 
 const LB = {
   forest:    '#1a3a2a',
@@ -574,43 +574,19 @@ function parseInline(text, onWikiClick, isUser) {
 }
 
 
-/* ── WikiLink button ────────────────────────────────────────────── */
+/* ── WikiLink anchor ────────────────────────────────────────────── */
 
 function WikiLink({ label, onClick, isUser }) {
-  const [hover, setHover] = useState(false)
   return (
-    <button
-      onClick={onClick}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '2px',
-        padding: '1px 6px',
-        borderRadius: '4px',
-        border: `1px solid ${isUser
-          ? (hover ? 'rgba(250,249,245,0.6)' : 'rgba(250,249,245,0.3)')
-          : (hover ? LB.gold : LB.goldBorder)}`,
-        background: isUser
-          ? (hover ? 'rgba(250,249,245,0.1)' : 'rgba(250,249,245,0.07)')
-          : (hover ? LB.goldGlow : 'rgba(197,165,90,0.07)'),
-        color: isUser
-          ? (hover ? LB.cream : 'rgba(250,249,245,0.8)')
-          : (hover ? LB.forest : LB.goldDim),
-        fontSize: 'inherit',
-        fontFamily: "'DM Sans', sans-serif",
-        fontWeight: 500,
-        cursor: 'pointer',
-        transition: 'all 150ms ease',
-        lineHeight: 'inherit',
-        verticalAlign: 'baseline',
-      }}
+    <a
+      href="#"
+      className={`lb-wikilink${isUser ? ' lb-wikilink--user' : ''}`}
+      onClick={(e) => { e.preventDefault(); onClick?.() }}
     >
       <span style={{ opacity: 0.6, fontSize: '0.75em' }}>[[</span>
       {label}
       <span style={{ opacity: 0.6, fontSize: '0.75em' }}>]]</span>
-    </button>
+    </a>
   )
 }
 

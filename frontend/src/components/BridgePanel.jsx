@@ -36,9 +36,9 @@ function SourceBadge({ source }) {
 }
 
 function strengthLabel(s) {
-  if (s >= 0.85) return { text: 'Stark', color: 'var(--accent-green)' }
-  if (s >= 0.65) return { text: 'Mittel', color: 'var(--accent-teal)' }
-  return { text: 'Schwach', color: 'var(--text-muted)' }
+  if (s >= 0.85) return { text: 'Stark', color: '#1a3a2a' }
+  if (s >= 0.65) return { text: 'Mittel', color: '#4a7c59' }
+  return { text: 'Schwach', color: '#6a6860' }
 }
 
 export default function BridgePanel({ bridges = [], liveSource }) {
@@ -54,7 +54,7 @@ export default function BridgePanel({ bridges = [], liveSource }) {
     <div className="panel-enter" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)', flexWrap: 'wrap' }}>
-        <span className="badge badge--cyan">{bridges.length} Brücken</span>
+        <span className="badge badge--gold">{bridges.length} Brücken</span>
         <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
           Konzeptuelle Gateways
         </span>
@@ -98,7 +98,7 @@ export default function BridgePanel({ bridges = [], liveSource }) {
             }}>
               <div style={{
                 flex: 1, height: 2,
-                background: 'var(--bg-surface)',
+                background: 'rgba(26,58,42,0.08)',
                 borderRadius: 'var(--radius-full)',
                 overflow: 'hidden',
               }}>

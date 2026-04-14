@@ -12,7 +12,7 @@ import GapPanel from '../components/GapPanel.jsx'
 import ChatPanel from '../components/ChatPanel.jsx'
 import { DEMO_GRAPH, DEMO_GAPS } from '../utils/api.js'
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
+const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/v1'
 
 const BRAND = {
   forest:     '#1a3a2a',

@@ -22,7 +22,7 @@ import LoadingPulse from '../components/LoadingPulse.jsx'
 import { DEMO_GRAPH, DEMO_GAPS, DEMO_BRIDGES } from '../utils/api.js'
 import { useAuth } from '../context/AuthContext.jsx'
 
-const BASE_URL    = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
+const BASE_URL    = (import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/v1'
 const N8N_WEBHOOK = 'https://n8n-production-6fe9.up.railway.app/webhook/lebergott-bot'
 const N8N_AUTH    = '419f12f0bc4c8bc8d6a5625fede2d28b51b618200a199ad28e42fbb4fd3b852a'
 
@@ -612,7 +612,11 @@ export default function LebergottApp() {
             </div>
           )}
           <GapPanel gaps={gaps} onGapClick={(gap) => {
-            const node = graphData.nodes.find(n => n.id === gap.id)
+            const node = graphData.nodes.find(n =>
+              n.id === gap.id ||
+              n.id === gap.concept ||
+              n.label?.toLowerCase() === (gap.title || '').toLowerCase()
+            )
             if (node) { setSelectedNode(node); setActivePanel(null) }
           }} />
         </div>

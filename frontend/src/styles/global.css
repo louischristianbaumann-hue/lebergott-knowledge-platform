@@ -611,6 +611,103 @@ textarea {
   font-size: 16px;
 }
 
+/* ── Wikilink user variant (dark bg user messages) ─────────────── */
+.lb-wikilink--user {
+  border-color: rgba(250, 249, 245, 0.35);
+  background: rgba(250, 249, 245, 0.08);
+  color: rgba(250, 249, 245, 0.85);
+}
+.lb-wikilink--user:hover {
+  background: rgba(250, 249, 245, 0.15);
+  border-color: rgba(250, 249, 245, 0.6);
+  color: #faf9f5;
+}
+
+/* ── Panel enter animation ──────────────────────────────────────── */
+.panel-enter {
+  animation: lb-fade-up 0.3s ease both;
+}
+
+/* ── Gap items (GapPanel) ───────────────────────────────────────── */
+.gap-item {
+  background: rgba(197, 165, 90, 0.04);
+  border: 1px solid rgba(197, 165, 90, 0.18);
+  border-radius: 10px;
+  padding: 12px;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+.gap-item:hover {
+  background: rgba(197, 165, 90, 0.08);
+  border-color: rgba(197, 165, 90, 0.28);
+}
+.gap-item__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1a3a2a;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+.gap-item__reason {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  color: #6a6860;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.gap-item__bridge {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  color: #4a7c59;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+/* ── Bridge items (BridgePanel) ─────────────────────────────────── */
+.bridge-item {
+  background: rgba(26, 58, 42, 0.04);
+  border: 1px solid rgba(26, 58, 42, 0.10);
+  border-radius: 10px;
+  padding: 12px;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+.bridge-item:hover {
+  background: rgba(26, 58, 42, 0.07);
+  border-color: rgba(26, 58, 42, 0.18);
+}
+.bridge-item__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1a3a2a;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+.bridge-item__connects {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  color: #4a6a4a;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.bridge-item__why {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  color: #6a6860;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* ── Spore count (GapPanel footer) ─────────────────────────────── */
+.spore-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.02em;
+}
+
 /* ── A2HS (Add to Home Screen) banner ───────────────────────────── */
 #a2hs-banner {
   position: fixed;
