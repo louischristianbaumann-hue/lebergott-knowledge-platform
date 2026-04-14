@@ -1,18 +1,14 @@
 /* ============================================================
    BridgePanel.jsx — Conceptual Bridges (InfraNodus live + cached)
-
-   Supports two data formats:
-     1. InfraNodus live/cached: { id, title, connects, why, strength, graph, source }
-     2. Demo fallback:          { id, title, connects, why, strength }
+   Two-column grid layout, dark card style
    ============================================================ */
 
 import React from 'react'
 
-// Source badge
 const SOURCE_BADGE = {
-  live:   { bg: 'rgba(26, 58, 42, 0.12)', color: '#1a3a2a', dot: '#2d5a3d', label: 'Live' },
-  cached: { bg: 'rgba(197, 165, 90, 0.10)', color: '#9e8648', dot: '#c5a55a', label: 'Cached' },
-  demo:   { bg: 'rgba(100, 100, 100, 0.08)', color: '#888', dot: '#aaa', label: 'Demo' },
+  live:   { bg: 'rgba(0, 212, 255, 0.08)',  color: '#00d4ff', dot: '#00d4ff', label: 'Live' },
+  cached: { bg: 'rgba(255,255,255, 0.04)',   color: '#888',    dot: '#555',    label: 'Cached' },
+  demo:   { bg: 'rgba(255,255,255, 0.03)',   color: '#555',    dot: '#444',    label: 'Demo' },
 }
 
 function SourceBadge({ source }) {
@@ -21,48 +17,54 @@ function SourceBadge({ source }) {
   return (
     <span style={{
       display: 'inline-flex', alignItems: 'center', gap: 4,
-      padding: '1px 6px',
+      padding: '1px 7px',
       background: s.bg,
-      borderRadius: 8,
+      border: '1px solid rgba(255,255,255,0.06)',
+      borderRadius: 'var(--radius-full)',
       fontSize: '0.65rem',
       color: s.color,
-      fontFamily: "'DM Sans', sans-serif",
-      letterSpacing: '0.04em',
+      fontFamily: 'var(--font-mono)',
     }}>
-      <span style={{ width: 5, height: 5, borderRadius: '50%', background: s.dot, display: 'inline-block' }} />
+      <span style={{ width: 4, height: 4, borderRadius: '50%', background: s.dot, display: 'inline-block' }} />
       {s.label}
     </span>
   )
 }
 
-function strengthLabel(s) {
-  if (s >= 0.85) return { text: 'Stark', color: '#1a3a2a' }
-  if (s >= 0.65) return { text: 'Mittel', color: '#4a7c59' }
-  return { text: 'Schwach', color: '#6a6860' }
+// Split "A → B" or "A ↔ B" into two parts
+function parseConnects(connects) {
+  if (!connects) return [null, null]
+  const sep = connects.includes('↔') ? '↔' : connects.includes('→') ? '→' : null
+  if (!sep) return [connects, null]
+  const parts = connects.split(sep).map(s => s.trim())
+  return [parts[0] || null, parts[1] || null]
+}
+
+function strengthColor(s) {
+  if (s >= 0.8) return 'var(--accent)'
+  if (s >= 0.55) return 'var(--success)'
+  return 'var(--text-muted)'
 }
 
 export default function BridgePanel({ bridges = [], liveSource }) {
   if (!bridges.length) {
     return (
-      <div style={{ padding: 'var(--space-6)', color: 'var(--text-muted)', fontSize: '0.85rem', textAlign: 'center' }}>
+      <div style={{ padding: 'var(--space-6)', color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center' }}>
         Noch keine Brücken analysiert.
       </div>
     )
   }
 
   return (
-    <div className="panel-enter" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)', flexWrap: 'wrap' }}>
-        <span className="badge badge--gold">{bridges.length} Brücken</span>
-        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-          Konzeptuelle Gateways
-        </span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-3)', flexWrap: 'wrap' }}>
+        <span className="badge badge--cyan">{bridges.length} Brücken</span>
+        <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Konzeptuelle Gateways</span>
         {liveSource && <SourceBadge source={liveSource} />}
       </div>
 
       {bridges.map((bridge) => {
-        // Normalize field names (live InfraNodus vs demo format)
         const id = bridge.id || bridge.concept || String(Math.random())
         const title = bridge.title || bridge.label || 'Unbekannte Brücke'
         const connects = bridge.connects || ''
@@ -70,67 +72,93 @@ export default function BridgePanel({ bridges = [], liveSource }) {
         const strength = bridge.strength ?? 0.5
         const graphName = bridge.graph || ''
         const source = bridge.source || liveSource || null
-        const sl = strengthLabel(strength)
+        const [nodeA, nodeB] = parseConnects(connects)
+        const sColor = strengthColor(strength)
 
         return (
-          <div key={id} className="bridge-item">
-            {/* Title row */}
-            <div className="bridge-item__title" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 6 }}>
-              <span>
-                <span style={{ marginRight: 'var(--space-2)' }}>⟷</span>
+          <div
+            key={id}
+            style={{
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius-md)',
+              padding: 'var(--space-4)',
+              transition: 'border-color var(--transition-fast)',
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--border-focus)'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border)'}
+          >
+            {/* Title + source */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8, marginBottom: 8 }}>
+              <div style={{ fontSize: '0.82rem', fontWeight: 500, color: 'var(--accent)', flex: 1, lineHeight: 1.4 }}>
                 {title}
-              </span>
+              </div>
               {source && <SourceBadge source={source} />}
             </div>
 
-            {/* Connects */}
-            {connects && <div className="bridge-item__connects">{connects}</div>}
+            {/* Two-column: Node A ↔ Node B */}
+            {(nodeA || nodeB) && (
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: nodeB ? '1fr auto 1fr' : '1fr',
+                alignItems: 'center',
+                gap: 6,
+                marginBottom: 8,
+                padding: '6px 8px',
+                background: 'var(--bg-surface)',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid var(--border-muted)',
+              }}>
+                {nodeA && (
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text)', textAlign: 'left', lineHeight: 1.3 }}>
+                    {nodeA}
+                  </div>
+                )}
+                {nodeB && (
+                  <>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', flexShrink: 0 }}>
+                      ↔
+                    </div>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text)', textAlign: 'right', lineHeight: 1.3 }}>
+                      {nodeB}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
 
             {/* Why / Insight */}
-            {why && <div className="bridge-item__why">{why}</div>}
+            {why && (
+              <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: 8 }}>
+                {why}
+              </div>
+            )}
 
             {/* Strength bar + graph label */}
-            <div style={{
-              marginTop: 'var(--space-2)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 'var(--space-3)',
-            }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{
                 flex: 1, height: 2,
-                background: 'rgba(26,58,42,0.08)',
+                background: 'var(--border-muted)',
                 borderRadius: 'var(--radius-full)',
                 overflow: 'hidden',
               }}>
                 <div style={{
                   width: `${strength * 100}%`,
                   height: '100%',
-                  background: sl.color,
+                  background: sColor,
                   borderRadius: 'var(--radius-full)',
-                  boxShadow: `0 0 4px ${sl.color}`,
                   transition: 'width 0.4s ease',
                 }} />
               </div>
-              <span style={{
-                fontSize: '0.7rem', color: sl.color,
-                fontFamily: 'var(--font-mono)', flexShrink: 0,
-              }}>
-                {sl.text}
+              <span style={{ fontSize: '0.65rem', color: sColor, fontFamily: 'var(--font-mono)', flexShrink: 0 }}>
+                {Math.round(strength * 100)}%
               </span>
+              {graphName && (
+                <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', opacity: 0.65 }}>
+                  {graphName.replace('lebergott-', '')}
+                </span>
+              )}
             </div>
-
-            {/* Graph name tag */}
-            {graphName && (
-              <div style={{
-                marginTop: 4,
-                fontSize: '0.62rem',
-                color: 'var(--text-muted)',
-                fontFamily: "'DM Sans', sans-serif",
-                opacity: 0.65,
-              }}>
-                {graphName.replace('lebergott-', '')}
-              </div>
-            )}
           </div>
         )
       })}

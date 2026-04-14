@@ -1,5 +1,6 @@
 /* ============================================================
-   Dashboard.jsx — Main dashboard: Graph + Panels + Chat
+   Dashboard.jsx — Graph + stat bar + sidebar panels
+   Layout: left nav (240px) + stat bar + graph + right panel
    ============================================================ */
 
 import React, { useState } from 'react'
@@ -9,146 +10,160 @@ import GapPanel from '../components/GapPanel.jsx'
 import BridgePanel from '../components/BridgePanel.jsx'
 import ChatPanel from '../components/ChatPanel.jsx'
 import NodeDetail from '../components/NodeDetail.jsx'
-import VaultFileList from '../components/VaultFileList.jsx'
 import LoadingPulse from '../components/LoadingPulse.jsx'
 import { useGraphData } from '../hooks/useGraphData.js'
 
-const TABS = [
-  { id: 'chat', label: 'Agent' },
-  { id: 'gaps', label: 'Lücken' },
-  { id: 'bridges', label: 'Brücken' },
-]
+/* ── Stat card ─────────────────────────────────────────────── */
+
+function StatCard({ label, value, accent }) {
+  return (
+    <div style={{
+      background: 'var(--bg-card)',
+      border: '1px solid var(--border)',
+      borderRadius: 7, padding: '10px 16px',
+    }}>
+      <div style={{
+        fontSize: 22, fontWeight: 300, lineHeight: 1, marginBottom: 3,
+        color: accent || 'var(--text-primary)',
+      }}>
+        {value}
+      </div>
+      <div style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+        {label}
+      </div>
+    </div>
+  )
+}
+
+/* ── Panel header ──────────────────────────────────────────── */
+
+function PanelHeader({ title }) {
+  return (
+    <div style={{
+      padding: '10px 14px',
+      borderBottom: '1px solid var(--border)',
+      fontSize: 10, color: 'var(--text-muted)',
+      letterSpacing: '0.08em', textTransform: 'uppercase',
+      flexShrink: 0,
+    }}>
+      {title}
+    </div>
+  )
+}
+
+/* ── Dashboard ─────────────────────────────────────────────── */
 
 export default function Dashboard() {
-  const { data, gaps, bridges, loading, isDemo } = useGraphData('demo')
+  const { data, gaps, bridges, loading, isDemo } = useGraphData('lebergott')
   const [selectedNode, setSelectedNode] = useState(null)
-  const [activeTab, setActiveTab] = useState('chat')
+  const [activeTab, setActiveTab]       = useState('chat')
 
-  const handleNodeClick = (node) => {
-    setSelectedNode((prev) => (prev?.id === node.id ? null : node))
-  }
+  const handleNodeClick    = (node) => setSelectedNode(prev => prev?.id === node.id ? null : node)
+  const handleNodeNavigate = (node) => setSelectedNode(node)
 
-  const handleNodeNavigate = (node) => {
-    setSelectedNode(node)
-  }
+  const nodeCount   = data?.nodes?.length   ?? '—'
+  const linkCount   = data?.links?.length   ?? '—'
+  const gapCount    = gaps?.length           ?? '—'
+  const bridgeCount = bridges?.length        ?? '—'
 
-  const sidebar = data ? (
-    <VaultFileList
-      nodes={data.nodes}
-      onNodeSelect={handleNodeClick}
-      selectedId={selectedNode?.id}
-    />
-  ) : null
+  const panelTitle = activeTab === 'chat' ? 'Agent' : activeTab === 'gaps' ? 'Lücken' : 'Brücken'
 
   return (
-    <Layout sidebar={sidebar}>
-      <div style={{ display: 'flex', height: '100%', position: 'relative' }}>
-        {/* ---- Graph ---- */}
-        <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-          {loading ? (
-            <LoadingPulse text="Myzelium laden..." />
-          ) : (
-            <MyceliumGraph
-              data={data}
-              onNodeClick={handleNodeClick}
-              selectedNodeId={selectedNode?.id}
-            />
-          )}
+    <Layout tabs={{ activeTab, setActiveTab }}>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
 
-          {isDemo && !loading && (
-            <div style={{
-              position: 'absolute', bottom: 'var(--space-4)', right: 'var(--space-4)', zIndex: 20,
+        {/* ── Stats bar ── */}
+        <div style={{
+          padding: '10px 16px',
+          borderBottom: '1px solid var(--border)',
+          display: 'flex', gap: 8, alignItems: 'center',
+          background: 'var(--bg-panel)', flexShrink: 0, flexWrap: 'wrap',
+        }}>
+          <StatCard label="Knoten"       value={nodeCount}   accent="var(--accent)"  />
+          <StatCard label="Verbindungen" value={linkCount}                           />
+          <StatCard label="Lücken"       value={gapCount}    accent="var(--warning)" />
+          <StatCard label="Brücken"      value={bridgeCount} accent="var(--success)" />
+
+          {isDemo && (
+            <span style={{
+              marginLeft: 'auto', fontSize: 10, padding: '3px 10px',
+              background: 'rgba(245,158,11,0.08)',
+              border: '1px solid rgba(245,158,11,0.2)',
+              borderRadius: 99, color: 'var(--warning)',
+              letterSpacing: '0.06em',
             }}>
-              <span className="badge badge--amber">Demo-Daten</span>
-            </div>
+              DEMO
+            </span>
           )}
         </div>
 
-        {/* ---- Right panel ---- */}
-        <aside style={{
-          width: 320,
-          background: 'var(--bg-secondary)',
-          borderLeft: '1px solid var(--border-subtle)',
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-          flexShrink: 0,
-        }}>
-          {/* Tab header */}
-          <div style={{
-            padding: 'var(--space-3) var(--space-4)',
-            borderBottom: '1px solid var(--border-subtle)',
-          }}>
-            <div style={{ display: 'flex', gap: 'var(--space-1)' }}>
-              {TABS.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  style={{
-                    flex: 1,
-                    padding: 'var(--space-2)',
-                    background: activeTab === tab.id ? 'var(--bg-surface)' : 'transparent',
-                    border: activeTab === tab.id
-                      ? '1px solid var(--border-medium)'
-                      : '1px solid transparent',
-                    borderRadius: 'var(--radius-sm)',
-                    fontSize: '0.78rem',
-                    fontWeight: activeTab === tab.id ? 600 : 400,
-                    color: activeTab === tab.id
-                      ? (tab.id === 'chat' ? 'var(--accent-green)' : 'var(--text-primary)')
-                      : 'var(--text-muted)',
-                    cursor: 'pointer',
-                    fontFamily: 'var(--font-sans)',
-                    transition: 'all var(--transition-fast)',
-                  }}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
+        {/* ── Content row ── */}
+        <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
 
-          {/* Tab content */}
-          <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            {loading ? (
-              <div style={{ padding: 'var(--space-4)' }}>
-                <LoadingPulse text="Analysieren..." />
-              </div>
-            ) : activeTab === 'chat' ? (
-              <ChatPanel
-                vaultId="lebergott"
-                selectedNode={selectedNode}
-                onNodeNavigate={handleNodeNavigate}
-              />
-            ) : activeTab === 'gaps' ? (
-              <div style={{ flex: 1, overflowY: 'auto', padding: 'var(--space-4)' }}>
-                <GapPanel
-                  gaps={gaps}
-                  onGapClick={(gap) => {
-                    const node = data?.nodes?.find((n) => n.id === gap.id)
-                    if (node) handleNodeClick(node)
-                  }}
+          {/* Graph */}
+          <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+            {loading
+              ? <LoadingPulse text="Graph laden..." />
+              : (
+                <MyceliumGraph
+                  data={data}
+                  onNodeClick={handleNodeClick}
+                  selectedNodeId={selectedNode?.id}
                 />
-              </div>
-            ) : (
-              <div style={{ flex: 1, overflowY: 'auto', padding: 'var(--space-4)' }}>
-                <BridgePanel bridges={bridges} />
-              </div>
-            )}
+              )
+            }
           </div>
-        </aside>
 
-        {/* ---- Node detail overlay ---- */}
-        {selectedNode && (
-          <NodeDetail
-            node={selectedNode}
-            graphData={data}
-            onClose={() => setSelectedNode(null)}
-            onNodeNavigate={handleNodeNavigate}
-            vaultId="lebergott"
-          />
-        )}
+          {/* Right panel */}
+          <aside style={{
+            width: 300, flexShrink: 0,
+            background: 'var(--bg-panel)',
+            borderLeft: '1px solid var(--border)',
+            display: 'flex', flexDirection: 'column', overflow: 'hidden',
+          }}>
+            <PanelHeader title={panelTitle} />
+
+            <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+              {loading ? (
+                <div style={{ padding: 16 }}>
+                  <LoadingPulse text="Laden..." />
+                </div>
+              ) : activeTab === 'chat' ? (
+                <ChatPanel
+                  vaultId="lebergott"
+                  selectedNode={selectedNode}
+                  onNodeNavigate={handleNodeNavigate}
+                />
+              ) : activeTab === 'gaps' ? (
+                <div style={{ flex: 1, overflowY: 'auto', padding: 12 }}>
+                  <GapPanel
+                    gaps={gaps}
+                    onGapClick={gap => {
+                      const node = data?.nodes?.find(n => n.id === gap.id)
+                      if (node) handleNodeClick(node)
+                    }}
+                  />
+                </div>
+              ) : (
+                <div style={{ flex: 1, overflowY: 'auto', padding: 12 }}>
+                  <BridgePanel bridges={bridges} />
+                </div>
+              )}
+            </div>
+          </aside>
+        </div>
       </div>
+
+      {/* Node detail overlay */}
+      {selectedNode && (
+        <NodeDetail
+          node={selectedNode}
+          graphData={data}
+          onClose={() => setSelectedNode(null)}
+          onNodeNavigate={handleNodeNavigate}
+          vaultId="lebergott"
+        />
+      )}
     </Layout>
   )
 }

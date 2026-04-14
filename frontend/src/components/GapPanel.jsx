@@ -1,18 +1,14 @@
 /* ============================================================
    GapPanel.jsx — Knowledge Gaps (InfraNodus live + cached)
-
-   Supports two data formats:
-     1. InfraNodus live/cached: { id, title, reason, bridge, bridge_potential, graph, source }
-     2. Demo fallback:          { id, title, reason, bridge, connections }
+   Dark card style, data-focused, Explore button per gap
    ============================================================ */
 
 import React from 'react'
 
-// Source badge colors
 const SOURCE_BADGE = {
-  live:   { bg: 'rgba(26, 58, 42, 0.12)', color: '#1a3a2a', dot: '#2d5a3d', label: 'Live' },
-  cached: { bg: 'rgba(197, 165, 90, 0.10)', color: '#9e8648', dot: '#c5a55a', label: 'Cached' },
-  demo:   { bg: 'rgba(100, 100, 100, 0.08)', color: '#888', dot: '#aaa', label: 'Demo' },
+  live:   { bg: 'rgba(0, 212, 255, 0.08)',   color: '#00d4ff', dot: '#00d4ff', label: 'Live' },
+  cached: { bg: 'rgba(255,255,255, 0.04)',    color: '#888',    dot: '#555',    label: 'Cached' },
+  demo:   { bg: 'rgba(255,255,255, 0.03)',    color: '#555',    dot: '#444',    label: 'Demo' },
 }
 
 function SourceBadge({ source }) {
@@ -21,15 +17,16 @@ function SourceBadge({ source }) {
   return (
     <span style={{
       display: 'inline-flex', alignItems: 'center', gap: 4,
-      padding: '1px 6px',
+      padding: '1px 7px',
       background: s.bg,
-      borderRadius: 8,
+      border: '1px solid rgba(255,255,255,0.06)',
+      borderRadius: 'var(--radius-full)',
       fontSize: '0.65rem',
       color: s.color,
-      fontFamily: "'DM Sans', sans-serif",
-      letterSpacing: '0.04em',
+      fontFamily: 'var(--font-mono)',
+      letterSpacing: '0.05em',
     }}>
-      <span style={{ width: 5, height: 5, borderRadius: '50%', background: s.dot, display: 'inline-block' }} />
+      <span style={{ width: 4, height: 4, borderRadius: '50%', background: s.dot, display: 'inline-block' }} />
       {s.label}
     </span>
   )
@@ -38,24 +35,23 @@ function SourceBadge({ source }) {
 function BridgePotentialBar({ value }) {
   if (value == null) return null
   const pct = Math.round(value * 100)
-  const color = pct >= 80 ? '#c5a55a' : pct >= 60 ? '#4a7c59' : '#888'
+  const color = pct >= 75 ? 'var(--accent)' : pct >= 50 ? 'var(--success)' : 'var(--text-dim)'
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 }}>
       <div style={{
         flex: 1, height: 2,
-        background: 'rgba(0,0,0,0.06)',
+        background: 'var(--border-muted)',
         borderRadius: 2, overflow: 'hidden',
       }}>
         <div style={{
           width: `${pct}%`, height: '100%',
           background: color,
           borderRadius: 2,
-          boxShadow: `0 0 4px ${color}66`,
           transition: 'width 0.4s ease',
         }} />
       </div>
-      <span style={{ fontSize: '0.65rem', color, fontFamily: "'DM Sans', sans-serif", flexShrink: 0 }}>
-        {pct}% Brückenpotenzial
+      <span style={{ fontSize: '0.65rem', color, fontFamily: 'var(--font-mono)', flexShrink: 0 }}>
+        {pct}%
       </span>
     </div>
   )
@@ -64,25 +60,22 @@ function BridgePotentialBar({ value }) {
 export default function GapPanel({ gaps = [], onGapClick, liveSource }) {
   if (!gaps.length) {
     return (
-      <div style={{ padding: 'var(--space-6)', color: 'var(--text-muted)', fontSize: '0.85rem', textAlign: 'center' }}>
-        Keine Lücken gefunden. Gut vernetztes Wissen!
+      <div style={{ padding: 'var(--space-6)', color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center' }}>
+        Keine Lücken gefunden — gut vernetztes Wissen.
       </div>
     )
   }
 
   return (
-    <div className="panel-enter" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-3)', flexWrap: 'wrap' }}>
         <span className="badge badge--amber">{gaps.length} Lücken</span>
-        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-          InfraNodus Wissensgraphen
-        </span>
+        <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>InfraNodus</span>
         {liveSource && <SourceBadge source={liveSource} />}
       </div>
 
       {gaps.map((gap) => {
-        // Normalize field names (live InfraNodus vs demo format)
         const id = gap.id || gap.concept || String(Math.random())
         const title = gap.title || gap.label || 'Unbekannte Lücke'
         const reason = gap.reason || gap.description || ''
@@ -95,56 +88,94 @@ export default function GapPanel({ gaps = [], onGapClick, liveSource }) {
         return (
           <div
             key={id}
-            className="gap-item"
-            onClick={() => onGapClick?.(gap)}
-            style={{ cursor: onGapClick ? 'pointer' : 'default' }}
+            style={{
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius-md)',
+              padding: 'var(--space-4)',
+              transition: 'border-color var(--transition-fast)',
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--border-focus)'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border)'}
           >
             {/* Title row */}
-            <div className="gap-item__title" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 6 }}>
-              <span>
-                <span style={{ marginRight: 'var(--space-2)' }}>⬡</span>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8, marginBottom: reason ? 6 : 0 }}>
+              <div style={{
+                fontSize: '0.82rem', fontWeight: 500,
+                color: 'var(--warning)',
+                lineHeight: 1.4,
+                flex: 1,
+              }}>
                 {title}
-              </span>
+              </div>
               {source && <SourceBadge source={source} />}
             </div>
 
             {/* Reason */}
-            {reason && <div className="gap-item__reason">{reason}</div>}
+            {reason && (
+              <div style={{
+                fontSize: '0.75rem', color: 'var(--text-muted)',
+                lineHeight: 1.5, marginBottom: bridge ? 6 : 0,
+              }}>
+                {reason}
+              </div>
+            )}
 
             {/* Bridge suggestion */}
             {bridge && (
-              <div className="gap-item__bridge">
+              <div style={{
+                fontSize: '0.72rem',
+                color: 'var(--accent)',
+                padding: '4px 8px',
+                background: 'var(--accent-glow)',
+                border: '1px solid rgba(0,212,255,0.12)',
+                borderRadius: 'var(--radius-sm)',
+                marginTop: 6,
+                marginBottom: 4,
+              }}>
                 → {bridge}
               </div>
             )}
 
-            {/* Bridge potential bar (InfraNodus live) */}
+            {/* Bridge potential bar */}
             {bridgePotential != null && <BridgePotentialBar value={bridgePotential} />}
 
-            {/* Footer: connections + graph name */}
+            {/* Footer */}
             <div style={{
-              marginTop: 'var(--space-2)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: 'var(--space-2)',
+              marginTop: 10,
+              display: 'flex', alignItems: 'center',
+              justifyContent: 'space-between', gap: 8,
             }}>
-              <span className="spore-count" style={{ color: 'var(--gap-amber-dim)' }}>
-                <span style={{
-                  width: 5, height: 5, borderRadius: '50%',
-                  background: 'var(--gap-amber)', display: 'inline-block',
-                }} />
+              <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                 {connections} Verbindung{connections !== 1 ? 'en' : ''}
+                {graphName && ` · ${graphName.replace('lebergott-', '')}`}
               </span>
-              {graphName && (
-                <span style={{
-                  fontSize: '0.62rem',
-                  color: 'var(--text-muted)',
-                  fontFamily: "'DM Sans', sans-serif",
-                  opacity: 0.7,
-                }}>
-                  {graphName.replace('lebergott-', '')}
-                </span>
+              {onGapClick && (
+                <button
+                  onClick={() => onGapClick(gap)}
+                  style={{
+                    padding: '3px 10px',
+                    background: 'transparent',
+                    border: '1px solid var(--border-focus)',
+                    borderRadius: 'var(--radius-sm)',
+                    fontSize: '0.68rem',
+                    color: 'var(--text-muted)',
+                    cursor: 'pointer',
+                    fontFamily: 'var(--font-sans)',
+                    transition: 'all var(--transition-fast)',
+                    flexShrink: 0,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'var(--accent)'
+                    e.currentTarget.style.color = 'var(--accent)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'var(--border-focus)'
+                    e.currentTarget.style.color = 'var(--text-muted)'
+                  }}
+                >
+                  Explore
+                </button>
               )}
             </div>
           </div>

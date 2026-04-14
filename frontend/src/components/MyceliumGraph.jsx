@@ -1,6 +1,6 @@
 /* ============================================================
-   MyceliumGraph.jsx — THE HERO COMPONENT
-   D3 force-directed knowledge graph with bioluminescent mycelium physics
+   MyceliumGraph.jsx — InfraNodus aesthetic
+   Dark canvas, cluster-colored nodes, thin edges, subtle breathing
    ============================================================ */
 
 import React, { useRef, useEffect, useCallback, useState } from 'react'
@@ -9,31 +9,20 @@ import {
   createSimulation,
   getClusterColor,
   getNodeRadius,
-  getNodeGlow,
   getLinkWidth,
   getLinkOpacity,
 } from '../utils/graphPhysics.js'
 
-// ---- Cluster legend items ----
+// ---- Cluster legend ----
 function ClusterLegend({ clusters }) {
   return (
     <div className="cluster-legend">
       {clusters.map((c) => (
         <div key={c.id} className="cluster-legend__item">
-          <div
-            className="cluster-legend__dot"
-            style={{ background: c.color, boxShadow: `0 0 4px ${c.color}` }}
-          />
+          <div className="cluster-legend__dot" style={{ background: c.color }} />
           {c.label}
         </div>
       ))}
-      <div className="cluster-legend__item">
-        <div
-          className="cluster-legend__dot"
-          style={{ background: '#ff9944', boxShadow: '0 0 4px #ff9944' }}
-        />
-        Wissens-Lücke
-      </div>
     </div>
   )
 }
@@ -42,9 +31,9 @@ function ClusterLegend({ clusters }) {
 function GraphControls({ onZoomIn, onZoomOut, onReset }) {
   return (
     <div className="graph-controls">
-      <button className="graph-controls__btn" onClick={onZoomIn} title="Hineinzoomen">+</button>
-      <button className="graph-controls__btn" onClick={onZoomOut} title="Herauszoomen">−</button>
-      <button className="graph-controls__btn" onClick={onReset} title="Zurücksetzen" style={{ fontSize: '0.75rem' }}>⌂</button>
+      <button className="graph-controls__btn" onClick={onZoomIn} title="Zoom in">+</button>
+      <button className="graph-controls__btn" onClick={onZoomOut} title="Zoom out">−</button>
+      <button className="graph-controls__btn" onClick={onReset} title="Reset" style={{ fontSize: '0.75rem' }}>⌂</button>
     </div>
   )
 }
@@ -55,25 +44,14 @@ function Tooltip({ node, x, y }) {
   return (
     <div
       className="mycelium-tooltip"
-      style={{
-        left: x + 14,
-        top: y - 10,
-        opacity: node ? 1 : 0,
-        pointerEvents: 'none',
-      }}
+      style={{ left: x + 14, top: y - 10, pointerEvents: 'none' }}
     >
       <div className="mycelium-tooltip__title">{node.label}</div>
       <div className="mycelium-tooltip__meta">
-        {node.connections} Verbindungen · Cluster {node.cluster >= 0 ? node.cluster : '—'}
+        {node.connections} connections
+        {node.cluster >= 0 ? ` · cluster ${node.cluster}` : ''}
+        {node.isGap ? ' · gap' : ''}
       </div>
-      {node.isGap && (
-        <div className="mycelium-tooltip__gap-label">⬡ Wissens-Lücke</div>
-      )}
-      {node.isHub && (
-        <div style={{ fontSize: '0.7rem', color: 'var(--accent-green)', marginTop: '2px' }}>
-          ✦ Hub-Knoten
-        </div>
-      )}
     </div>
   )
 }
@@ -107,109 +85,51 @@ export default function MyceliumGraph({ data, onNodeClick, selectedNodeId, perso
     const svg = d3.select(svgRef.current)
     svg.selectAll('*').remove()
 
-    // Deep clone nodes and links so D3 can mutate them
     const nodes = data.nodes.map((n) => ({ ...n }))
     const links = data.links.map((l) => ({ ...l }))
 
-    // ---- Zoom behaviour ----
+    // ---- SVG defs: single hover glow filter ----
+    const defs = svg.append('defs')
+    const hoverGlow = defs.append('filter')
+      .attr('id', 'hover-glow')
+      .attr('x', '-60%').attr('y', '-60%')
+      .attr('width', '220%').attr('height', '220%')
+    hoverGlow.append('feGaussianBlur')
+      .attr('in', 'SourceGraphic').attr('stdDeviation', '3').attr('result', 'blur')
+    const feMerge = hoverGlow.append('feMerge')
+    feMerge.append('feMergeNode').attr('in', 'blur')
+    feMerge.append('feMergeNode').attr('in', 'SourceGraphic')
+
+    // ---- Zoom ----
     const zoomBehaviour = d3
       .zoom()
       .scaleExtent([0.15, 4])
-      .on('zoom', (event) => {
-        container.attr('transform', event.transform)
-      })
+      .on('zoom', (event) => container.attr('transform', event.transform))
 
     svg.call(zoomBehaviour)
     zoomRef.current = zoomBehaviour
 
-    // ---- Root container ----
     const container = svg.append('g').attr('class', 'mycelium-root')
 
-    // ---- Defs: glow filters per cluster ----
-    const defs = svg.append('defs')
-
-    // Generic node glow filter
-    const glowFilter = defs.append('filter')
-      .attr('id', 'node-glow')
-      .attr('x', '-50%').attr('y', '-50%')
-      .attr('width', '200%').attr('height', '200%')
-    glowFilter.append('feGaussianBlur')
-      .attr('in', 'SourceGraphic').attr('stdDeviation', '4').attr('result', 'blur')
-    const feMerge = glowFilter.append('feMerge')
-    feMerge.append('feMergeNode').attr('in', 'blur')
-    feMerge.append('feMergeNode').attr('in', 'SourceGraphic')
-
-    // Hub glow (stronger)
-    const hubGlowFilter = defs.append('filter')
-      .attr('id', 'hub-glow')
-      .attr('x', '-80%').attr('y', '-80%')
-      .attr('width', '260%').attr('height', '260%')
-    hubGlowFilter.append('feGaussianBlur')
-      .attr('in', 'SourceGraphic').attr('stdDeviation', '8').attr('result', 'blur')
-    const feMergeHub = hubGlowFilter.append('feMerge')
-    feMergeHub.append('feMergeNode').attr('in', 'blur')
-    feMergeHub.append('feMergeNode').attr('in', 'SourceGraphic')
-
-    // Gap glow (amber)
-    const gapGlowFilter = defs.append('filter')
-      .attr('id', 'gap-glow')
-      .attr('x', '-50%').attr('y', '-50%')
-      .attr('width', '200%').attr('height', '200%')
-    gapGlowFilter.append('feGaussianBlur')
-      .attr('in', 'SourceGraphic').attr('stdDeviation', '5').attr('result', 'blur')
-    const feMergeGap = gapGlowFilter.append('feMerge')
-    feMergeGap.append('feMergeNode').attr('in', 'blur')
-    feMergeGap.append('feMergeNode').attr('in', 'SourceGraphic')
-
-    // Personalized glow (gold — warm, editorial)
-    const personalizedGlowFilter = defs.append('filter')
-      .attr('id', 'personalized-glow')
-      .attr('x', '-80%').attr('y', '-80%')
-      .attr('width', '260%').attr('height', '260%')
-    personalizedGlowFilter.append('feGaussianBlur')
-      .attr('in', 'SourceGraphic').attr('stdDeviation', '7').attr('result', 'blur')
-    const feMergePersonalized = personalizedGlowFilter.append('feMerge')
-    feMergePersonalized.append('feMergeNode').attr('in', 'blur')
-    feMergePersonalized.append('feMergeNode').attr('in', 'SourceGraphic')
-
-    // Nutrient flow gradient for links
-    const linkGradient = defs.append('linearGradient')
-      .attr('id', 'link-flow')
-      .attr('gradientUnits', 'userSpaceOnUse')
-    linkGradient.append('stop').attr('offset', '0%').attr('stop-color', 'rgba(0,255,136,0)  ')
-    linkGradient.append('stop').attr('offset', '50%').attr('stop-color', 'rgba(0,255,136,0.6)')
-    linkGradient.append('stop').attr('offset', '100%').attr('stop-color', 'rgba(0,255,136,0)')
-
-    // ---- Links layer ----
+    // ---- Links — thin, light gray, gentle curves ----
     const linkGroup = container.append('g').attr('class', 'links-layer')
     const linkSelection = linkGroup
       .selectAll('path')
       .data(links)
       .join('path')
       .attr('class', 'mycelium-link')
+      .attr('stroke', '#333')
       .attr('stroke-width', (d) => getLinkWidth(d.strength))
       .attr('stroke-opacity', (d) => getLinkOpacity(d.strength))
       .attr('fill', 'none')
-      .attr('stroke', (d) => {
-        // Color links by source cluster
-        const srcNode = nodes.find((n) => n.id === (d.source?.id || d.source))
-        if (srcNode?.isGap) return '#cc6622'
-        return getClusterColor(srcNode?.cluster ?? 0, 0.5)
-      })
 
-    // ---- Nodes layer ----
+    // ---- Nodes ----
     const nodeGroup = container.append('g').attr('class', 'nodes-layer')
-
     const nodeSelection = nodeGroup
       .selectAll('g')
       .data(nodes)
       .join('g')
-      .attr('class', (d) => {
-        let cls = 'mycelium-node'
-        if (d.isHub) cls += ' mycelium-node--hub'
-        if (d.isGap) cls += ' mycelium-node--gap'
-        return cls
-      })
+      .attr('class', 'mycelium-node')
       .style('cursor', 'pointer')
       .call(
         d3.drag()
@@ -217,108 +137,97 @@ export default function MyceliumGraph({ data, onNodeClick, selectedNodeId, perso
             if (!event.active) simulationRef.current.alphaTarget(0.3).restart()
             d.fx = d.x; d.fy = d.y
           })
-          .on('drag', (event, d) => {
-            d.fx = event.x; d.fy = event.y
-          })
+          .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y })
           .on('end', (event, d) => {
             if (!event.active) simulationRef.current.alphaTarget(0)
             d.fx = null; d.fy = null
           })
       )
 
-    // Node circle
-    const personalizedSet = new Set(personalizedNodeIds)
+    // ---- Node circles ----
     nodeSelection
       .append('circle')
       .attr('r', (d) => getNodeRadius(d.connections, d.isHub))
       .attr('fill', (d) => {
-        if (personalizedSet.has(d.id)) return 'rgba(197, 165, 90, 0.55)'
-        if (d.isGap) return getClusterColor(-1, 0.6)
-        return getClusterColor(d.cluster, d.isHub ? 0.85 : 0.65)
+        if (d.isGap) return getClusterColor(-1, 0.7)
+        return getClusterColor(d.cluster, d.isHub ? 0.9 : 0.75)
       })
       .attr('stroke', (d) => {
-        if (personalizedSet.has(d.id)) return '#c5a55a'
-        if (d.isGap) return '#ff9944'
-        return getClusterColor(d.cluster, d.isHub ? 1 : 0.7)
+        if (d.isGap) return '#f97316'
+        return getClusterColor(d.cluster, d.isHub ? 1 : 0.6)
       })
-      .attr('stroke-width', (d) => (personalizedSet.has(d.id) ? 2 : d.isHub ? 1.5 : 0.8))
-      .attr('filter', (d) => {
-        if (personalizedSet.has(d.id)) return 'url(#personalized-glow)'
-        if (d.isGap) return 'url(#gap-glow)'
-        if (d.isHub) return 'url(#hub-glow)'
-        return 'url(#node-glow)'
-      })
+      .attr('stroke-width', (d) => d.id === selectedNodeId ? 2 : d.isHub ? 1 : 0.5)
+      // No filter by default — only on hover/selected (see interaction below)
 
-    // Node label (visible for hubs and moderately connected nodes)
+    // ---- Node labels — hub + high-degree nodes always visible ----
     nodeSelection
       .append('text')
-      .attr('class', (d) => {
-        let cls = 'mycelium-label'
-        if (d.isHub) cls += ' mycelium-label--hub'
-        if (d.isGap) cls += ' mycelium-label--gap'
-        return cls
-      })
-      .attr('dy', (d) => getNodeRadius(d.connections, d.isHub) + 12)
+      .attr('class', 'mycelium-label')
+      .attr('dy', (d) => getNodeRadius(d.connections, d.isHub) + 11)
       .attr('text-anchor', 'middle')
       .text((d) => {
-        if (personalizedSet.has(d.id)) return d.label
-        if (d.isHub || d.connections >= 6) return d.label
-        if (d.isGap) return d.label
-        return '' // hide labels for low-connection nodes (declutter)
+        if (d.isHub || d.connections >= 5 || d.isGap) return d.label
+        return ''
       })
 
     // ---- Interaction ----
     nodeSelection
       .on('mouseenter', (event, d) => {
-        // Highlight connected links
+        // Dim unrelated links
         linkSelection
           .attr('stroke-opacity', (l) => {
             const srcId = l.source?.id || l.source
             const tgtId = l.target?.id || l.target
-            return srcId === d.id || tgtId === d.id ? 0.9 : 0.05
+            return srcId === d.id || tgtId === d.id ? 0.7 : 0.04
+          })
+          .attr('stroke', (l) => {
+            const srcId = l.source?.id || l.source
+            const tgtId = l.target?.id || l.target
+            if (srcId === d.id || tgtId === d.id) return getClusterColor(d.cluster, 0.8)
+            return '#333'
           })
           .attr('stroke-width', (l) => {
             const srcId = l.source?.id || l.source
             const tgtId = l.target?.id || l.target
             return srcId === d.id || tgtId === d.id
-              ? getLinkWidth(l.strength) + 1
+              ? getLinkWidth(l.strength) + 0.5
               : getLinkWidth(l.strength)
           })
 
-        // Show all labels for connected nodes
+        // Reveal labels for connected neighbors
         nodeSelection.select('text').text((n) => {
-          const isConnected = links.some((l) => {
+          if (n.id === d.id) return n.label
+          const connected = links.some((l) => {
             const srcId = l.source?.id || l.source
             const tgtId = l.target?.id || l.target
             return (srcId === d.id && tgtId === n.id) || (tgtId === d.id && srcId === n.id)
           })
-          return isConnected || n.id === d.id ? n.label : (n.isHub || n.connections >= 6 ? n.label : '')
+          if (connected) return n.label
+          return n.isHub || n.connections >= 5 || n.isGap ? n.label : ''
         })
 
-        // Tooltip
+        // Glow on hovered node
+        nodeSelection.select('circle')
+          .attr('filter', (n) => n.id === d.id ? 'url(#hover-glow)' : null)
+
         const rect = wrapperRef.current.getBoundingClientRect()
-        setTooltip({
-          node: d,
-          x: event.clientX - rect.left,
-          y: event.clientY - rect.top,
-        })
+        setTooltip({ node: d, x: event.clientX - rect.left, y: event.clientY - rect.top })
       })
       .on('mousemove', (event) => {
         const rect = wrapperRef.current.getBoundingClientRect()
-        setTooltip((prev) => ({
-          ...prev,
-          x: event.clientX - rect.left,
-          y: event.clientY - rect.top,
-        }))
+        setTooltip((prev) => ({ ...prev, x: event.clientX - rect.left, y: event.clientY - rect.top }))
       })
       .on('mouseleave', () => {
         linkSelection
           .attr('stroke-opacity', (d) => getLinkOpacity(d.strength))
+          .attr('stroke', '#333')
           .attr('stroke-width', (d) => getLinkWidth(d.strength))
 
         nodeSelection.select('text').text((n) =>
-          personalizedSet.has(n.id) || n.isHub || n.connections >= 6 || n.isGap ? n.label : ''
+          n.isHub || n.connections >= 5 || n.isGap ? n.label : ''
         )
+
+        nodeSelection.select('circle').attr('filter', null)
 
         setTooltip({ node: null, x: 0, y: 0 })
       })
@@ -327,11 +236,11 @@ export default function MyceliumGraph({ data, onNodeClick, selectedNodeId, perso
         if (onNodeClick) onNodeClick(d)
       })
 
-    // ---- Highlight selected node ----
+    // ---- Selected node highlight ----
     if (selectedNodeId) {
-      nodeSelection.select('circle').attr('stroke-width', (d) =>
-        d.id === selectedNodeId ? 3 : (d.isHub ? 1.5 : 0.8)
-      )
+      nodeSelection.select('circle')
+        .attr('stroke-width', (d) => d.id === selectedNodeId ? 2 : d.isHub ? 1 : 0.5)
+        .attr('filter', (d) => d.id === selectedNodeId ? 'url(#hover-glow)' : null)
     }
 
     // ---- Simulation ----
@@ -344,34 +253,24 @@ export default function MyceliumGraph({ data, onNodeClick, selectedNodeId, perso
         const tx = d.target.x, ty = d.target.y
         const ddx = tx - sx, ddy = ty - sy
         const len = Math.sqrt(ddx * ddx + ddy * ddy) || 1
-        // Perpendicular unit vector for S-curve control points
-        const px = -ddy / len, py = ddx / len
-        const offset = 60
-        const cp1x = sx + ddx / 3 + px * offset
-        const cp1y = sy + ddy / 3 + py * offset
-        const cp2x = sx + 2 * ddx / 3 - px * offset
-        const cp2y = sy + 2 * ddy / 3 - py * offset
-        return `M ${sx} ${sy} C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${tx} ${ty}`
+        // Very gentle quadratic curve (6% perpendicular offset)
+        const cpx = (sx + tx) / 2 + (-ddy / len) * (len * 0.06)
+        const cpy = (sy + ty) / 2 + (ddx / len) * (len * 0.06)
+        return `M ${sx} ${sy} Q ${cpx} ${cpy} ${tx} ${ty}`
       })
-
       nodeSelection.attr('transform', (d) => `translate(${d.x},${d.y})`)
     })
 
     // ---- Initial zoom to fit ----
-    const initialTransform = d3.zoomIdentity.translate(width * 0.1, height * 0.1).scale(0.85)
-    svg.call(zoomBehaviour.transform, initialTransform)
+    svg.call(zoomBehaviour.transform, d3.zoomIdentity.translate(width * 0.1, height * 0.1).scale(0.85))
 
-    return () => {
-      simulation.stop()
-    }
+    return () => simulation.stop()
   }, [data, dimensions, selectedNodeId, personalizedNodeIds])
 
   // ---- Zoom controls ----
   const handleZoom = useCallback((factor) => {
     if (!svgRef.current || !zoomRef.current) return
-    d3.select(svgRef.current).transition().duration(300).call(
-      zoomRef.current.scaleBy, factor
-    )
+    d3.select(svgRef.current).transition().duration(300).call(zoomRef.current.scaleBy, factor)
   }, [])
 
   const handleReset = useCallback(() => {
@@ -397,18 +296,10 @@ export default function MyceliumGraph({ data, onNodeClick, selectedNodeId, perso
         onReset={handleReset}
       />
 
-      {/* Node count indicator */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 'var(--space-4)',
-          left: 'var(--space-4)',
-          zIndex: 10,
-        }}
-      >
+      <div style={{ position: 'absolute', top: 'var(--space-4)', left: 'var(--space-4)', zIndex: 10 }}>
         <span className="spore-count">
           <span className="spore-count__dot" />
-          {data?.nodes?.length ?? 0} Knoten · {data?.links?.length ?? 0} Verbindungen
+          {data?.nodes?.length ?? 0} nodes · {data?.links?.length ?? 0} edges
         </span>
       </div>
     </div>

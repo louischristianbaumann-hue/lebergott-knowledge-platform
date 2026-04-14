@@ -1,33 +1,19 @@
 /* ============================================================
    ChatPanel.jsx — Lebergott Knowledge Chat
-   - Lebergott brand colors (cream/forest/gold) throughout
-   - [[Wikilink]] parsing → clickable gold buttons → graph navigation
-   - Role-aware suggested questions
-   - Chat history in sessionStorage
-   - Typing indicator (gold dots)
+   InfraNodus dark theme — functional, clean, no decoration
+   - Messages list top, input bar bottom fixed
+   - User bubbles: right-aligned, accent bg
+   - Assistant bubbles: left-aligned, panel bg
+   - 3-dot typing indicator
+   - Error toast on failure
+   - [[Wikilink]] parsing → graph navigation
    ============================================================ */
 
 import React, { useState, useRef, useEffect, useMemo } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
+import { useToast } from '../context/ToastContext.jsx'
 
 const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/v1'
-
-const LB = {
-  forest:    '#1a3a2a',
-  forestDp:  '#0f2418',
-  gold:      '#c5a55a',
-  goldDim:   '#9e8648',
-  goldGlow:  'rgba(197,165,90,0.12)',
-  goldBorder:'rgba(197,165,90,0.28)',
-  cream:     '#faf9f5',
-  creamDim:  '#f0ede4',
-  creamBrd:  'rgba(26,58,42,0.10)',
-  text:      '#2c2c2a',
-  textMid:   '#4a6a4a',
-  textLight: '#7a9a7a',
-  warmGray:  '#b0aea5',
-  red:       '#a83020',
-}
 
 // Role-based suggested questions
 const SUGGESTED_QUESTIONS = {
@@ -35,22 +21,16 @@ const SUGGESTED_QUESTIONS = {
     'Welche Symptome deuten auf Leberprobleme hin?',
     'Was kann ich für meine Entgiftung tun?',
     'Welche Ernährung unterstützt meine Leber?',
-    'Was verbindet meine Beschwerden?',
-    'Wie funktioniert die Selbstheilungskraft?',
   ],
   staff: [
     'Welche Wissenscluster sind am stärksten vernetzt?',
     'Wo sind analytische Lücken im Lebergott-Wissen?',
     'Was verbindet Ernährung und Entgiftung?',
-    'Zeige Brücken zwischen den Haupt-Clustern.',
-    'Welche Konzepte fehlen Klienten am häufigsten?',
   ],
   admin: [
     'Welche Content-Lücken gibt es im Wissensnetz?',
     'Wo entstehen neue Produkt-Ideen aus Gaps?',
-    'Welche Themen werden am meisten gefragt?',
     'Was sind die stärksten Brücken-Konzepte?',
-    'Zeige alle isolierten Wissensknoten.',
   ],
   default: [
     'Wo sind die größten Wissenslücken?',
@@ -75,6 +55,7 @@ export default function ChatPanel({
   initialContext = '',
 }) {
   const { token, user } = useAuth()
+  const { toast } = useToast()
   const sessionKey = useMemo(() => `lb_chat_${user?.id || 'anon'}`, [user?.id])
 
   const [messages, setMessages] = useState(() => {
@@ -85,7 +66,7 @@ export default function ChatPanel({
     return [WELCOME_MESSAGE]
   })
 
-  const [input, setInput]   = useState(initialContext)
+  const [input, setInput]     = useState(initialContext)
   const [loading, setLoading] = useState(false)
   const messagesEndRef = useRef(null)
   const inputRef       = useRef(null)
@@ -95,6 +76,7 @@ export default function ChatPanel({
     try { sessionStorage.setItem(sessionKey, JSON.stringify(messages)) } catch { /* ignore */ }
   }, [messages, sessionKey])
 
+  // Scroll to bottom on new messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
@@ -108,12 +90,11 @@ export default function ChatPanel({
     if (!text.trim() || loading) return
 
     const userMsg = { role: 'user', text: text.trim() }
-    setMessages((prev) => [...prev, userMsg])
+    setMessages(prev => [...prev, userMsg])
     setInput('')
     setLoading(true)
 
-    // History: last 10 messages before this user message (for n8n context)
-    const history = messages.slice(-10).map((m) => ({ role: m.role, text: m.text }))
+    const history = messages.slice(-10).map(m => ({ role: m.role, text: m.text }))
 
     const authHeaders = {}
     if (token && !token.startsWith('demo_')) {
@@ -121,49 +102,35 @@ export default function ChatPanel({
     }
 
     try {
-      let answered = false
+      const res = await fetch(`${BASE_URL}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...authHeaders },
+        body: JSON.stringify({
+          vault_id: vaultId,
+          question: text.trim(),
+          selected_node_id: selectedNode?.id || null,
+          role: user?.role || 'client',
+          history,
+        }),
+        signal: AbortSignal.timeout(22000),
+      })
 
-      // Backend orchestrates: n8n bot → local graph analysis → demo fallback
-      try {
-        const res = await fetch(`${BASE_URL}/chat`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', ...authHeaders },
-          body: JSON.stringify({
-            vault_id: vaultId,
-            question: text.trim(),
-            selected_node_id: selectedNode?.id || null,
-            role: user?.role || 'client',
-            history,
-          }),
-          // 22s: allows n8n (15s timeout) + local graph fallback buffer
-          signal: AbortSignal.timeout(22000),
-        })
-        if (res.ok) {
-          const data = await res.json()
-          setMessages((prev) => [...prev, {
-            role: 'assistant',
-            text: data.answer || 'Keine Antwort gefunden.',
-            nodes: data.relevant_nodes || [],
-            gaps: data.gaps || [],
-            bridges: data.bridges || [],
-            followUps: data.follow_up_questions || [],
-          }])
-          answered = true
-        }
-      } catch { /* backend offline */ }
-
-      // Frontend demo fallback (backend completely unreachable)
-      if (!answered) {
-        setMessages((prev) => [...prev, {
+      if (res.ok) {
+        const data = await res.json()
+        setMessages(prev => [...prev, {
           role: 'assistant',
-          text: _localFallback(text.trim()),
-          nodes: [],
-          gaps: [],
-          followUps: ['Welche Cluster gibt es?', 'Wo sind [[Wissenslücken]]?'],
+          text: data.answer || 'Keine Antwort gefunden.',
+          nodes: data.relevant_nodes || [],
+          gaps: data.gaps || [],
+          bridges: data.bridges || [],
+          followUps: data.follow_up_questions || [],
         }])
+      } else {
+        throw new Error(`HTTP ${res.status}`)
       }
-    } catch {
-      setMessages((prev) => [...prev, {
+    } catch (err) {
+      toast.error('Verbindung unterbrochen – versuche erneut')
+      setMessages(prev => [...prev, {
         role: 'assistant',
         text: _localFallback(text.trim()),
         nodes: [],
@@ -183,7 +150,6 @@ export default function ChatPanel({
     }
   }
 
-  // Wikilink click: use provided handler or synthesize a node from label
   const handleWikiClick = (label) => {
     if (onWikiLinkClick) {
       onWikiLinkClick(label)
@@ -202,67 +168,80 @@ export default function ChatPanel({
   const showSuggested = messages.length <= 1
 
   return (
-    <div style={cs.root}>
-      {/* Messages */}
-      <div className="lb-scroll" style={cs.messageList}>
-        {messages.map((msg, i) => (
-          <ChatMessage
-            key={i}
-            message={msg}
-            onFollowUp={sendMessage}
-            onNodeClick={onNodeNavigate}
-            onWikiClick={handleWikiClick}
-          />
-        ))}
+    <>
+      <style>{TYPING_KEYFRAMES}</style>
+      <div style={cs.root}>
+        {/* Messages scroll area */}
+        <div style={cs.messageList}>
+          {messages.map((msg, i) => (
+            <ChatMessage
+              key={i}
+              message={msg}
+              onFollowUp={sendMessage}
+              onNodeClick={onNodeNavigate}
+              onWikiClick={handleWikiClick}
+            />
+          ))}
 
-        {/* Typing indicator */}
-        {loading && (
-          <div style={cs.typingBubble}>
-            <span className="lb-typing-dot" />
-            <span className="lb-typing-dot" />
-            <span className="lb-typing-dot" />
+          {/* Typing indicator */}
+          {loading && (
+            <div style={cs.typingBubble}>
+              <span style={{ ...cs.dot, animationDelay: '0ms' }} />
+              <span style={{ ...cs.dot, animationDelay: '160ms' }} />
+              <span style={{ ...cs.dot, animationDelay: '320ms' }} />
+            </div>
+          )}
+
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Suggested questions — shown only on empty chat */}
+        {showSuggested && !loading && (
+          <div style={cs.suggestions}>
+            {suggestedQuestions.map((q, i) => (
+              <SuggestedChip key={i} text={q} onClick={() => sendMessage(q)} />
+            ))}
           </div>
         )}
 
-        <div ref={messagesEndRef} />
-      </div>
+        {/* Selected node context badge */}
+        {selectedNode && (
+          <div style={cs.nodeCtx}>
+            <span style={{ color: 'var(--accent)', fontSize: '0.65rem' }}>◆</span>
+            <span>Kontext: <strong style={{ color: 'var(--accent)' }}>{selectedNode.label}</strong></span>
+          </div>
+        )}
 
-      {/* Suggested questions */}
-      {showSuggested && !loading && (
-        <div style={cs.suggestions}>
-          {suggestedQuestions.slice(0, 3).map((q, i) => (
-            <SuggestedChip key={i} text={q} onClick={() => sendMessage(q)} />
-          ))}
-        </div>
-      )}
-
-      {/* Selected node context badge */}
-      {selectedNode && (
-        <div style={cs.nodeCtx}>
-          <span style={cs.nodeCtxDot}>◆</span>
-          <span>Kontext: <strong style={{ color: LB.forest }}>{selectedNode.label}</strong></span>
-        </div>
-      )}
-
-      {/* Input area */}
-      <div style={cs.inputArea}>
-        <div style={cs.inputRow}>
-          <InputField
-            inputRef={inputRef}
-            value={input}
-            onChange={setInput}
-            onKeyDown={handleKeyDown}
-            disabled={loading}
-          />
-          <SendButton onClick={() => sendMessage(input)} disabled={loading || !input.trim()} />
+        {/* Input bar — fixed at bottom */}
+        <div style={cs.inputArea}>
+          <div style={cs.inputRow}>
+            <InputField
+              inputRef={inputRef}
+              value={input}
+              onChange={setInput}
+              onKeyDown={handleKeyDown}
+              disabled={loading}
+            />
+            <SendButton onClick={() => sendMessage(input)} disabled={loading || !input.trim()} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
 
-/* ── Suggested chip ─────────────────────────────────────────────── */
+/* ── Typing animation keyframes ─────────────────────────────── */
+
+const TYPING_KEYFRAMES = `
+  @keyframes chat-dot-bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-5px); opacity: 1; }
+  }
+`
+
+
+/* ── Suggested chip ─────────────────────────────────────────── */
 
 function SuggestedChip({ text, onClick }) {
   const [hover, setHover] = useState(false)
@@ -272,15 +251,15 @@ function SuggestedChip({ text, onClick }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        padding: '5px 11px',
-        background: hover ? LB.goldGlow : 'transparent',
-        border: `1px solid ${hover ? LB.gold : LB.goldBorder}`,
-        borderRadius: '20px',
-        fontSize: '0.7rem',
-        color: hover ? LB.goldDim : LB.textMid,
+        padding: '5px 12px',
+        background: hover ? 'var(--bg-card-hover)' : 'transparent',
+        border: `1px solid ${hover ? 'var(--border-focus)' : 'var(--border)'}`,
+        borderRadius: 'var(--radius-full)',
+        fontSize: '0.72rem',
+        color: hover ? 'var(--text)' : 'var(--text-muted)',
         cursor: 'pointer',
-        fontFamily: "'DM Sans', sans-serif",
-        transition: 'all 150ms ease',
+        fontFamily: 'var(--font-sans)',
+        transition: 'all var(--transition-fast)',
         whiteSpace: 'nowrap',
         flexShrink: 0,
       }}
@@ -291,7 +270,7 @@ function SuggestedChip({ text, onClick }) {
 }
 
 
-/* ── Input field ────────────────────────────────────────────────── */
+/* ── Input field ────────────────────────────────────────────── */
 
 function InputField({ inputRef, value, onChange, onKeyDown, disabled }) {
   const [focused, setFocused] = useState(false)
@@ -300,31 +279,31 @@ function InputField({ inputRef, value, onChange, onKeyDown, disabled }) {
       ref={inputRef}
       type="text"
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={e => onChange(e.target.value)}
       onKeyDown={onKeyDown}
-      placeholder="Frage zum Wissensraum stellen…"
+      placeholder="Stelle eine Frage zum Lebergott-Wissen..."
       disabled={disabled}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
       style={{
         flex: 1,
-        padding: '11px 14px',
-        background: LB.creamDim,
-        border: `1.5px solid ${focused ? LB.gold : LB.creamBrd}`,
-        borderRadius: '10px',
-        color: LB.text,
+        padding: '10px 14px',
+        background: 'var(--bg-card)',
+        border: `1px solid ${focused ? 'var(--border-focus)' : 'var(--border)'}`,
+        borderRadius: 'var(--radius-md)',
+        color: 'var(--text)',
         fontSize: '0.83rem',
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: 'var(--font-sans)',
         outline: 'none',
-        transition: 'border-color 200ms ease, box-shadow 200ms ease',
-        boxShadow: focused ? `0 0 0 3px rgba(197,165,90,0.12)` : 'none',
+        transition: 'border-color var(--transition-fast)',
+        boxShadow: focused ? '0 0 0 2px rgba(0,212,255,0.08)' : 'none',
       }}
     />
   )
 }
 
 
-/* ── Send button ────────────────────────────────────────────────── */
+/* ── Send button ────────────────────────────────────────────── */
 
 function SendButton({ onClick, disabled }) {
   const [hover, setHover] = useState(false)
@@ -335,17 +314,15 @@ function SendButton({ onClick, disabled }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        padding: '11px 18px',
-        background: disabled ? LB.creamDim : hover ? '#143020' : LB.forest,
-        border: 'none',
-        borderRadius: '10px',
-        color: disabled ? LB.warmGray : LB.cream,
-        fontSize: '0.9rem',
+        padding: '10px 16px',
+        background: disabled ? 'var(--bg-card)' : hover ? 'rgba(0,212,255,0.2)' : 'rgba(0,212,255,0.1)',
+        border: `1px solid ${disabled ? 'var(--border)' : 'rgba(0,212,255,0.3)'}`,
+        borderRadius: 'var(--radius-md)',
+        color: disabled ? 'var(--text-dim)' : 'var(--accent)',
+        fontSize: '1rem',
         fontWeight: 600,
         cursor: disabled ? 'default' : 'pointer',
-        transition: 'all 180ms ease',
-        transform: (!disabled && hover) ? 'translateY(-1px)' : 'none',
-        boxShadow: (!disabled && hover) ? '0 4px 12px rgba(26,58,42,0.2)' : 'none',
+        transition: 'all var(--transition-fast)',
         flexShrink: 0,
       }}
     >
@@ -355,43 +332,44 @@ function SendButton({ onClick, disabled }) {
 }
 
 
-/* ── Individual chat message ────────────────────────────────────── */
+/* ── Individual chat message ────────────────────────────────── */
 
 function ChatMessage({ message, onFollowUp, onNodeClick, onWikiClick }) {
   const isUser = message.role === 'user'
 
   return (
     <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: isUser ? 'flex-end' : 'flex-start',
+      maxWidth: '88%',
       alignSelf: isUser ? 'flex-end' : 'flex-start',
-      maxWidth: '92%',
-      animation: 'lb-fade-up 0.3s ease both',
     }}>
       {/* Message bubble */}
       <div style={{
         padding: '10px 14px',
-        background: isUser ? LB.forest : LB.cream,
-        border: `1px solid ${isUser ? 'rgba(26,58,42,0.6)' : LB.creamBrd}`,
-        borderRadius: isUser ? '14px 14px 4px 14px' : '4px 14px 14px 14px',
+        background: isUser ? 'rgba(0,212,255,0.1)' : 'var(--bg-panel)',
+        border: `1px solid ${isUser ? 'rgba(0,212,255,0.25)' : 'var(--border)'}`,
+        borderRadius: isUser ? '12px 12px 3px 12px' : '3px 12px 12px 12px',
         fontSize: '0.82rem',
-        color: isUser ? LB.cream : LB.text,
+        color: 'var(--text)',
         lineHeight: 1.65,
-        boxShadow: '0 1px 4px rgba(26,58,42,0.06)',
       }}>
         <RenderMarkdown text={message.text} onWikiClick={onWikiClick} isUser={isUser} />
       </div>
 
-      {/* Relevant nodes (clickable) */}
+      {/* Relevant nodes (clickable chips) */}
       {message.nodes?.length > 0 && (
         <div style={{ marginTop: '6px', display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
-          {message.nodes.map((node) => (
+          {message.nodes.map(node => (
             <NodeChip key={node.id} node={node} onClick={() => onNodeClick?.(node)} />
           ))}
         </div>
       )}
 
-      {/* Follow-up chips — horizontal, pill-shaped */}
+      {/* Follow-up questions */}
       {!isUser && message.followUps?.length > 0 && (
-        <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+        <div style={{ marginTop: '6px', display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
           {message.followUps.map((q, i) => (
             <FollowUpChip key={i} text={q} onClick={() => onFollowUp?.(q)} />
           ))}
@@ -402,10 +380,11 @@ function ChatMessage({ message, onFollowUp, onNodeClick, onWikiClick }) {
 }
 
 
-/* ── Node chip (in message) ─────────────────────────────────────── */
+/* ── Node chip ──────────────────────────────────────────────── */
 
 function NodeChip({ node, onClick }) {
   const [hover, setHover] = useState(false)
+  const isGap = node.is_gap
   return (
     <button
       onClick={onClick}
@@ -413,27 +392,26 @@ function NodeChip({ node, onClick }) {
       onMouseLeave={() => setHover(false)}
       style={{
         padding: '3px 9px',
-        background: node.is_gap
-          ? (hover ? 'rgba(180,80,30,0.12)' : 'rgba(180,80,30,0.06)')
-          : (hover ? LB.goldGlow : 'rgba(197,165,90,0.06)'),
-        border: `1px solid ${node.is_gap ? 'rgba(180,80,30,0.25)' : LB.goldBorder}`,
-        borderRadius: '20px',
+        background: hover
+          ? (isGap ? 'rgba(245,158,11,0.12)' : 'rgba(0,212,255,0.08)')
+          : 'transparent',
+        border: `1px solid ${isGap ? 'rgba(245,158,11,0.3)' : 'rgba(0,212,255,0.2)'}`,
+        borderRadius: 'var(--radius-full)',
         fontSize: '0.68rem',
-        color: node.is_gap ? '#8b4020' : LB.goldDim,
+        color: isGap ? 'var(--warning)' : 'var(--accent)',
         cursor: 'pointer',
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: 'var(--font-sans)',
         fontWeight: 500,
-        transition: 'all 150ms ease',
-        transform: hover ? 'translateY(-1px)' : 'none',
+        transition: 'all var(--transition-fast)',
       }}
     >
-      {node.is_gap ? '◇' : '◆'} {node.label}
+      {isGap ? '◇' : '◆'} {node.label}
     </button>
   )
 }
 
 
-/* ── Follow-up chip ─────────────────────────────────────────────── */
+/* ── Follow-up chip ─────────────────────────────────────────── */
 
 function FollowUpChip({ text, onClick }) {
   const [hover, setHover] = useState(false)
@@ -444,15 +422,15 @@ function FollowUpChip({ text, onClick }) {
       onMouseLeave={() => setHover(false)}
       style={{
         textAlign: 'left',
-        padding: '4px 11px',
-        background: hover ? 'rgba(26,58,42,0.05)' : 'transparent',
-        border: `1px solid ${hover ? 'rgba(26,58,42,0.25)' : LB.creamBrd}`,
-        borderRadius: '20px',
+        padding: '4px 10px',
+        background: hover ? 'var(--bg-card)' : 'transparent',
+        border: `1px solid ${hover ? 'var(--border-focus)' : 'var(--border)'}`,
+        borderRadius: 'var(--radius-full)',
         fontSize: '0.7rem',
-        color: hover ? LB.forest : LB.textMid,
+        color: hover ? 'var(--text)' : 'var(--text-muted)',
         cursor: 'pointer',
-        fontFamily: "'DM Sans', sans-serif",
-        transition: 'all 150ms ease',
+        fontFamily: 'var(--font-sans)',
+        transition: 'all var(--transition-fast)',
         whiteSpace: 'nowrap',
       }}
     >
@@ -462,9 +440,9 @@ function FollowUpChip({ text, onClick }) {
 }
 
 
-/* ── Markdown + Wikilink renderer ───────────────────────────────── */
+/* ── Markdown + Wikilink renderer ───────────────────────────── */
 
-function RenderMarkdown({ text, onWikiClick, isUser }) {
+function RenderMarkdown({ text, onWikiClick }) {
   if (!text) return null
 
   return (
@@ -474,43 +452,29 @@ function RenderMarkdown({ text, onWikiClick, isUser }) {
         if (line.startsWith('> ')) {
           return (
             <div key={lineIdx} style={{
-              borderLeft: `2px solid ${isUser ? 'rgba(250,249,245,0.3)' : LB.gold}`,
+              borderLeft: '2px solid var(--border-focus)',
               paddingLeft: '10px',
               margin: '4px 0',
-              color: isUser ? 'rgba(250,249,245,0.75)' : LB.textLight,
+              color: 'var(--text-muted)',
               fontStyle: 'italic',
-              fontSize: '0.77rem',
+              fontSize: '0.78rem',
             }}>
-              {parseInline(line.slice(2), onWikiClick, isUser)}
+              {parseInline(line.slice(2), onWikiClick)}
             </div>
           )
         }
 
-        // Callout lines (emoji markers)
+        // Warning callout
         if (line.includes('⚠️')) {
           return (
             <div key={lineIdx} style={{
               padding: '5px 10px',
-              background: 'rgba(180,80,20,0.06)',
-              borderRadius: '5px',
+              background: 'rgba(245,158,11,0.06)',
+              borderRadius: 'var(--radius-sm)',
               margin: '3px 0',
               fontSize: '0.78rem',
             }}>
-              {parseInline(line, onWikiClick, isUser)}
-            </div>
-          )
-        }
-
-        if (line.includes('🌿') || line.includes('✦') || line.includes('🍃')) {
-          return (
-            <div key={lineIdx} style={{
-              padding: '5px 10px',
-              background: 'rgba(26,58,42,0.05)',
-              borderRadius: '5px',
-              margin: '3px 0',
-              fontSize: '0.78rem',
-            }}>
-              {parseInline(line, onWikiClick, isUser)}
+              {parseInline(line, onWikiClick)}
             </div>
           )
         }
@@ -519,10 +483,10 @@ function RenderMarkdown({ text, onWikiClick, isUser }) {
         if (/^\d+\.\s/.test(line)) {
           return (
             <div key={lineIdx} style={{ display: 'flex', gap: '6px', margin: '2px 0' }}>
-              <span style={{ color: LB.gold, fontWeight: 600, flexShrink: 0 }}>
+              <span style={{ color: 'var(--accent)', fontWeight: 600, flexShrink: 0 }}>
                 {line.match(/^\d+/)[0]}.
               </span>
-              <span>{parseInline(line.replace(/^\d+\.\s*/, ''), onWikiClick, isUser)}</span>
+              <span>{parseInline(line.replace(/^\d+\.\s*/, ''), onWikiClick)}</span>
             </div>
           )
         }
@@ -534,7 +498,7 @@ function RenderMarkdown({ text, onWikiClick, isUser }) {
 
         return (
           <div key={lineIdx}>
-            {parseInline(line, onWikiClick, isUser)}
+            {parseInline(line, onWikiClick)}
           </div>
         )
       })}
@@ -543,10 +507,9 @@ function RenderMarkdown({ text, onWikiClick, isUser }) {
 }
 
 
-/* ── Inline parser: [[wikilinks]] + **bold** ────────────────────── */
+/* ── Inline parser: [[wikilinks]] + **bold** ────────────────── */
 
-function parseInline(text, onWikiClick, isUser) {
-  // Split by [[wikilinks]]
+function parseInline(text, onWikiClick) {
   const segments = []
   let last = 0
   const re = /\[\[([^\]]+)\]\]/g
@@ -561,12 +524,11 @@ function parseInline(text, onWikiClick, isUser) {
 
   return segments.flatMap((seg, si) => {
     if (seg.type === 'wiki') {
-      return [<WikiLink key={`wiki-${si}`} label={seg.value} onClick={() => onWikiClick?.(seg.value)} isUser={isUser} />]
+      return [<WikiLink key={`wiki-${si}`} label={seg.value} onClick={() => onWikiClick?.(seg.value)} />]
     }
-    // Process bold within text segments
     return seg.value.split(/(\*\*[^*]+\*\*)/g).map((part, pi) => {
       if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={`bold-${si}-${pi}`} style={{ color: isUser ? LB.cream : LB.forest }}>{part.slice(2, -2)}</strong>
+        return <strong key={`bold-${si}-${pi}`} style={{ color: 'var(--text)', fontWeight: 600 }}>{part.slice(2, -2)}</strong>
       }
       return <span key={`text-${si}-${pi}`}>{part}</span>
     })
@@ -574,82 +536,104 @@ function parseInline(text, onWikiClick, isUser) {
 }
 
 
-/* ── WikiLink anchor ────────────────────────────────────────────── */
+/* ── WikiLink anchor ────────────────────────────────────────── */
 
-function WikiLink({ label, onClick, isUser }) {
+function WikiLink({ label, onClick }) {
+  const [hover, setHover] = useState(false)
   return (
     <a
       href="#"
-      className={`lb-wikilink${isUser ? ' lb-wikilink--user' : ''}`}
-      onClick={(e) => { e.preventDefault(); onClick?.() }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onClick={e => { e.preventDefault(); onClick?.() }}
+      style={{
+        color: hover ? 'var(--accent)' : 'rgba(0,212,255,0.7)',
+        textDecoration: 'none',
+        borderBottom: `1px solid ${hover ? 'var(--accent)' : 'rgba(0,212,255,0.3)'}`,
+        fontSize: '0.85em',
+        transition: 'all var(--transition-fast)',
+        cursor: 'pointer',
+      }}
     >
-      <span style={{ opacity: 0.6, fontSize: '0.75em' }}>[[</span>
       {label}
-      <span style={{ opacity: 0.6, fontSize: '0.75em' }}>]]</span>
     </a>
   )
 }
 
 
-/* ── Styles ─────────────────────────────────────────────────────── */
+/* ── Styles ─────────────────────────────────────────────────── */
 
 const cs = {
   root: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    background: LB.cream,
-    fontFamily: "'DM Sans', sans-serif",
+    background: 'var(--bg)',
+    fontFamily: 'var(--font-sans)',
+    overflow: 'hidden',
   },
   messageList: {
     flex: 1,
     overflowY: 'auto',
-    padding: '12px 14px',
+    padding: '16px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '10px',
+    gap: '12px',
+    scrollbarWidth: 'thin',
+    scrollbarColor: 'var(--border) transparent',
   },
   typingBubble: {
     alignSelf: 'flex-start',
     padding: '10px 14px',
-    background: LB.cream,
-    border: `1px solid ${LB.creamBrd}`,
-    borderRadius: '4px 14px 14px 14px',
+    background: 'var(--bg-panel)',
+    border: '1px solid var(--border)',
+    borderRadius: '3px 12px 12px 12px',
     display: 'flex',
     alignItems: 'center',
-    gap: '4px',
-    boxShadow: '0 1px 4px rgba(26,58,42,0.06)',
+    gap: '5px',
+  },
+  dot: {
+    display: 'inline-block',
+    width: '6px',
+    height: '6px',
+    borderRadius: '50%',
+    background: 'var(--text-muted)',
+    animation: 'chat-dot-bounce 1.1s infinite ease-in-out',
   },
   suggestions: {
-    padding: '8px 14px',
-    borderTop: `1px solid ${LB.creamBrd}`,
+    padding: '8px 16px',
+    borderTop: '1px solid var(--border-muted)',
     display: 'flex',
     flexWrap: 'wrap',
     gap: '6px',
-    background: LB.cream,
+    background: 'var(--bg)',
   },
   nodeCtx: {
-    padding: '7px 14px',
-    background: 'rgba(197,165,90,0.07)',
-    borderTop: `1px solid ${LB.goldBorder}`,
+    padding: '6px 16px',
+    borderTop: '1px solid var(--border-muted)',
     fontSize: '0.72rem',
-    color: LB.textMid,
-    fontFamily: "'DM Sans', sans-serif",
+    color: 'var(--text-muted)',
+    fontFamily: 'var(--font-sans)',
     display: 'flex',
     alignItems: 'center',
     gap: '6px',
+    background: 'var(--bg)',
   },
-  nodeCtxDot: { color: LB.gold, fontSize: '0.65rem' },
   inputArea: {
-    padding: '10px 14px 12px',
-    borderTop: `1px solid ${LB.creamBrd}`,
-    background: LB.cream,
+    padding: '10px 16px 12px',
+    borderTop: '1px solid var(--border)',
+    background: 'var(--bg)',
+    flexShrink: 0,
   },
-  inputRow: { display: 'flex', gap: '8px', alignItems: 'center' },
+  inputRow: {
+    display: 'flex',
+    gap: '8px',
+    alignItems: 'center',
+  },
 }
 
 
-/* ── Local fallback ─────────────────────────────────────────────── */
+/* ── Local fallback ─────────────────────────────────────────── */
 
 function _localFallback(question) {
   const q = question.toLowerCase()
@@ -660,30 +644,27 @@ function _localFallback(question) {
       '1. **[[Epigenetik & Leber]]** — fehlt komplett\n' +
       '2. **[[Darm-Leber-Achse]]** — unterrepräsentiert\n' +
       '3. **[[Chronobiologie Detox]]** — kein Cluster\n' +
-      '4. **[[Fastenprotokolle]]** — nicht verankert\n\n' +
-      '🌿 Klicke auf einen [[Begriff]] um ihn im Graph zu finden.'
+      '4. **[[Fastenprotokolle]]** — nicht verankert'
     )
   }
   if (q.includes('hub') || q.includes('zentral') || q.includes('vernetzt')) {
     return (
-      '**Top 5 Hub-Knoten:**\n\n' +
+      '**Top Hub-Knoten:**\n\n' +
       '1. **[[Leber heißt Leben]]** — 77 Verbindungen\n' +
       '2. **[[Selbstheilungskraft]]** — 54 Verbindungen\n' +
       '3. **[[Entgiftung]]** — 48 Verbindungen\n' +
-      '4. **[[Darmgesundheit]]** — 43 Verbindungen\n' +
-      '5. **[[Mitochondrien]]** — 38 Verbindungen'
+      '4. **[[Darmgesundheit]]** — 43 Verbindungen'
     )
   }
-  if (q.includes('entgiftung') || q.includes('detox')) {
+  if (q.includes('entgiftung') || q.includes('detox') || q.includes('müdigkeit')) {
     return (
-      '**[[Entgiftung]]** ist zentral im Lebergott-Wissen:\n\n' +
+      '[[Entgiftung]] ist zentral im Lebergott-Wissen.\n\n' +
       '> Die Leber entgiftet in zwei Phasen — Phase I aktiviert Toxine, Phase II neutralisiert sie.\n\n' +
-      'Verknüpfte Konzepte: [[Schwermetalle]], [[Darmgesundheit]], [[Mariendistel]], [[Wasser]].\n\n' +
-      '🌿 Öffne den Chat mit einem [[Knoten]] ausgewählt für tiefere Analyse.'
+      'Verwandte Konzepte: [[Schwermetalle]], [[Darmgesundheit]], [[Mariendistel]], [[Wasser]].'
     )
   }
   return (
-    'Im Demo-Modus ist lokale Analyse verfügbar. Starte das Backend für volle Graph-Analyse:\n\n' +
+    'Backend nicht erreichbar. Starte es mit:\n\n' +
     '`uvicorn backend.main:app --reload`\n\n' +
     'Versuche: [[Entgiftung]], [[Leber heißt Leben]], [[Mariendistel]]'
   )

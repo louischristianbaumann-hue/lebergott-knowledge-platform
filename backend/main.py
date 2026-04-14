@@ -110,7 +110,7 @@ async def server_error_handler(request, exc):
 @app.middleware("http")
 async def timeout_middleware(request: Request, call_next):
     try:
-        return await asyncio.wait_for(call_next(request), timeout=30.0)
+        return await asyncio.wait_for(call_next(request), timeout=45.0)
     except asyncio.TimeoutError:
         return JSONResponse(
             status_code=504,

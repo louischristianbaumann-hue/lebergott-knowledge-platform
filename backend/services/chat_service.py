@@ -1,10 +1,12 @@
 """
 SYNODEA NEXT — Chat Service
 Graph-aware question answering against vault knowledge.
-Tries n8n Lebergott bot first; falls back to local graph analysis.
+Tries n8n Lebergott bot first; falls back to claude -p subprocess, then local graph analysis.
 """
 import json
 import re
+import subprocess
+import uuid
 import urllib.request
 import urllib.error
 from typing import Optional
@@ -14,9 +16,8 @@ from .vault_loader import VaultLoader
 from .graph_service import GraphService
 
 _settings = get_settings()
-# Read from env: N8N_WEBHOOK_URL / N8N_AUTH_TOKEN
+# n8n webhook — no auth token required (public webhook)
 N8N_WEBHOOK = _settings.n8n_webhook_url or 'https://n8n-production-6fe9.up.railway.app/webhook/lebergott-bot'
-N8N_AUTH = _settings.n8n_auth_token
 
 
 class ChatService:
@@ -54,82 +55,80 @@ class ChatService:
         """
         history = (history or [])[-10:]
 
+        # n8n expects: {message, userId, sessionId}
+        # returns: {status, knowledge, sources, disclaimer}
         payload = {
-            'query': question,
-            'role': role,
-            'selectedNode': selected_node_id,
-            'history': history,
+            'message': question,
+            'userId': role,
+            'sessionId': str(uuid.uuid4()),
         }
 
-        # ── 1 attempt: n8n Lebergott Bot (15s timeout, within 30s backend limit) ──
-        # n8n bot takes ~10-12s — 1 attempt keeps total under 30s with fallback room
-        for attempt in range(1):
-            try:
-                encoded = json.dumps(payload).encode('utf-8')
-                req = urllib.request.Request(
-                    N8N_WEBHOOK,
-                    data=encoded,
-                    headers={
-                        'Content-Type': 'application/json',
-                        'Authorization': f'Bearer {N8N_AUTH}',
-                    },
-                    method='POST',
-                )
-                with urllib.request.urlopen(req, timeout=15) as resp:
-                    raw = json.loads(resp.read().decode('utf-8'))
+        # ── 1. n8n Lebergott Bot (15s timeout — n8n cold-start takes ~10s) ────────
+        try:
+            encoded = json.dumps(payload).encode('utf-8')
+            req = urllib.request.Request(
+                N8N_WEBHOOK,
+                data=encoded,
+                headers={'Content-Type': 'application/json'},
+                method='POST',
+            )
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                raw = json.loads(resp.read().decode('utf-8'))
 
-                # Handle various n8n response shapes
-                if isinstance(raw, str):
-                    answer_text = raw
-                elif isinstance(raw, list) and raw:
-                    first = raw[0]
-                    answer_text = (
-                        first.get('output') or first.get('answer') or
-                        first.get('knowledge') or first.get('text') or str(first)
-                    )
-                    raw = first  # use first item for additional fields
-                else:
-                    # n8n Lebergott bot returns {status, query, knowledge, sources, disclaimer}
-                    answer_text = (
-                        raw.get('output') or raw.get('answer') or
-                        raw.get('knowledge') or raw.get('text')
-                    )
+            # n8n returns {status, knowledge, sources, disclaimer}
+            if isinstance(raw, list) and raw:
+                raw = raw[0]
+            answer_text = raw.get('knowledge') or raw.get('output') or raw.get('answer') or raw.get('text')
 
-                if answer_text:
-                    # Enrich with local graph data for nodes/gaps/bridges
-                    try:
-                        local = self.answer(question, selected_node_id, max_results)
-                    except Exception:
-                        local = {
-                            'relevant_nodes': [], 'gaps': [], 'bridges': [],
-                            'follow_up_questions': [], 'context': {},
-                        }
+            if answer_text:
+                try:
+                    local = self.answer(question, selected_node_id, max_results)
+                except Exception:
+                    local = {'relevant_nodes': [], 'gaps': [], 'bridges': [], 'follow_up_questions': [], 'context': {}}
 
-                    raw_dict = raw if isinstance(raw, dict) else {}
-                    # n8n Lebergott bot provides sources and disclaimer
-                    sources = raw_dict.get('sources', [])
-                    disclaimer = raw_dict.get('disclaimer', '')
+                sources = raw.get('sources', []) if isinstance(raw, dict) else []
+                disclaimer = raw.get('disclaimer', '') if isinstance(raw, dict) else ''
+                follow_ups = local.get('follow_up_questions', [])[:3]
 
-                    # Build follow-ups from local graph (n8n bot doesn't generate them)
-                    follow_ups = local.get('follow_up_questions', [])
-                    if sources:
-                        follow_ups = follow_ups[:3]  # make room for sources hint
+                return {
+                    'answer': answer_text,
+                    'relevant_nodes': local.get('relevant_nodes', []),
+                    'gaps': local.get('gaps', []),
+                    'bridges': local.get('bridges', []),
+                    'follow_up_questions': follow_ups,
+                    'sources': sources,
+                    'disclaimer': disclaimer,
+                    'context': {**(local.get('context') or {}), 'source': 'n8n'},
+                }
+        except Exception:
+            pass  # n8n unreachable or error — try claude fallback
 
-                    return {
-                        'answer': answer_text,
-                        'relevant_nodes': raw_dict.get('relevant_nodes') or local.get('relevant_nodes', []),
-                        'gaps': raw_dict.get('gaps') or local.get('gaps', []),
-                        'bridges': raw_dict.get('bridges') or local.get('bridges', []),
-                        'follow_up_questions': follow_ups,
-                        'sources': sources,
-                        'disclaimer': disclaimer,
-                        'context': {**(local.get('context') or {}), 'source': 'n8n'},
-                    }
-
-            except urllib.error.URLError:
-                pass  # Network error — n8n unreachable
-            except Exception:
-                pass  # Parse error — fall through to local graph
+        # ── 2. Claude subprocess fallback ───────────────────────────────────────
+        try:
+            result = subprocess.run(
+                ['claude', '-p', '--dangerously-skip-permissions', question],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            claude_answer = (result.stdout or '').strip()
+            if claude_answer:
+                try:
+                    local = self.answer(question, selected_node_id, max_results)
+                except Exception:
+                    local = {'relevant_nodes': [], 'gaps': [], 'bridges': [], 'follow_up_questions': [], 'context': {}}
+                return {
+                    'answer': claude_answer,
+                    'relevant_nodes': local.get('relevant_nodes', []),
+                    'gaps': local.get('gaps', []),
+                    'bridges': local.get('bridges', []),
+                    'follow_up_questions': local.get('follow_up_questions', [])[:3],
+                    'sources': [],
+                    'disclaimer': '',
+                    'context': {**(local.get('context') or {}), 'source': 'claude'},
+                }
+        except Exception:
+            pass  # claude not available — fall through to local graph
 
         # ── Fallback 1: local graph analysis ────────────────────────────
         try:

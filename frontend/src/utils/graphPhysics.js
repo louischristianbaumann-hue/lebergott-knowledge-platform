@@ -1,57 +1,53 @@
 /* ============================================================
    SYNODEA — Graph Physics
-   Custom D3 force simulation parameters for organic mycelium feel
+   InfraNodus aesthetic: cluster-colored nodes, sparse edges, organic spring layout
    ============================================================ */
 
 import * as d3 from 'd3'
 
-// ---- Cluster color palette (organic, bioluminescent) ----
+// ---- Cluster color palette (InfraNodus-style: vivid, distinct, dark-bg optimized) ----
 const CLUSTER_COLORS = [
-  '#00ff88', // 0 — bright green (main)
-  '#55eebb', // 1 — cool mint
-  '#00ccaa', // 2 — teal
-  '#44aaff', // 3 — blue-teal
-  '#aa88ff', // 4 — violet
-  '#ffcc44', // 5 — warm gold
-  '#ff8888', // 6 — soft red
-  '#88ffaa', // 7 — light green
+  '#06b6d4', // 0 — cyan
+  '#8b5cf6', // 1 — violet
+  '#22c55e', // 2 — green
+  '#f97316', // 3 — orange
+  '#ec4899', // 4 — pink
+  '#3b82f6', // 5 — blue
+  '#eab308', // 6 — yellow
+  '#14b8a6', // 7 — teal
 ]
 
 export function getClusterColor(clusterId, alpha = 1) {
-  if (clusterId < 0) return `rgba(255, 153, 68, ${alpha})` // gap — amber
+  if (clusterId < 0) return alpha === 1 ? '#f97316' : `rgba(249, 115, 22, ${alpha})` // gap — orange
   const hex = CLUSTER_COLORS[clusterId % CLUSTER_COLORS.length]
   if (alpha === 1) return hex
-  // Convert hex to rgba
   const r = parseInt(hex.slice(1, 3), 16)
   const g = parseInt(hex.slice(3, 5), 16)
   const b = parseInt(hex.slice(5, 7), 16)
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
-// ---- Node size based on connection count ----
+// ---- Node radius by degree (proxy for betweenness centrality) ----
+// Small, clean nodes like InfraNodus — not large glowing blobs
 export function getNodeRadius(connections, isHub = false) {
-  const base = Math.sqrt(connections + 1) * 4
-  const r = Math.max(7, Math.min(base, isHub ? 36 : 28))
-  return r
+  const base = Math.sqrt(connections + 1) * 3
+  return Math.max(5, Math.min(base, isHub ? 22 : 16))
 }
 
-// ---- Glow intensity based on hub status ----
+// ---- Glow — only for hover/selected, not default ----
 export function getNodeGlow(connections, isHub, isGap) {
-  if (isGap) return 'drop-shadow(0 0 5px rgba(255, 153, 68, 0.5))'
-  if (isHub || connections >= 10) return 'drop-shadow(0 0 14px rgba(0, 255, 136, 0.7))'
-  if (connections >= 5) return 'drop-shadow(0 0 8px rgba(0, 255, 136, 0.5))'
-  return 'drop-shadow(0 0 4px rgba(0, 255, 136, 0.3))'
+  // Kept for API compatibility — graph uses CSS classes now
+  return 'none'
 }
 
-// ---- Create simulation ----
+// ---- Create simulation — organic spring layout ----
 export function createSimulation(nodes, links, width, height) {
-  // Assign randomized pulse delay to each node for organic feel
   nodes.forEach((n, i) => {
-    n._pulseDelay = (i * 0.37) % 5 // staggered pulse
-    n._pulseSpeed = 3 + Math.random() * 2.5
+    n._pulseDelay = (i * 0.37) % 5
+    n._pulseSpeed = 3.5 + (i % 3) * 0.8 // staggered, not random for determinism
   })
 
-  const simulation = d3
+  return d3
     .forceSimulation(nodes)
     .force(
       'link',
@@ -59,55 +55,42 @@ export function createSimulation(nodes, links, width, height) {
         .forceLink(links)
         .id((d) => d.id)
         .distance((d) => {
-          // Stronger connections = closer nodes
-          const base = 80
-          return base + (1 - (d.strength || 0.5)) * 120
+          const base = 90
+          return base + (1 - (d.strength || 0.5)) * 100
         })
-        .strength((d) => (d.strength || 0.5) * 0.6)
+        .strength((d) => (d.strength || 0.5) * 0.55)
     )
     .force(
       'charge',
       d3
         .forceManyBody()
-        .strength((d) => {
-          // Hubs repel more, gaps less
-          if (d.isHub) return -300
-          if (d.isGap) return -80
-          return -150
-        })
-        .distanceMax(400)
-        .distanceMin(20)
+        .strength((d) => (d.isHub ? -280 : d.isGap ? -70 : -130))
+        .distanceMax(450)
+        .distanceMin(15)
     )
-    .force('center', d3.forceCenter(width / 2, height / 2).strength(0.05))
+    .force('center', d3.forceCenter(width / 2, height / 2).strength(0.04))
     .force(
       'collision',
-      d3.forceCollide().radius((d) => getNodeRadius(d.connections, d.isHub) + 12)
+      d3.forceCollide().radius((d) => getNodeRadius(d.connections, d.isHub) + 10)
     )
-    .force(
-      // Gentle x/y attraction to keep graph centered without rigidity
-      'x',
-      d3.forceX(width / 2).strength(0.02)
-    )
+    .force('x', d3.forceX(width / 2).strength(0.02))
     .force('y', d3.forceY(height / 2).strength(0.02))
-    .alphaDecay(0.008) // very slow decay = organic, living movement
-    .velocityDecay(0.35)
-
-  return simulation
+    .alphaDecay(0.01)
+    .velocityDecay(0.38)
 }
 
-// ---- Link stroke width from strength ----
+// ---- Link stroke width — thin, InfraNodus style ----
 export function getLinkWidth(strength) {
-  return 0.5 + (strength || 0.5) * 2.5
+  return 0.4 + (strength || 0.5) * 1.2
 }
 
-// ---- Link opacity from strength ----
+// ---- Link opacity — sparse, elegant ----
 export function getLinkOpacity(strength) {
-  return 0.08 + (strength || 0.5) * 0.45
+  return 0.12 + (strength || 0.5) * 0.28
 }
 
-// ---- Pulse animation keyframe values (for JS-driven animation) ----
+// ---- Pulse animation keyframe values (sinusoidal 0.97–1.03) ----
 export function getPulseScale(elapsed, pulseDelay, pulseSpeed) {
   const t = ((elapsed * 0.001 + pulseDelay) % pulseSpeed) / pulseSpeed
-  // Sine wave: oscillates between 0.95 and 1.05
   return 0.97 + Math.sin(t * Math.PI * 2) * 0.03
 }
