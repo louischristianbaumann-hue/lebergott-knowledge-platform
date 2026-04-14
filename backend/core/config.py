@@ -128,4 +128,11 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     """Cached settings singleton."""
-    return Settings()
+    s = Settings()
+    _DEFAULT_SECRET = "lebergott-secret-key-change-in-production"
+    if s.environment == "production" and s.jwt_secret_key == _DEFAULT_SECRET:
+        raise RuntimeError(
+            "JWT_SECRET_KEY must be set to a secure value in production. "
+            "Set the JWT_SECRET_KEY environment variable."
+        )
+    return s

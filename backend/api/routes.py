@@ -180,8 +180,10 @@ def _resolve_vault_path(vault_id: str, db: Session) -> str:
 
 
 @router.post("/customers", response_model=CustomerResponse, status_code=status.HTTP_201_CREATED, tags=["customers"])
-def create_customer(payload: CustomerCreate, db: Session = Depends(get_db)):
-    """Register a new customer/brand."""
+def create_customer(payload: CustomerCreate, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """Register a new customer/brand. Requires admin role."""
+    if current_user.role != "admin":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin access required")
     from ..models.database import Customer
     customer = Customer(
         name=payload.name,

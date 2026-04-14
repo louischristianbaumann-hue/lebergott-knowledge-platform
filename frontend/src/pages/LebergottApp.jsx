@@ -22,9 +22,7 @@ import LoadingPulse from '../components/LoadingPulse.jsx'
 import { DEMO_GRAPH, DEMO_GAPS, DEMO_BRIDGES } from '../utils/api.js'
 import { useAuth } from '../context/AuthContext.jsx'
 
-const BASE_URL    = (import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/v1'
-const N8N_WEBHOOK = 'https://n8n-production-6fe9.up.railway.app/webhook/lebergott-bot'
-const N8N_AUTH    = '419f12f0bc4c8bc8d6a5625fede2d28b51b618200a199ad28e42fbb4fd3b852a'
+const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/v1'
 
 const brand = {
   forest:     '#1a3a2a',
@@ -339,23 +337,6 @@ export default function LebergottApp() {
           if (data._cached) setIsDataCached(true)
           setIsLoading(false)
           return
-        }
-      } catch {}
-
-      if (cancelled) return
-
-      // Attempt 2: n8n webhook
-      try {
-        const res = await fetch(N8N_WEBHOOK, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${N8N_AUTH}` },
-          body: JSON.stringify({ query: 'system:get-graph-data' }),
-          signal: AbortSignal.timeout(5000),
-        })
-        if (!cancelled && res.ok) {
-          const data = await res.json()
-          if (data.graph) setGraphData(data.graph)
-          if (data.gaps)  setGaps(data.gaps)
         }
       } catch {}
 
