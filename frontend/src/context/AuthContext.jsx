@@ -11,7 +11,7 @@ const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/a
 const DEMO_USERS = [
   { id: 1, email: 'marcel@lebergott.de',       password: 'lebergott2024', role: 'admin',  name: 'Marcel Lebergott' },
   { id: 2, email: 'mitarbeiter@lebergott.de',  password: 'lebergott2024', role: 'staff',  name: 'Mitarbeiter Demo' },
-  { id: 3, email: 'klient@lebergott.de',       password: 'lebergott2024', role: 'client', name: 'Klient Demo' },
+  { id: 3, email: 'demo@lebergott.de',          password: 'lebergott2024', role: 'client', name: 'Demo Klient' },
 ]
 
 const AuthContext = createContext(null)

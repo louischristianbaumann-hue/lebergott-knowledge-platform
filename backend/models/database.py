@@ -263,8 +263,8 @@ def seed_admin_user(db: Session) -> None:
 
     demo_users = [
         ("marcel@lebergott.de", "lebergott2024", "admin"),
-        ("staff@lebergott.de", "lebergott2024", "staff"),
-        ("client@lebergott.de", "lebergott2024", "client"),
+        ("mitarbeiter@lebergott.de", "lebergott2024", "staff"),
+        ("demo@lebergott.de", "lebergott2024", "client"),
     ]
 
     for email, password, role in demo_users:
