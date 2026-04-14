@@ -107,6 +107,54 @@ class InfraNodusService:
 
     # ── Public API ────────────────────────────────────────────────────────
 
+    def _normalize_cached_gap(self, gap: dict, graph_name: str, idx: int) -> dict:
+        """Ensure cached gap dict has all fields the frontend expects."""
+        gap_id = gap.get("id") or gap.get("concept") or f"{graph_name}-gap-{idx+1}"
+        label = gap.get("label") or gap.get("title") or gap_id
+        desc = gap.get("description") or gap.get("reason") or ""
+        connects_raw = gap.get("connects", [])
+        connects_str = (
+            " ↔ ".join(connects_raw) if isinstance(connects_raw, list) else str(connects_raw or "")
+        )
+        return {
+            **gap,
+            "id": gap_id,
+            "concept": gap.get("concept") or gap_id,
+            "label": label,
+            "title": label,
+            "description": desc,
+            "reason": desc,
+            "bridge": gap.get("bridge") or connects_str or "",
+            "bridge_potential": gap.get("bridge_potential", 0.8),
+            "connections": gap.get("connections", 0),
+            "gap_type": gap.get("gap_type", "missing_connection"),
+            "related_clusters": gap.get("related_clusters", []),
+            "graph": gap.get("graph") or graph_name,
+            "source": "cached",
+        }
+
+    def _normalize_cached_bridge(self, bridge: dict, graph_name: str, idx: int) -> dict:
+        """Ensure cached bridge dict has all fields the frontend expects."""
+        bridge_id = bridge.get("id") or bridge.get("concept") or f"{graph_name}-bridge-{idx+1}"
+        label = bridge.get("label") or bridge.get("title") or bridge_id
+        connects_raw = bridge.get("connects", [])
+        connects_str = (
+            " ↔ ".join(connects_raw) if isinstance(connects_raw, list) else str(connects_raw or "")
+        )
+        return {
+            **bridge,
+            "id": bridge_id,
+            "concept": bridge.get("concept") or bridge_id,
+            "label": label,
+            "title": label,
+            "connects": connects_str,
+            "why": bridge.get("why") or bridge.get("insight") or "",
+            "insight": bridge.get("insight") or bridge.get("why") or "",
+            "strength": bridge.get("strength", 0.7),
+            "graph": bridge.get("graph") or graph_name,
+            "source": "cached",
+        }
+
     def get_graph_analysis(self, graph_name: str) -> dict[str, Any]:
         """
         Get normalized analysis for one graph.
@@ -117,7 +165,16 @@ class InfraNodusService:
             return self._normalize_live(raw, graph_name)
         cached = self._cache_for(graph_name)
         if cached:
+            cached = dict(cached)  # don't mutate the in-memory cache
             cached["source"] = "cached"
+            cached["gaps"] = [
+                self._normalize_cached_gap(g, graph_name, i)
+                for i, g in enumerate(cached.get("gaps", []))
+            ]
+            cached["bridges"] = [
+                self._normalize_cached_bridge(b, graph_name, i)
+                for i, b in enumerate(cached.get("bridges", []))
+            ]
         return cached
 
     def get_gaps(self, graph_name: str) -> list[dict[str, Any]]:
@@ -146,9 +203,19 @@ class InfraNodusService:
                 data = self._normalize_live(raw, graph_name)
                 any_live = True
             else:
-                data = self._cache_for(graph_name)
-                if data:
+                cached = self._cache_for(graph_name)
+                data = {}
+                if cached:
+                    data = dict(cached)
                     data["source"] = "cached"
+                    data["gaps"] = [
+                        self._normalize_cached_gap(g, graph_name, i)
+                        for i, g in enumerate(data.get("gaps", []))
+                    ]
+                    data["bridges"] = [
+                        self._normalize_cached_bridge(b, graph_name, i)
+                        for i, b in enumerate(data.get("bridges", []))
+                    ]
 
             all_gaps.extend(data.get("gaps", []))
             all_bridges.extend(data.get("bridges", []))

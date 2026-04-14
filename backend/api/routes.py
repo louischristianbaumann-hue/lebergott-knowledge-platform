@@ -721,7 +721,7 @@ def get_graph_live(graph_name: str):
     tags=["graph"],
     summary="Live InfraNodus gaps for Lebergott (all graphs)",
 )
-def get_lebergott_gaps():
+def get_lebergott_gaps_live():
     """
     Returns aggregated content gaps from all 6 Lebergott InfraNodus graphs.
     Each gap includes: id, title, reason, bridge, bridge_potential, graph, source.
