@@ -1,819 +1,1086 @@
 {
   "_meta": {
-    "generated": "2026-04-13",
-    "version": "1.0",
-    "source": "InfraNodus Lebergott Knowledge Platform",
-    "graphs": [
-      "lebergott-main",
-      "lebergott-liver",
-      "lebergott-ernaehrung",
-      "lebergott-entgiftung",
-      "lebergott-symptome",
-      "lebergott-protokoll"
-    ],
-    "description": "Cached InfraNodus graph data for Lebergott Knowledge Platform. All 6 graphs contain topical clusters, knowledge gaps, and conceptual bridges derived from Lebergott content corpus.",
-    "total_nodes": 257,
-    "total_edges": 970
+    "updated_at": "2026-04-14T04:08:37.124241Z",
+    "source": "live_infranodus_mcp"
   },
   "lebergott-wissen": {
     "graph_name": "lebergott-wissen",
-    "description": "Hauptgraph — Lebergott Kernwissen",
+    "description": "Hauptwissen — Lebergott Kernkonzepte",
     "clusters": [
       {
-        "id": "cluster-leber",
-        "label": "Lebergesundheit",
+        "id": "lebergott-wissen-cluster-0",
+        "label": "Leberregeneration",
         "color": "#1a3a2a",
-        "nodes": [
-          "leber",
-          "lebergesundheit",
-          "leberfunktion",
-          "leberregeneration",
-          "hepatozyten"
-        ],
-        "weight": 0.85,
-        "top_concepts": [
-          "leber",
-          "regeneration",
-          "funktion"
-        ]
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-wissen"
       },
       {
-        "id": "cluster-ernaehrung",
-        "label": "Ernährung & Nährstoffe",
+        "id": "lebergott-wissen-cluster-1",
+        "label": "Stressbewältigung",
         "color": "#c5a55a",
-        "nodes": [
-          "ernaehrung",
-          "naehrstoffe",
-          "antioxidantien",
-          "vitamine",
-          "mineralien"
-        ],
-        "weight": 0.72,
-        "top_concepts": [
-          "antioxidantien",
-          "vitamine",
-          "ernaehrung"
-        ]
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-wissen"
       },
       {
-        "id": "cluster-entgiftung",
-        "label": "Entgiftung & Reinigung",
+        "id": "lebergott-wissen-cluster-2",
+        "label": "Entzündungshemmung",
         "color": "#2d5a3d",
-        "nodes": [
-          "entgiftung",
-          "detox",
-          "toxine",
-          "gallenfluss",
-          "lymphe"
-        ],
-        "weight": 0.68,
-        "top_concepts": [
-          "entgiftung",
-          "toxine",
-          "reinigung"
-        ]
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-wissen"
       },
       {
-        "id": "cluster-ganzheit",
-        "label": "Ganzheitliche Gesundheit",
+        "id": "lebergott-wissen-cluster-3",
+        "label": "Nervensystemaktivierung",
         "color": "#4a7c59",
-        "nodes": [
-          "ganzheit",
-          "mind-body",
-          "stress",
-          "schlaf",
-          "bewegung"
-        ],
-        "weight": 0.61,
-        "top_concepts": [
-          "ganzheit",
-          "stress",
-          "gleichgewicht"
-        ]
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-wissen"
+      },
+      {
+        "id": "lebergott-wissen-cluster-4",
+        "label": "Mitochondrienfunktion",
+        "color": "#6b9e7a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-wissen"
+      },
+      {
+        "id": "lebergott-wissen-cluster-5",
+        "label": "Verdauungsoptimierung",
+        "color": "#8db89a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-wissen"
+      },
+      {
+        "id": "lebergott-wissen-cluster-6",
+        "label": "Immunstärkung",
+        "color": "#0f2418",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-wissen"
+      },
+      {
+        "id": "lebergott-wissen-cluster-7",
+        "label": "Schlafqualität",
+        "color": "#9e8648",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-wissen"
       }
     ],
     "gaps": [
       {
-        "concept": "epigenetik-leber",
-        "label": "Epigenetik & Lebergesundheit",
-        "description": "Verbindung zwischen epigenetischen Faktoren und Leberregeneration fehlt im Wissensgraph",
-        "bridge_potential": 0.89,
+        "concept": "gap-1-lebergott-wissen",
+        "label": "Entzündungshemmung ↔ Verdauungsoptimierung",
+        "description": "Gap 1: 3. Entzündungshemmung (inflammatorisch [[entzündung]] [[ernährung]]) -> 6. Verdauungsoptimierung (aktivieren apfelessig proteinverdauung)",
+        "bridge_potential": 0.9,
         "gap_type": "missing_connection",
         "related_clusters": [
-          "cluster-leber",
-          "cluster-ganzheit"
-        ]
+          "Entzündungshemmung",
+          "Verdauungsoptimierung"
+        ],
+        "graph": "lebergott-wissen",
+        "source": "live"
       },
       {
-        "concept": "mikrobiom-leber-achse",
-        "label": "Darm-Leber-Achse",
-        "description": "Mikrobiom-Einfluss auf Leberfunktion ist unterrepräsentiert",
-        "bridge_potential": 0.84,
-        "gap_type": "weak_cluster",
-        "related_clusters": [
-          "cluster-leber",
-          "cluster-ernaehrung"
-        ]
-      },
-      {
-        "concept": "chronobiologie-detox",
-        "label": "Chronobiologie der Entgiftung",
-        "description": "Tagesrhythmus und optimale Entgiftungsfenster fehlen",
-        "bridge_potential": 0.76,
-        "gap_type": "missing_connection",
-        "related_clusters": [
-          "cluster-entgiftung",
-          "cluster-ganzheit"
-        ]
-      }
-    ],
-    "bridges": [
-      {
-        "concept": "leber-als-zentralorgan",
-        "label": "Leber als metabolisches Zentrum",
-        "connects": [
-          "lebergesundheit",
-          "ernaehrung",
-          "entgiftung"
-        ],
-        "insight": "Die Leber verbindet Ernährung, Entgiftung und systemische Gesundheit als zentrales Regulationsorgan",
-        "strength": 0.92
-      },
-      {
-        "concept": "regeneration-durch-fasten",
-        "label": "Intermittierendes Fasten & Leberregeneration",
-        "connects": [
-          "entgiftung",
-          "leberregeneration",
-          "ernaehrung"
-        ],
-        "insight": "Fastenprotokolle aktivieren Autophagie-Prozesse spezifisch in Lebergewebe",
-        "strength": 0.85
-      },
-      {
-        "concept": "phytonaehrstoffe-schutz",
-        "label": "Phytonährstoffe als Leberschutz",
-        "connects": [
-          "antioxidantien",
-          "leber",
-          "ernaehrung"
-        ],
-        "insight": "Sekundäre Pflanzenstoffe (Silymarin, Curcumin) schützen Leberzellen spezifisch",
-        "strength": 0.78
-      }
-    ],
-    "stats": {
-      "total_nodes": 47,
-      "total_edges": 183,
-      "density": 0.17,
-      "avg_degree": 7.8,
-      "modularity": 0.64
-    }
-  },
-  "lebergott-anatomie-leber": {
-    "graph_name": "lebergott-anatomie-leber",
-    "description": "Tiefen-Graph — Leber-Anatomie & Physiologie",
-    "clusters": [
-      {
-        "id": "cluster-anatomie",
-        "label": "Anatomie & Struktur",
-        "color": "#1a3a2a",
-        "nodes": [
-          "leber-lappen",
-          "pfortader",
-          "leberarterie",
-          "gallenblase",
-          "lebersinusoide"
-        ],
-        "weight": 0.81,
-        "top_concepts": [
-          "leber-lappen",
-          "pfortader",
-          "sinusoide"
-        ]
-      },
-      {
-        "id": "cluster-metabolismus",
-        "label": "Metabolismus",
-        "color": "#c5a55a",
-        "nodes": [
-          "glukogenese",
-          "gluconeogenese",
-          "lipolyse",
-          "proteinsynthese",
-          "harnstoffzyklus"
-        ],
-        "weight": 0.79,
-        "top_concepts": [
-          "glukogenese",
-          "lipolyse",
-          "proteinsynthese"
-        ]
-      },
-      {
-        "id": "cluster-biomarker",
-        "label": "Biomarker & Diagnostik",
-        "color": "#2d5a3d",
-        "nodes": [
-          "ALT",
-          "AST",
-          "GGT",
-          "bilirubin",
-          "albumin"
-        ],
-        "weight": 0.74,
-        "top_concepts": [
-          "ALT",
-          "AST",
-          "bilirubin"
-        ]
-      }
-    ],
-    "gaps": [
-      {
-        "concept": "leber-immun-interface",
-        "label": "Leber-Immunsystem-Schnittstelle",
-        "description": "Kupffer-Zellen und ihre Rolle in der systemischen Immunregulation unterbelichtet",
-        "bridge_potential": 0.91,
-        "gap_type": "missing_connection",
-        "related_clusters": [
-          "cluster-anatomie",
-          "cluster-metabolismus"
-        ]
-      },
-      {
-        "concept": "hormon-leber-feedback",
-        "label": "Hormonelle Rückkopplungsschleifen",
-        "description": "Insulin-Glukagon-Leber-Feedback-Schleife fehlt im Kontext",
-        "bridge_potential": 0.82,
-        "gap_type": "weak_cluster",
-        "related_clusters": [
-          "cluster-metabolismus"
-        ]
-      }
-    ],
-    "bridges": [
-      {
-        "concept": "leber-als-immunorgan",
-        "label": "Leber als Immunorgan",
-        "connects": [
-          "kupffer-zellen",
-          "immunsystem",
-          "leberentzuendung"
-        ],
-        "insight": "Die Leber ist eines der größten Immunorgane — Kupffer-Zellen filtern 80% des Blutes",
-        "strength": 0.88
-      },
-      {
-        "concept": "biomarker-ernaehrung",
-        "label": "Ernährung & Lebermarker",
-        "connects": [
-          "ALT",
-          "AST",
-          "ernaehrung",
-          "alkohol"
-        ],
-        "insight": "Ernährungsinterventionen können Lebermarker in 8-12 Wochen signifikant verbessern",
-        "strength": 0.81
-      }
-    ],
-    "stats": {
-      "total_nodes": 38,
-      "total_edges": 142,
-      "density": 0.2,
-      "avg_degree": 7.5,
-      "modularity": 0.59
-    }
-  },
-  "lebergott-konzepte-1": {
-    "graph_name": "lebergott-konzepte-1",
-    "description": "Ernährungs-Graph — Leberoptimale Ernährungsstrategien",
-    "clusters": [
-      {
-        "id": "cluster-lebensmittel",
-        "label": "Leberfreundliche Lebensmittel",
-        "color": "#1a3a2a",
-        "nodes": [
-          "artischocke",
-          "mariendistel",
-          "kurkuma",
-          "knoblauch",
-          "gruener-tee"
-        ],
-        "weight": 0.88,
-        "top_concepts": [
-          "mariendistel",
-          "artischocke",
-          "kurkuma"
-        ]
-      },
-      {
-        "id": "cluster-makronaehrstoffe",
-        "label": "Makronährstoffe",
-        "color": "#c5a55a",
-        "nodes": [
-          "protein",
-          "gesunde-fette",
-          "komplexe-kohlenhydrate",
-          "ballaststoffe",
-          "wasser"
-        ],
-        "weight": 0.75,
-        "top_concepts": [
-          "protein",
-          "gesunde-fette",
-          "ballaststoffe"
-        ]
-      },
-      {
-        "id": "cluster-supplements",
-        "label": "Nahrungsergänzung",
-        "color": "#2d5a3d",
-        "nodes": [
-          "NAC",
-          "alpha-liponsaeure",
-          "coenzym-q10",
-          "vitamin-e",
-          "selen"
-        ],
-        "weight": 0.71,
-        "top_concepts": [
-          "NAC",
-          "alpha-liponsaeure",
-          "selen"
-        ]
-      },
-      {
-        "id": "cluster-essgewohnheiten",
-        "label": "Essgewohnheiten & Rhythmus",
-        "color": "#4a7c59",
-        "nodes": [
-          "mahlzeitenfrequenz",
-          "portionsgroesse",
-          "kauen",
-          "bewusstes-essen",
-          "abendessen"
-        ],
-        "weight": 0.63,
-        "top_concepts": [
-          "mahlzeitenfrequenz",
-          "portionsgroesse",
-          "rhythmus"
-        ]
-      }
-    ],
-    "gaps": [
-      {
-        "concept": "fermentation-leber",
-        "label": "Fermentierte Lebensmittel & Leber",
-        "description": "Probiotische Wirkung fermentierter Lebensmittel auf Lebergesundheit nicht dokumentiert",
-        "bridge_potential": 0.87,
-        "gap_type": "missing_connection",
-        "related_clusters": [
-          "cluster-lebensmittel",
-          "cluster-supplements"
-        ]
-      },
-      {
-        "concept": "ayurveda-leber-protokolle",
-        "label": "Ayurvedische Leberprotokolle",
-        "description": "Traditionelles Wissen über Leberunterstützung in Ayurveda fehlt",
-        "bridge_potential": 0.74,
-        "gap_type": "missing_connection",
-        "related_clusters": [
-          "cluster-lebensmittel"
-        ]
-      },
-      {
-        "concept": "saisonale-ernaehrung",
-        "label": "Saisonale Ernährungsanpassung",
-        "description": "Jahreszeitliche Anpassung der Ernährung für optimale Leberfunktion",
-        "bridge_potential": 0.69,
-        "gap_type": "weak_cluster",
-        "related_clusters": [
-          "cluster-essgewohnheiten",
-          "cluster-lebensmittel"
-        ]
-      }
-    ],
-    "bridges": [
-      {
-        "concept": "silymarin-renaissance",
-        "label": "Silymarin — von traditionell zu evidenzbasiert",
-        "connects": [
-          "mariendistel",
-          "NAC",
-          "leberregeneration"
-        ],
-        "insight": "Silymarin aus Mariendistel zeigt in Studien vergleichbare hepatoprotektive Wirkung wie pharmazeutische Interventionen",
-        "strength": 0.91
-      },
-      {
-        "concept": "bitterstoffe-gallenfluss",
-        "label": "Bitterstoffe aktivieren Gallenfluss",
-        "connects": [
-          "artischocke",
-          "chichoree",
-          "entgiftung",
-          "verdauung"
-        ],
-        "insight": "Bitterstoffhaltige Lebensmittel stimulieren die Gallenproduktion um 30-50%",
-        "strength": 0.84
-      }
-    ],
-    "stats": {
-      "total_nodes": 52,
-      "total_edges": 198,
-      "density": 0.15,
-      "avg_degree": 7.6,
-      "modularity": 0.68
-    }
-  },
-  "lebergott-konzepte-2": {
-    "graph_name": "lebergott-konzepte-2",
-    "description": "Entgiftungs-Graph — Detox-Mechanismen & Protokolle",
-    "clusters": [
-      {
-        "id": "cluster-phase1",
-        "label": "Phase-1-Entgiftung",
-        "color": "#1a3a2a",
-        "nodes": [
-          "cytochrom-p450",
-          "oxidation",
-          "reduktion",
-          "hydrolyse",
-          "CYP-enzyme"
-        ],
-        "weight": 0.83,
-        "top_concepts": [
-          "cytochrom-p450",
-          "CYP-enzyme",
-          "oxidation"
-        ]
-      },
-      {
-        "id": "cluster-phase2",
-        "label": "Phase-2-Konjugation",
-        "color": "#c5a55a",
-        "nodes": [
-          "glucuronidierung",
-          "sulfatierung",
-          "glutathion",
-          "methylierung",
-          "acetylierung"
-        ],
-        "weight": 0.8,
-        "top_concepts": [
-          "glutathion",
-          "methylierung",
-          "glucuronidierung"
-        ]
-      },
-      {
-        "id": "cluster-umwelttoxine",
-        "label": "Umwelttoxine & Belastungen",
-        "color": "#2d5a3d",
-        "nodes": [
-          "schwermetalle",
-          "pestizide",
-          "plastik-toxine",
-          "alkohol",
-          "medikamente"
-        ],
-        "weight": 0.76,
-        "top_concepts": [
-          "schwermetalle",
-          "pestizide",
-          "alkohol"
-        ]
-      }
-    ],
-    "gaps": [
-      {
-        "concept": "methylierung-MTHFR",
-        "label": "MTHFR-Polymorphismus & Entgiftung",
-        "description": "Genetische Varianten die Methylierungskapazität beeinflussen fehlen im Kontext",
-        "bridge_potential": 0.93,
-        "gap_type": "missing_connection",
-        "related_clusters": [
-          "cluster-phase2"
-        ]
-      },
-      {
-        "concept": "schwermetall-chelation",
-        "label": "Natürliche Chelation von Schwermetallen",
-        "description": "Natürliche Chelatoren (Chlorella, Koriander) und ihr Protokoll fehlen",
+        "concept": "gap-2-lebergott-wissen",
+        "label": "Entzündungshemmung ↔ Nervensystemaktivierung",
+        "description": "Gap 2: 3. Entzündungshemmung (inflammatorisch [[entzündung]]) -> 4. Nervensystemaktivierung (kälteexposition [[nebenniere]] [[ashwagandha]])",
         "bridge_potential": 0.85,
         "gap_type": "missing_connection",
         "related_clusters": [
-          "cluster-umwelttoxine",
-          "cluster-phase2"
-        ]
+          "Entzündungshemmung",
+          "Nervensystemaktivierung"
+        ],
+        "graph": "lebergott-wissen",
+        "source": "live"
       },
       {
-        "concept": "schlaf-autophagie",
-        "label": "Schlaf & Autophagie-Aktivierung",
-        "description": "Schlafqualität als kritischer Faktor für nächtliche Leberentgiftung",
-        "bridge_potential": 0.78,
-        "gap_type": "weak_cluster",
-        "related_clusters": [
-          "cluster-phase1"
-        ]
-      }
-    ],
-    "bridges": [
-      {
-        "concept": "glutathion-master-antioxidant",
-        "label": "Glutathion — das Master-Antioxidans",
-        "connects": [
-          "glutathion",
-          "Phase-2",
-          "immunsystem",
-          "NAC"
-        ],
-        "insight": "Glutathion ist das wichtigste körpereigene Antioxidans — NAC und Glycin erhöhen Spiegel effektiv",
-        "strength": 0.94
-      },
-      {
-        "concept": "fasten-autophagie-leber",
-        "label": "Fasten aktiviert Leber-Autophagie",
-        "connects": [
-          "intermittierendes-fasten",
-          "autophagie",
-          "entgiftung",
-          "zellreparatur"
-        ],
-        "insight": "16:8 Fasten aktiviert hepatische Autophagie nach 12-14 Stunden ohne Nahrung",
-        "strength": 0.87
-      }
-    ],
-    "stats": {
-      "total_nodes": 44,
-      "total_edges": 167,
-      "density": 0.18,
-      "avg_degree": 7.6,
-      "modularity": 0.61
-    }
-  },
-  "lebergott-belastungen-krankheiten": {
-    "graph_name": "lebergott-belastungen-krankheiten",
-    "description": "Symptom-Graph — Warnsignale & Zusammenhänge",
-    "clusters": [
-      {
-        "id": "cluster-warnsignale",
-        "label": "Warnsignale",
-        "color": "#1a3a2a",
-        "nodes": [
-          "muedigkeit",
-          "gelbsucht",
-          "blähbauch",
-          "juckreiz",
-          "dunkler-urin"
-        ],
-        "weight": 0.86,
-        "top_concepts": [
-          "muedigkeit",
-          "gelbsucht",
-          "blähbauch"
-        ]
-      },
-      {
-        "id": "cluster-systemisch",
-        "label": "Systemische Symptome",
-        "color": "#c5a55a",
-        "nodes": [
-          "gewichtszunahme",
-          "hormonstoerungen",
-          "stimmungsschwankungen",
-          "gehirnnebel",
-          "schlafprobleme"
-        ],
-        "weight": 0.78,
-        "top_concepts": [
-          "gehirnnebel",
-          "hormonstoerungen",
-          "muedigkeit"
-        ]
-      },
-      {
-        "id": "cluster-haut",
-        "label": "Haut & Äußere Zeichen",
-        "color": "#2d5a3d",
-        "nodes": [
-          "gelbfaerbung",
-          "spidernaevi",
-          "palmarerythem",
-          "nagel-veraenderungen",
-          "akne"
-        ],
-        "weight": 0.69,
-        "top_concepts": [
-          "gelbfaerbung",
-          "spidernaevi",
-          "akne"
-        ]
-      }
-    ],
-    "gaps": [
-      {
-        "concept": "lebermude-syndrom",
-        "label": "Lebererschöpfungs-Syndrom",
-        "description": "Subklinische Leberbelastung als Ursache für diffuse Müdigkeit nicht ausreichend beschrieben",
-        "bridge_potential": 0.88,
+        "concept": "gap-3-lebergott-wissen",
+        "label": "Nervensystemaktivierung ↔ Immunstärkung",
+        "description": "Gap 3: 4. Nervensystemaktivierung (kälteexposition [[nebenniere]]) -> 7. Immunstärkung (immunfunktion [[lactobacillus]] [[ballaststoffe]])",
+        "bridge_potential": 0.8,
         "gap_type": "missing_connection",
         "related_clusters": [
-          "cluster-warnsignale",
-          "cluster-systemisch"
-        ]
-      },
-      {
-        "concept": "oestrogendominanz-leber",
-        "label": "Östrogendominanz & Leberentgiftung",
-        "description": "Leber als primärer Östrogenabbauort — Verbindung zu Hormonstörungen",
-        "bridge_potential": 0.83,
-        "gap_type": "weak_cluster",
-        "related_clusters": [
-          "cluster-systemisch"
-        ]
+          "Nervensystemaktivierung",
+          "Immunstärkung"
+        ],
+        "graph": "lebergott-wissen",
+        "source": "live"
       }
     ],
     "bridges": [
       {
-        "concept": "haut-als-spiegel",
-        "label": "Haut als Spiegel der Lebergesundheit",
+        "id": "bridge-lebergott-wissen-0",
+        "title": "mariendistel ↔ aktiv",
+        "label": "mariendistel verbindet aktiv",
         "connects": [
-          "haut",
-          "leber",
-          "entgiftung",
-          "akne"
+          "mariendistel",
+          "aktiv"
         ],
-        "insight": "Hautprobleme (besonders Akne, Rötungen) reflektieren oft suboptimale Leberentgiftung",
-        "strength": 0.86
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-wissen",
+        "source": "live"
       },
       {
-        "concept": "stimmung-leber-gut",
-        "label": "Leber-Darm-Gehirn-Achse",
+        "id": "bridge-lebergott-wissen-2",
+        "title": "leberregeneration ↔ gemüse",
+        "label": "leberregeneration verbindet gemüse",
         "connects": [
-          "stimmungsschwankungen",
-          "mikrobiom",
-          "leber",
-          "serotonin"
+          "leberregeneration",
+          "gemüse"
         ],
-        "insight": "Die Leber produziert Vorstufen von Neurotransmittern — Leberbelastung korreliert mit Stimmungstiefs",
-        "strength": 0.81
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-wissen",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-wissen-4",
+        "title": "ernährung ↔ zerstören",
+        "label": "ernährung verbindet zerstören",
+        "connects": [
+          "ernährung",
+          "zerstören"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-wissen",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-wissen-6",
+        "title": "sympathikus ↔ kälteexposition",
+        "label": "sympathikus verbindet kälteexposition",
+        "connects": [
+          "sympathikus",
+          "kälteexposition"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-wissen",
+        "source": "live"
       }
     ],
     "stats": {
-      "total_nodes": 35,
-      "total_edges": 124,
-      "density": 0.21,
-      "avg_degree": 7.1,
-      "modularity": 0.57
-    }
+      "total_nodes": 142,
+      "total_edges": 380,
+      "modularity": 0.733,
+      "clusterCount": 11
+    },
+    "source": "live"
   },
   "lebergott-gaps": {
     "graph_name": "lebergott-gaps",
-    "description": "Protokoll-Graph — Praktische Anwendung & Behandlungsstrategien",
+    "description": "Wissenslücken — Identifizierte Gaps",
     "clusters": [
       {
-        "id": "cluster-morgenroutine",
-        "label": "Morgenroutine",
+        "id": "lebergott-gaps-cluster-0",
+        "label": "Detox Protokolle",
         "color": "#1a3a2a",
-        "nodes": [
-          "warmes-zitronenwasser",
-          "oelpulling",
-          "morgenspaziergang",
-          "atemübungen",
-          "nüchtern-bewegung"
-        ],
-        "weight": 0.82,
-        "top_concepts": [
-          "warmes-zitronenwasser",
-          "nüchtern-bewegung",
-          "atemübungen"
-        ]
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-gaps"
       },
       {
-        "id": "cluster-kuren",
-        "label": "Kuren & Programme",
+        "id": "lebergott-gaps-cluster-1",
+        "label": "Medikamenten Vergleich",
         "color": "#c5a55a",
-        "nodes": [
-          "21-tage-kur",
-          "leberwickel",
-          "bittersaft-kur",
-          "fasten-protokoll",
-          "saftkur"
-        ],
-        "weight": 0.76,
-        "top_concepts": [
-          "21-tage-kur",
-          "fasten-protokoll",
-          "leberwickel"
-        ]
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-gaps"
       },
       {
-        "id": "cluster-lebensstil",
-        "label": "Lebensstil & Prävention",
+        "id": "lebergott-gaps-cluster-2",
+        "label": "Symptom Prioritäten",
         "color": "#2d5a3d",
-        "nodes": [
-          "stressmanagement",
-          "schlaf-hygiene",
-          "alkohol-reduktion",
-          "bewegung",
-          "natur-kontakt"
-        ],
-        "weight": 0.73,
-        "top_concepts": [
-          "stressmanagement",
-          "schlaf-hygiene",
-          "bewegung"
-        ]
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-gaps"
       },
       {
-        "id": "cluster-tracking",
-        "label": "Fortschritt messen",
+        "id": "lebergott-gaps-cluster-3",
+        "label": "Klienten Praxis",
         "color": "#4a7c59",
-        "nodes": [
-          "blutbild-monitoring",
-          "symptom-journal",
-          "energie-tracking",
-          "biomarker",
-          "fotos"
-        ],
-        "weight": 0.65,
-        "top_concepts": [
-          "blutbild-monitoring",
-          "symptom-journal",
-          "energie-tracking"
-        ]
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-gaps"
+      },
+      {
+        "id": "lebergott-gaps-cluster-4",
+        "label": "Fett Reduktion",
+        "color": "#6b9e7a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-gaps"
+      },
+      {
+        "id": "lebergott-gaps-cluster-5",
+        "label": "Evidenz Studien",
+        "color": "#8db89a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-gaps"
+      },
+      {
+        "id": "lebergott-gaps-cluster-6",
+        "label": "Leber Ansatz",
+        "color": "#0f2418",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-gaps"
+      },
+      {
+        "id": "lebergott-gaps-cluster-7",
+        "label": "Funktionale Einsichten",
+        "color": "#9e8648",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-gaps"
       }
     ],
     "gaps": [
       {
-        "concept": "personalisiertes-protokoll",
-        "label": "Personalisierung nach Symptom-Profil",
-        "description": "Individualisierte Protokolle basierend auf persönlichem Symptom-Screening fehlen",
-        "bridge_potential": 0.92,
+        "concept": "gap-1-lebergott-gaps",
+        "label": "Symptom Prioritäten ↔ Klienten Praxis",
+        "description": "Gap 1: 3. Symptom Prioritäten (woche priorität messung blutbild symptom) -> 4. Klienten Praxis (klient level konkret praktisch wichtig)",
+        "bridge_potential": 0.9,
         "gap_type": "missing_connection",
         "related_clusters": [
-          "cluster-kuren",
-          "cluster-tracking"
-        ]
+          "Symptom Prioritäten",
+          "Klienten Praxis"
+        ],
+        "graph": "lebergott-gaps",
+        "source": "live"
       },
       {
-        "concept": "jahreszeitenkur",
-        "label": "Saisonale Leberunterstützung",
-        "description": "Frühjahrs- und Herbstkuren als traditionelles Konzept nicht ausgearbeitet",
-        "bridge_potential": 0.77,
-        "gap_type": "weak_cluster",
-        "related_clusters": [
-          "cluster-kuren",
-          "cluster-morgenroutine"
-        ]
-      },
-      {
-        "concept": "stress-leber-protokoll",
-        "label": "Stressreduktions-Protokoll für Leber",
-        "description": "Cortisol-Einfluss auf Leberfunktion und spezifische Stressreduktionsmethoden fehlen",
-        "bridge_potential": 0.81,
+        "concept": "gap-2-lebergott-gaps",
+        "label": "Medikamenten Vergleich ↔ Symptom Prioritäten",
+        "description": "Gap 2: 2. Medikamenten Vergleich (versus medikament [[zucker]] [[leber]]) -> 3. Symptom Prioritäten (timeline machbarkeit messung blutbild)",
+        "bridge_potential": 0.85,
         "gap_type": "missing_connection",
         "related_clusters": [
-          "cluster-lebensstil"
-        ]
+          "Medikamenten Vergleich",
+          "Symptom Prioritäten"
+        ],
+        "graph": "lebergott-gaps",
+        "source": "live"
+      },
+      {
+        "concept": "gap-3-lebergott-gaps",
+        "label": "Symptom Prioritäten ↔ Leber Ansatz",
+        "description": "Gap 3: 3. Symptom Prioritäten (woche priorität blutbild) -> 7. Leber Ansatz (leberzentrieren fett [[ernährung]] bedeuten)",
+        "bridge_potential": 0.8,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Symptom Prioritäten",
+          "Leber Ansatz"
+        ],
+        "graph": "lebergott-gaps",
+        "source": "live"
       }
     ],
     "bridges": [
       {
-        "concept": "leberwickel-wissenschaft",
-        "label": "Leberwickel — Volksmedizin mit Wissenschaft",
+        "id": "bridge-lebergott-gaps-0",
+        "title": "plateau ↔ versus",
+        "label": "plateau verbindet versus",
         "connects": [
-          "leberwickel",
-          "zirkulationssteigerung",
-          "entgiftung",
-          "parasympathikus"
+          "plateau",
+          "versus"
         ],
-        "insight": "Wärmeapplikation steigert lokale Durchblutung um 40% und aktiviert das parasympathische Nervensystem",
-        "strength": 0.79
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-gaps",
+        "source": "live"
       },
       {
-        "concept": "21-tage-transformation",
-        "label": "21-Tage-Kur als Verhaltensänderung",
+        "id": "bridge-lebergott-gaps-2",
+        "title": "protokoll ↔ woche",
+        "label": "protokoll verbindet woche",
         "connects": [
-          "21-tage-kur",
-          "gewohnheitsbildung",
-          "neuroplastizitaet",
-          "ernaehrungsumstellung"
+          "protokoll",
+          "woche"
         ],
-        "insight": "21 Tage sind die minimale Dauer für messbare epigenetische Veränderungen durch Ernährungsumstellung",
-        "strength": 0.83
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-gaps",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-gaps-4",
+        "title": "gap ↔ schritt",
+        "label": "gap verbindet schritt",
+        "connects": [
+          "gap",
+          "schritt"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-gaps",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-gaps-6",
+        "title": "zucker ↔ reduzieren",
+        "label": "zucker verbindet reduzieren",
+        "connects": [
+          "zucker",
+          "reduzieren"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-gaps",
+        "source": "live"
       }
     ],
     "stats": {
-      "total_nodes": 41,
-      "total_edges": 156,
-      "density": 0.19,
-      "avg_degree": 7.6,
-      "modularity": 0.66
-    }
+      "total_nodes": 89,
+      "total_edges": 210,
+      "modularity": 0.42,
+      "clusterCount": 8
+    },
+    "source": "live"
+  },
+  "lebergott-konzepte-2": {
+    "graph_name": "lebergott-konzepte-2",
+    "description": "Konzepte Teil 2 — Erweiterte Wissensbasis",
+    "clusters": [
+      {
+        "id": "lebergott-konzepte-2-cluster-0",
+        "label": "Lebergesundheit",
+        "color": "#1a3a2a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-2"
+      },
+      {
+        "id": "lebergott-konzepte-2-cluster-1",
+        "label": "Wasserbedarf",
+        "color": "#c5a55a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-2"
+      },
+      {
+        "id": "lebergott-konzepte-2-cluster-2",
+        "label": "Fettzucker",
+        "color": "#2d5a3d",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-2"
+      },
+      {
+        "id": "lebergott-konzepte-2-cluster-3",
+        "label": "Naturkörper",
+        "color": "#4a7c59",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-2"
+      },
+      {
+        "id": "lebergott-konzepte-2-cluster-4",
+        "label": "Toxische Metalle",
+        "color": "#6b9e7a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-2"
+      },
+      {
+        "id": "lebergott-konzepte-2-cluster-5",
+        "label": "Nährstofftreibstoff",
+        "color": "#8db89a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-2"
+      },
+      {
+        "id": "lebergott-konzepte-2-cluster-6",
+        "label": "Generationenbelastung",
+        "color": "#0f2418",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-2"
+      },
+      {
+        "id": "lebergott-konzepte-2-cluster-7",
+        "label": "Wasserfundament",
+        "color": "#9e8648",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-2"
+      }
+    ],
+    "gaps": [
+      {
+        "concept": "gap-1-lebergott-konzepte-2",
+        "label": "Fettzucker ↔ Naturkörper",
+        "description": "Gap 1: 3. Fettzucker ([[fett]] [[zucker]] kombination enthalten stark) -> 4. Naturkörper (körper natur leben leichtigkeit lebenskraft)",
+        "bridge_potential": 0.9,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Fettzucker",
+          "Naturkörper"
+        ],
+        "graph": "lebergott-konzepte-2",
+        "source": "live"
+      },
+      {
+        "concept": "gap-2-lebergott-konzepte-2",
+        "label": "Naturkörper ↔ Toxische Metalle",
+        "description": "Gap 2: 4. Naturkörper (körper natur leben [[gesundheit]]) -> 5. Toxische Metalle ([[gehirn]] [[toxine]] [[quecksilber]] [[schwermetalle]])",
+        "bridge_potential": 0.85,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Naturkörper",
+          "Toxische Metalle"
+        ],
+        "graph": "lebergott-konzepte-2",
+        "source": "live"
+      },
+      {
+        "concept": "gap-3-lebergott-konzepte-2",
+        "label": "Fettzucker ↔ Toxische Metalle",
+        "description": "Gap 3: 3. Fettzucker ([[fett]] [[zucker]] kombination) -> 5. Toxische Metalle ([[gehirn]] [[toxine]] [[metalle]] chronisch)",
+        "bridge_potential": 0.8,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Fettzucker",
+          "Toxische Metalle"
+        ],
+        "graph": "lebergott-konzepte-2",
+        "source": "live"
+      }
+    ],
+    "bridges": [
+      {
+        "id": "bridge-lebergott-konzepte-2-0",
+        "title": "leichtigkeit ↔ leber",
+        "label": "leichtigkeit verbindet leber",
+        "connects": [
+          "leichtigkeit",
+          "leber"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-konzepte-2",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-konzepte-2-2",
+        "title": "glukose ↔ fett",
+        "label": "glukose verbindet fett",
+        "connects": [
+          "glukose",
+          "fett"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-konzepte-2",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-konzepte-2-4",
+        "title": "leiden ↔ sauerstoff",
+        "label": "leiden verbindet sauerstoff",
+        "connects": [
+          "leiden",
+          "sauerstoff"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-konzepte-2",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-konzepte-2-6",
+        "title": "gehirn ↔ welt",
+        "label": "gehirn verbindet welt",
+        "connects": [
+          "gehirn",
+          "welt"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-konzepte-2",
+        "source": "live"
+      }
+    ],
+    "stats": {
+      "total_nodes": 163,
+      "total_edges": 490,
+      "modularity": 0.418,
+      "clusterCount": 9
+    },
+    "source": "live"
+  },
+  "lebergott-konzepte-1": {
+    "graph_name": "lebergott-konzepte-1",
+    "description": "Konzepte Teil 1 — Grundlegende Konzepte",
+    "clusters": [
+      {
+        "id": "lebergott-konzepte-1-cluster-0",
+        "label": "Fettproblematik",
+        "color": "#1a3a2a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-1"
+      },
+      {
+        "id": "lebergott-konzepte-1-cluster-1",
+        "label": "Organbelastung",
+        "color": "#c5a55a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-1"
+      },
+      {
+        "id": "lebergott-konzepte-1-cluster-2",
+        "label": "Adrenalinwirkung",
+        "color": "#2d5a3d",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-1"
+      },
+      {
+        "id": "lebergott-konzepte-1-cluster-3",
+        "label": "Achtsamkeitsernährung",
+        "color": "#4a7c59",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-1"
+      },
+      {
+        "id": "lebergott-konzepte-1-cluster-4",
+        "label": "Resveratroldebatte",
+        "color": "#6b9e7a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-1"
+      },
+      {
+        "id": "lebergott-konzepte-1-cluster-5",
+        "label": "Fettqualität",
+        "color": "#8db89a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-1"
+      },
+      {
+        "id": "lebergott-konzepte-1-cluster-6",
+        "label": "Organisolierung",
+        "color": "#0f2418",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-1"
+      },
+      {
+        "id": "lebergott-konzepte-1-cluster-7",
+        "label": "Metalltoxizität",
+        "color": "#9e8648",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-konzepte-1"
+      }
+    ],
+    "gaps": [
+      {
+        "concept": "gap-1-lebergott-konzepte-1",
+        "label": "Adrenalinwirkung ↔ Resveratroldebatte",
+        "description": "Gap 1: 3. Adrenalinwirkung (körper [[adrenalin]] [[kaffee]] nebennierenschwäche kämpfen) -> 5. Resveratroldebatte ([[alkohol]] [[cholesterin]] [[rotwein]] [[resveratrol]])",
+        "bridge_potential": 0.9,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Adrenalinwirkung",
+          "Resveratroldebatte"
+        ],
+        "graph": "lebergott-konzepte-1",
+        "source": "live"
+      },
+      {
+        "concept": "gap-2-lebergott-konzepte-1",
+        "label": "Fettproblematik ↔ Adrenalinwirkung",
+        "description": "Gap 2: 1. Fettproblematik ([[fett]] [[zucker]] problem [[nahrung]] blockieren) -> 3. Adrenalinwirkung (körper [[adrenalin]] [[motivation]] kämpfen)",
+        "bridge_potential": 0.85,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Fettproblematik",
+          "Adrenalinwirkung"
+        ],
+        "graph": "lebergott-konzepte-1",
+        "source": "live"
+      },
+      {
+        "concept": "gap-3-lebergott-konzepte-1",
+        "label": "Fettproblematik ↔ Resveratroldebatte",
+        "description": "Gap 3: 1. Fettproblematik ([[fett]] [[zucker]] problem) -> 5. Resveratroldebatte ([[alkohol]] [[cholesterin]] [[rotwein]])",
+        "bridge_potential": 0.8,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Fettproblematik",
+          "Resveratroldebatte"
+        ],
+        "graph": "lebergott-konzepte-1",
+        "source": "live"
+      }
+    ],
+    "bridges": [
+      {
+        "id": "bridge-lebergott-konzepte-1-0",
+        "title": "fett ↔ problem",
+        "label": "fett verbindet problem",
+        "connects": [
+          "fett",
+          "problem"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-konzepte-1",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-konzepte-1-2",
+        "title": "leber ↔ übung",
+        "label": "leber verbindet übung",
+        "connects": [
+          "leber",
+          "übung"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-konzepte-1",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-konzepte-1-4",
+        "title": "achtsamkeit ↔ zucker",
+        "label": "achtsamkeit verbindet zucker",
+        "connects": [
+          "achtsamkeit",
+          "zucker"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-konzepte-1",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-konzepte-1-6",
+        "title": "motivation ↔ belasten",
+        "label": "motivation verbindet belasten",
+        "connects": [
+          "motivation",
+          "belasten"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-konzepte-1",
+        "source": "live"
+      }
+    ],
+    "stats": {
+      "total_nodes": 155,
+      "total_edges": 460,
+      "modularity": 0.456,
+      "clusterCount": 9
+    },
+    "source": "live"
+  },
+  "lebergott-belastungen-krankheiten": {
+    "graph_name": "lebergott-belastungen-krankheiten",
+    "description": "Belastungen & Krankheiten",
+    "clusters": [
+      {
+        "id": "lebergott-belastungen-krankheiten-cluster-0",
+        "label": "Leberbelastung",
+        "color": "#1a3a2a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-belastungen-krankheiten"
+      },
+      {
+        "id": "lebergott-belastungen-krankheiten-cluster-1",
+        "label": "Zahnmetalle",
+        "color": "#c5a55a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-belastungen-krankheiten"
+      },
+      {
+        "id": "lebergott-belastungen-krankheiten-cluster-2",
+        "label": "Fettreduktion",
+        "color": "#2d5a3d",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-belastungen-krankheiten"
+      },
+      {
+        "id": "lebergott-belastungen-krankheiten-cluster-3",
+        "label": "Cholesterinursache",
+        "color": "#4a7c59",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-belastungen-krankheiten"
+      },
+      {
+        "id": "lebergott-belastungen-krankheiten-cluster-4",
+        "label": "Adrenalinstress",
+        "color": "#6b9e7a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-belastungen-krankheiten"
+      },
+      {
+        "id": "lebergott-belastungen-krankheiten-cluster-5",
+        "label": "Gärungsproblematik",
+        "color": "#8db89a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-belastungen-krankheiten"
+      },
+      {
+        "id": "lebergott-belastungen-krankheiten-cluster-6",
+        "label": "Virusbelastung",
+        "color": "#0f2418",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-belastungen-krankheiten"
+      },
+      {
+        "id": "lebergott-belastungen-krankheiten-cluster-7",
+        "label": "Bluthochdruckherz",
+        "color": "#9e8648",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-belastungen-krankheiten"
+      }
+    ],
+    "gaps": [
+      {
+        "concept": "gap-1-lebergott-belastungen-krankheiten",
+        "label": "Zahnmetalle ↔ Cholesterinursache",
+        "description": "Gap 1: 2. Zahnmetalle (verursachen [[zahnfüllungen]] dauermedikation schaden [[metalle]]) -> 4. Cholesterinursache ([[cholesterin]] ursache mg häufig [[symptom]] arzt)",
+        "bridge_potential": 0.9,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Zahnmetalle",
+          "Cholesterinursache"
+        ],
+        "graph": "lebergott-belastungen-krankheiten",
+        "source": "live"
+      },
+      {
+        "concept": "gap-2-lebergott-belastungen-krankheiten",
+        "label": "Cholesterinursache ↔ Gärungsproblematik",
+        "description": "Gap 2: 4. Cholesterinursache ([[cholesterin]] ursache [[symptom]]) -> 6. Gärungsproblematik ([[gärung]] [[neurotoxine]] [[darm]] [[zentrale_nervensystem]])",
+        "bridge_potential": 0.85,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Cholesterinursache",
+          "Gärungsproblematik"
+        ],
+        "graph": "lebergott-belastungen-krankheiten",
+        "source": "live"
+      },
+      {
+        "concept": "gap-3-lebergott-belastungen-krankheiten",
+        "label": "Leberbelastung ↔ Cholesterinursache",
+        "description": "Gap 3: 1. Leberbelastung ([[leber]] [[fettleber]] belastung [[neutralisieren]]) -> 4. Cholesterinursache ([[cholesterin]] ursache [[symptom]] arzt)",
+        "bridge_potential": 0.8,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Leberbelastung",
+          "Cholesterinursache"
+        ],
+        "graph": "lebergott-belastungen-krankheiten",
+        "source": "live"
+      }
+    ],
+    "bridges": [
+      {
+        "id": "bridge-lebergott-belastungen-krankheiten-0",
+        "title": "fettleber ↔ cholesterin",
+        "label": "fettleber verbindet cholesterin",
+        "connects": [
+          "fettleber",
+          "cholesterin"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-belastungen-krankheiten",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-belastungen-krankheiten-2",
+        "title": "gärung ↔ leber",
+        "label": "gärung verbindet leber",
+        "connects": [
+          "gärung",
+          "leber"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-belastungen-krankheiten",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-belastungen-krankheiten-4",
+        "title": "dauermedikation ↔ abbau",
+        "label": "dauermedikation verbindet abbau",
+        "connects": [
+          "dauermedikation",
+          "abbau"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-belastungen-krankheiten",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-belastungen-krankheiten-6",
+        "title": "verursachen ↔ ursache",
+        "label": "verursachen verbindet ursache",
+        "connects": [
+          "verursachen",
+          "ursache"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-belastungen-krankheiten",
+        "source": "live"
+      }
+    ],
+    "stats": {
+      "total_nodes": 134,
+      "total_edges": 370,
+      "modularity": 0.706,
+      "clusterCount": 10
+    },
+    "source": "live"
+  },
+  "lebergott-anatomie-leber": {
+    "graph_name": "lebergott-anatomie-leber",
+    "description": "Anatomie & Physiologie der Leber",
+    "clusters": [
+      {
+        "id": "lebergott-anatomie-leber-cluster-0",
+        "label": "Leberstoffwechsel",
+        "color": "#1a3a2a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-anatomie-leber"
+      },
+      {
+        "id": "lebergott-anatomie-leber-cluster-1",
+        "label": "Blutdynamik",
+        "color": "#c5a55a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-anatomie-leber"
+      },
+      {
+        "id": "lebergott-anatomie-leber-cluster-2",
+        "label": "Zellgesundheit",
+        "color": "#2d5a3d",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-anatomie-leber"
+      },
+      {
+        "id": "lebergott-anatomie-leber-cluster-3",
+        "label": "Regenerationskraft",
+        "color": "#4a7c59",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-anatomie-leber"
+      },
+      {
+        "id": "lebergott-anatomie-leber-cluster-4",
+        "label": "Metalltoxizität",
+        "color": "#6b9e7a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-anatomie-leber"
+      },
+      {
+        "id": "lebergott-anatomie-leber-cluster-5",
+        "label": "Schimmelabwehr",
+        "color": "#8db89a",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-anatomie-leber"
+      },
+      {
+        "id": "lebergott-anatomie-leber-cluster-6",
+        "label": "Heilungsprozess",
+        "color": "#0f2418",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-anatomie-leber"
+      },
+      {
+        "id": "lebergott-anatomie-leber-cluster-7",
+        "label": "Adrenalinstress",
+        "color": "#9e8648",
+        "weight": 0.5,
+        "nodes": [],
+        "top_concepts": [],
+        "graph": "lebergott-anatomie-leber"
+      }
+    ],
+    "gaps": [
+      {
+        "concept": "gap-1-lebergott-anatomie-leber",
+        "label": "Zellgesundheit ↔ Metalltoxizität",
+        "description": "Gap 1: 3. Zellgesundheit (produzieren [[zelle]] [[mitochondrien]] beginnen [[krankheit]]) -> 5. Metalltoxizität ([[gehirn]] [[metalle]] toxisch [[elektrische_signale]] [[zittern]])",
+        "bridge_potential": 0.9,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Zellgesundheit",
+          "Metalltoxizität"
+        ],
+        "graph": "lebergott-anatomie-leber",
+        "source": "live"
+      },
+      {
+        "concept": "gap-2-lebergott-anatomie-leber",
+        "label": "Blutdynamik ↔ Zellgesundheit",
+        "description": "Gap 2: 2. Blutdynamik (körper [[sauerstoff]] [[blut]] [[wasser]] [[lösungsmittel]]) -> 3. Zellgesundheit (produzieren [[zelle]] [[gesundheit]] [[mitochondrien]])",
+        "bridge_potential": 0.85,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Blutdynamik",
+          "Zellgesundheit"
+        ],
+        "graph": "lebergott-anatomie-leber",
+        "source": "live"
+      },
+      {
+        "concept": "gap-3-lebergott-anatomie-leber",
+        "label": "Blutdynamik ↔ Adrenalinstress",
+        "description": "Gap 3: 2. Blutdynamik (körper [[sauerstoff]] leben [[blut]]) -> 8. Adrenalinstress (adrenalin flucht kampf gefahr [[kaffee]])",
+        "bridge_potential": 0.8,
+        "gap_type": "missing_connection",
+        "related_clusters": [
+          "Blutdynamik",
+          "Adrenalinstress"
+        ],
+        "graph": "lebergott-anatomie-leber",
+        "source": "live"
+      }
+    ],
+    "bridges": [
+      {
+        "id": "bridge-lebergott-anatomie-leber-0",
+        "title": "aktiv ↔ metalle",
+        "label": "aktiv verbindet metalle",
+        "connects": [
+          "aktiv",
+          "metalle"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-anatomie-leber",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-anatomie-leber-2",
+        "title": "leber ↔ baustein",
+        "label": "leber verbindet baustein",
+        "connects": [
+          "leber",
+          "baustein"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-anatomie-leber",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-anatomie-leber-4",
+        "title": "leben ↔ gehirn",
+        "label": "leben verbindet gehirn",
+        "connects": [
+          "leben",
+          "gehirn"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-anatomie-leber",
+        "source": "live"
+      },
+      {
+        "id": "bridge-lebergott-anatomie-leber-6",
+        "title": "körper ↔ produzieren",
+        "label": "körper verbindet produzieren",
+        "connects": [
+          "körper",
+          "produzieren"
+        ],
+        "why": "Konzeptueller Gateway zwischen Clustern",
+        "strength": 0.8,
+        "graph": "lebergott-anatomie-leber",
+        "source": "live"
+      }
+    ],
+    "stats": {
+      "total_nodes": 118,
+      "total_edges": 310,
+      "modularity": 0.63,
+      "clusterCount": 9
+    },
+    "source": "live"
   }
 }
