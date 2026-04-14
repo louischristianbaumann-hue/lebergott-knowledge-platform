@@ -39,10 +39,19 @@ init_db(engine)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup + shutdown lifecycle."""
-    # Seed demo vault and admin user (init_db already called at module level)
-    with _db_mod.SessionLocal() as db:
-        seed_demo_vault(db, str(settings.lebergott_path))
-        seed_admin_user(db)
+    # Seed demo vault — independent, failure here must not block user seeding
+    try:
+        with _db_mod.SessionLocal() as db:
+            seed_demo_vault(db, str(settings.lebergott_path))
+    except Exception as exc:
+        logger.warning(f"seed_demo_vault skipped: {exc}")
+
+    # Seed admin/staff/client users — always runs even if vault seed fails
+    try:
+        with _db_mod.SessionLocal() as db:
+            seed_admin_user(db)
+    except Exception as exc:
+        logger.error(f"seed_admin_user failed: {exc}")
 
     yield
 

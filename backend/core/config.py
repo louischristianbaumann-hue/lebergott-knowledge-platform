@@ -7,8 +7,9 @@ import json
 import sys
 from functools import lru_cache
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -51,7 +52,9 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8000
 
-    # CORS — override via CORS_ORIGINS='["https://your-app.vercel.app"]' in prod
+    # CORS — override via CORS_ORIGINS env var in prod
+    # Accepts JSON array: CORS_ORIGINS='["https://your-app.vercel.app"]'
+    # OR comma-separated: CORS_ORIGINS=https://your-app.vercel.app,http://localhost:3000
     cors_origins: list[str] = [
         "http://localhost:3000",
         "http://localhost:5173",
@@ -59,8 +62,22 @@ class Settings(BaseSettings):
         "http://127.0.0.1:5173",
         "https://lebergott-knowledge-platform.vercel.app",
     ]
-    # Regex for Vercel preview URLs — matches *-louischristianbaumann-hue.vercel.app
+    # Regex for Vercel preview URLs — override via CORS_ORIGIN_REGEX env var
     cors_origin_regex: str = r"https://.*-louischristianbaumann-hue\.vercel\.app"
+
+    @field_validator("cors_origins", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, v: Any) -> list[str]:
+        """Parse CORS_ORIGINS from JSON array string or comma-separated string."""
+        if isinstance(v, list):
+            return v
+        if isinstance(v, str):
+            stripped = v.strip()
+            if stripped.startswith("["):
+                return json.loads(stripped)
+            # comma-separated: "https://a.com, https://b.com"
+            return [o.strip() for o in stripped.split(",") if o.strip()]
+        return v
 
     # Database
     database_url: str = "sqlite:///./synodea.db"
