@@ -19,9 +19,9 @@
 
 | Role | Email | Password |
 |------|-------|----------|
-| Admin | `marcel@lebergott.de` | `lebergott2024` |
-| Staff | `mitarbeiter@lebergott.de` | `lebergott2024` |
-| Client | `demo@lebergott.de` | `lebergott2024` |
+| Admin | `marcel@lebergott.de` | `Lebergott2026!` |
+| Staff | `mitarbeiter@lebergott.de` | `Staff2026!` |
+| Client | `demo@lebergott.de` | `Demo2026!` |
 
 ## BLOCKER: Deploy to Railway + Vercel
 

@@ -22,9 +22,9 @@ const BRAND = {
 }
 
 const DEMO_HINTS = [
-  { label: 'Marcel (Admin)',  email: 'marcel@lebergott.de',      password: 'lebergott2024', role: 'Admin' },
-  { label: 'Mitarbeiter',     email: 'mitarbeiter@lebergott.de', password: 'lebergott2024', role: 'Staff' },
-  { label: 'Klient Demo',     email: 'klient@lebergott.de',      password: 'lebergott2024', role: 'Client' },
+  { label: 'Marcel (Admin)',  email: 'marcel@lebergott.de',      password: 'Lebergott2026!', role: 'Admin' },
+  { label: 'Mitarbeiter',     email: 'mitarbeiter@lebergott.de', password: 'Staff2026!',      role: 'Staff' },
+  { label: 'Klient Demo',     email: 'demo@lebergott.de',         password: 'Demo2026!',       role: 'Client' },
 ]
 
 export default function LoginPage() {

@@ -1,0 +1,139 @@
+{
+  "_comment": "Lebergott Knowledge Platform — Claude Desktop MCP Config für Mitarbeiter",
+  "_instructions": "Diesen Block in claude_desktop_config.json unter 'mcpServers' einfügen",
+  "_config_path_mac": "~/Library/Application Support/Claude/claude_desktop_config.json",
+  "_config_path_win": "%APPDATA%\\Claude\\claude_desktop_config.json",
+
+  "mcpServers": {
+    "lebergott-knowledge": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-fetch"
+      ],
+      "env": {
+        "LEBERGOTT_API_URL": "https://lebergott-knowledge-platform-production.up.railway.app/api/v1",
+        "LEBERGOTT_API_URL_LOCAL": "http://127.0.0.1:8000/api/v1",
+        "_note": "Wenn Railway deployed: LEBERGOTT_API_URL nutzen. Lokal: LEBERGOTT_API_URL_LOCAL"
+      }
+    },
+
+    "lebergott-backend": {
+      "_type": "http",
+      "_description": "Direkter HTTP-Zugang zum Lebergott Backend — alle API Endpoints",
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://127.0.0.1:8000/api/v1",
+        "--header",
+        "Content-Type:application/json"
+      ],
+      "env": {
+        "LEBERGOTT_BASE_URL": "http://127.0.0.1:8000/api/v1"
+      }
+    },
+
+    "infranodus": {
+      "_description": "InfraNodus Knowledge Graph MCP — Gaps, Bridges, Cluster-Analyse",
+      "_setup": "npm install -g @infranodus/mcp-server (wenn verfügbar) oder via npx",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@infranodus/mcp"
+      ],
+      "env": {
+        "INFRANODUS_API_KEY": "HIER_INFRANODUS_API_KEY_EINFÜGEN",
+        "INFRANODUS_USERNAME": "lautloos"
+      }
+    }
+  },
+
+  "lebergott_api_reference": {
+    "_description": "Alle verfügbaren Endpoints — für manuelle Nutzung oder Custom MCP",
+    "base_url_local": "http://127.0.0.1:8000/api/v1",
+    "base_url_production": "https://lebergott-knowledge-platform-production.up.railway.app/api/v1",
+
+    "auth": {
+      "login": {
+        "method": "POST",
+        "path": "/auth/login",
+        "body": { "email": "mitarbeiter@lebergott.de", "password": "Staff2026!" },
+        "returns": "{ access_token: string, token_type: 'bearer' }"
+      },
+      "me": {
+        "method": "GET",
+        "path": "/auth/me",
+        "headers": { "Authorization": "Bearer {access_token}" },
+        "returns": "{ id, email, role, name }"
+      }
+    },
+
+    "knowledge": {
+      "graph": {
+        "method": "GET",
+        "path": "/graph/lebergott",
+        "returns": "{ nodes: [...], links: [...] } — 44 Nodes, 302 Links"
+      },
+      "gaps": {
+        "method": "GET",
+        "path": "/lebergott/gaps",
+        "returns": "Array von Lücken mit id, title, reason, bridge"
+      },
+      "infranodus_gaps": {
+        "method": "GET",
+        "path": "/infranodus/gaps",
+        "returns": "Live InfraNodus Gaps — 18 Gaps"
+      },
+      "bridges": {
+        "method": "GET",
+        "path": "/lebergott/bridges",
+        "returns": "Array von Verbindungen mit title, connects, why"
+      }
+    },
+
+    "chat": {
+      "ask": {
+        "method": "POST",
+        "path": "/chat",
+        "headers": { "Authorization": "Bearer {access_token}" },
+        "body": { "question": "Deine Frage hier", "vault_id": "lebergott" },
+        "returns": "{ answer: string, sources: [...] }",
+        "_note": "Läuft über n8n Webhook → Claude → InfraNodus Knowledge Context"
+      }
+    },
+
+    "vault": {
+      "files": {
+        "method": "GET",
+        "path": "/vault/lebergott/files",
+        "returns": "Liste aller Vault-Dateien"
+      },
+      "file_content": {
+        "method": "GET",
+        "path": "/vault/lebergott/file/{file_path}",
+        "returns": "Dateiinhalt als Text"
+      }
+    },
+
+    "health": {
+      "method": "GET",
+      "path": "/health",
+      "returns": "{ status: 'ok', version: '1.0.0' }"
+    }
+  },
+
+  "n8n_webhook": {
+    "lebergott_bot": {
+      "url": "https://n8n-production-6fe9.up.railway.app/webhook/lebergott-bot",
+      "auth_header": "X-Auth-Token",
+      "auth_value": "419f12f0bc4c8bc8d6a5625fede2d28b51b618200a199ad28e42fbb4fd3b852a",
+      "method": "POST",
+      "body_schema": {
+        "question": "string — die Frage des Users",
+        "userId": "number — optional, für personalisierte Antworten",
+        "context": "string — optional, zusätzlicher Kontext"
+      }
+    }
+  }
+}

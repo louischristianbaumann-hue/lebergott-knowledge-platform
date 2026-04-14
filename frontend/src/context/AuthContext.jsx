@@ -9,9 +9,9 @@ const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/a
 
 // Demo users — active when backend is offline
 const DEMO_USERS = [
-  { id: 1, email: 'marcel@lebergott.de',       password: 'lebergott2024', role: 'admin',  name: 'Marcel Lebergott' },
-  { id: 2, email: 'mitarbeiter@lebergott.de',  password: 'lebergott2024', role: 'staff',  name: 'Mitarbeiter Demo' },
-  { id: 3, email: 'demo@lebergott.de',          password: 'lebergott2024', role: 'client', name: 'Demo Klient' },
+  { id: 1, email: 'marcel@lebergott.de',       password: 'Lebergott2026!', role: 'admin',  name: 'Marcel Lebergott' },
+  { id: 2, email: 'mitarbeiter@lebergott.de',  password: 'Staff2026!',      role: 'staff',  name: 'Mitarbeiter Demo' },
+  { id: 3, email: 'demo@lebergott.de',          password: 'Demo2026!',       role: 'client', name: 'Demo Klient' },
 ]
 
 const AuthContext = createContext(null)
