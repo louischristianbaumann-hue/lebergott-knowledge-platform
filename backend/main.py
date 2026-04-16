@@ -122,8 +122,10 @@ async def timeout_middleware(request: Request, call_next):
 
 
 from .api.routes import router  # noqa: E402
+from .api.telegram_routes import telegram_router  # noqa: E402
 
 app.include_router(router)
+app.include_router(telegram_router)
 
 
 # ── Root ──────────────────────────────────────────────────────────────────

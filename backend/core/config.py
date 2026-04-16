@@ -113,6 +113,12 @@ class Settings(BaseSettings):
     infranodus_api_key: str = ""          # Set via INFRANODUS_API_KEY env var
     infranodus_username: str = "lautloos" # InfraNodus account username
 
+    # Telegram Bot
+    telegram_bot_token: str = ""  # Set via TELEGRAM_BOT_TOKEN env var
+
+    # Anthropic API
+    anthropic_api_key: str = ""   # Set via ANTHROPIC_API_KEY env var
+
     @property
     def engine_path(self) -> Path:
         return Path(self.synodea_engine_path)
